@@ -74,7 +74,7 @@ function Arquivo() {
 		{"label":"pasta","column":"snPasta","width": 60      },						
 		{"label":"caminho","column":"caminho","width":220    } 						
 	]);
-	FormalWindow.apply(this,["Arquivo"]);	
+	FormalWindow.apply(this,["Arquivo","*lista de arquivos no servidor"]);	
 	this._revision = "$Revision$";
 	this.htmlX.addClass("Arquivo");
 	this.htmlX[0]["dta"] = this;
