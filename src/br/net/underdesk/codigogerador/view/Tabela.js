@@ -110,7 +110,7 @@ function Tabela(){
 	this.htmlX.addClass("Tabela");
 	this.htmlX[0]["dta"] = this;
 	this.setIcon("indent-left");
-	this.setSize(4);
+	this.setSize(5);
 	this.append(this.tbMain);	
 	this.append(this.itidTabela);
 	this.append(this.itdsTabela);

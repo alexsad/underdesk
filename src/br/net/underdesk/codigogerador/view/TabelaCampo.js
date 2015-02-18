@@ -70,7 +70,7 @@ function TabelaCampo() {
 	this._revision = "$Revision$";
 	this.htmlX.addClass("TabelaCampo");
 	this.htmlX[0]["dta"] = this;
-	this.setSize(8);
+	this.setSize(7);
 	this.append(this.tbMain);
 	this.append(this.itIdTabelaCampo);
 	this.append(this.itCampo);	

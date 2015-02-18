@@ -41,11 +41,6 @@ function Arquivo() {
 	this.btExplorar.setIcon("folder-open");
 	this.btExplorar.htmlX.click(function(){
 		if(arquivo.itSnPasta.getValue()=="N"){
-			/*
-			tabela = new Tabela();       
-			tabela.show(true,false);
-			tabela.getTabelas("assets/z_under_uml.json");
-			*/
 			_.loadOnceOnly("tabela","Tabela","js/br/net/underdesk/codigogerador/view/Tabela.js","getTabelas",[arquivo.itCaminho.getValue()]);
 		}else{
 			arquivo.getByCaminho(arquivo.itCaminho.getValue());
@@ -54,6 +49,22 @@ function Arquivo() {
 	this.tbMain.addButton(this.btExplorar,false);
 	
 	
+	
+	this.btBaixar = new Button("Baixar");
+	this.btBaixar.setIcon("download-alt");
+	this.btBaixar.htmlX.attr("target","_blank");
+	this.tbMain.addButton(this.btBaixar,false);
+	
+	
+	this.idArquivo.htmlX.find("input").change(function(){
+		var toOpen = "#";
+		if(this.value!=""){			
+			if(arquivo.itSnPasta.getValue()=="N"){
+				toOpen = arquivo.itCaminho.getValue();				
+			}
+		}
+		this.btBaixar.htmlX.attr("href",toOpen);
+	});
 	
 	
 	this.dtgMain.setColumns([	
