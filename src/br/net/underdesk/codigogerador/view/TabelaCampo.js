@@ -67,7 +67,7 @@ function TabelaCampo() {
 		{"label":"descricao do campo","column":"dsCampo","width":120    }						
 	]);
 	FormalWindow.apply(this,["campos","campos da tabela"]);	
-	this._revision = "$Revision: 1 $";
+	this._revision = "$Revision$";
 	this.htmlX.addClass("TabelaCampo");
 	this.htmlX[0]["dta"] = this;
 	this.setSize(8);

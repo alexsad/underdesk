@@ -106,7 +106,7 @@ function Tabela(){
 	
 	
 	FormalWindow.apply(this,["Tabelas","*Geracao de Codigo"]);
-	this._revision = "$Revision: 1 $";	
+	this._revision = "$Revision$";	
 	this.htmlX.addClass("Tabela");
 	this.htmlX[0]["dta"] = this;
 	this.setIcon("indent-left");

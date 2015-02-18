@@ -64,7 +64,7 @@ function Arquivo() {
 		{"label":"caminho","column":"caminho","width":220    } 						
 	]);
 	FormalWindow.apply(this,["Arquivo"]);	
-	this._revision = "$Revision: 1 $";
+	this._revision = "$Revision$";
 	this.htmlX.addClass("Arquivo");
 	this.htmlX[0]["dta"] = this;
 	this.append(this.tbMain);
