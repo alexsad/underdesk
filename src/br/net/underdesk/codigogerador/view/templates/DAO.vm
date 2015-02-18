@@ -1,0 +1,50 @@
+package ${classe.getPacote()}.${classe.getDominio().toLowerCase()}.dao;
+#foreach ($import in $classe.getImports())
+import $import;
+#end
+import ${classe.getPacote()}.${classe.getDominio().toLowerCase()}.model.${classe.getNome()};
+import ${pacote}.util.ConexaoDB;
+import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+/**
+* @author alexandre.araujo
+*/
+public class $classe.getNome()DAO{
+	private String[][] ordemP = {{"$classe.getPrimaryKey().getColuna()", "desc"}};
+    public List<$classe.getNome()> get() {
+    	return (List<$classe.getNome()>) ConexaoDB.get(${classe.getNome()}.class,true,1,100,null,ordemP);
+    }
+#foreach ($campo in $classe.getAllCampos())  
+#if($campo.getColuna()==$classe.getPrimaryKey().getColuna())  
+	public List<$classe.getNome()> getBy$campo.getColunaCapitalize()($campo.getTipo() $campo.getColuna()){
+        return (List<$classe.getNome()>) ConexaoDB.getById(${classe.getNome()}.class,$campo.getColuna());
+    }
+#else
+    public List<$classe.getNome()> getBy$campo.getColunaCapitalize()($campo.getTipo() $campo.getColuna()){		
+		Map<String,Object> params = new HashMap<String, Object>();
+     	params.put("${campo.getColuna()}", ${campo.getColuna()});
+    	return (List<$classe.getNome()>) ConexaoDB.get(${classe.getNome()}.class,true,1,100,params,ordemP);
+    }
+	#if($campo.getTipo()=="Date")
+    public List<${classe.getNome()}> getByPeriodo${campo.getColunaCapitalize()}(Date DtaI,Date DtaF){
+    	DtaF.setTime(DtaF.getTime()+86399999L);
+		return (List<${classe.getNome()}>) ConexaoDB.getBetween(${classe.getNome()}.class,true,1,100,"${campo.getColuna()}",DtaI,DtaF,ordemP);
+    }
+	#end
+#end
+
+
+#end
+#if ($classe.getTipo()!="view")
+    public boolean add($classe.getNome() $classe.getNomeAlias()){
+        return ConexaoDB.add($classe.getNomeAlias());
+    }
+    public boolean editar($classe.getNome() $classe.getNomeAlias()){
+        return ConexaoDB.editar($classe.getNomeAlias());
+    }
+    public boolean excluir($classe.getNome() $classe.getNomeAlias()){
+        return ConexaoDB.deletar($classe.getNomeAlias());
+    }
+#end    
+}

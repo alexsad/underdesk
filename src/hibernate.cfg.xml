@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+   <property name="hibernate.dialect">br.net.underdesk.util.SQLiteDialect</property>
+  <property name="hibernate.connection.driver_class">org.sqlite.JDBC</property>
+    
+   <!-- Assume test is the database name -->
+   <!-- 
+   	<property name="hibernate.connection.url">jdbc:mysql://127.0.0.1:3308/ata3_sml</property>
+   	<property name="hibernate.connection.url">jdbc:mysql://192.168.5.55:3308/ata3_sml</property>
+   	<property name="hibernate.connection.url">jdbc:mysql://172.16.33.181:3308/ata3_sml</property>
+   	   	<property name="hibernate.connection.url">jdbc:mysql://172.16.33.181:3308/ata3_sml</property>
+   	   	   <property name="hibernate.connection.url">jdbc:mysql://192.168.5.60:3308/ata3_sml</property>
+    -->
+   <property name="hibernate.connection.url">jdbc:sqlite:C://sistemas//db//underdesk//underdeskdef.sqlite</property>
+   <property name="hibernate.connection.username">root</property>
+   <property name="hibernate.connection.password">blu3</property>
+    <!-- comeco turbinacao -->
+    <!--
+    <property name="hibernate.connection.autocommit">true</property>
+    -->
+    
+    <!-- Enable Hibernate's automatic session context management -->
+    <property name="current_session_context_class">thread</property>
+    <!-- Disable the second-level cache  -->
+    <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+    <!-- Echo all executed SQL to stdout -->
+    <property name="show_sql">true</property>
+    <!-- Use the C3P0 connection pool provider -->
+    <property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+    <property name="hibernate.c3p0.min_size">1</property>
+    <property name="hibernate.c3p0.max_size">5</property>
+    <property name="hibernate.c3p0.timeout">144000</property>
+    <property name="hibernate.c3p0.max_statements">0</property>
+    <property name="hibernate.c3p0.idle_test_periods">450</property>
+    <property name="hibernate.default_batch_fetch_size">50</property>
+    <property name="hibernate.jdbc.batch_size">50</property>
+    <property name="hibernate.c3p0.acquire_increment">2</property>
+    
+    
+    <!-- fim turbinacao -->
+     <!-- 
+	    <mapping class="br.net.atasacramental.usuario.model.Usuario"/>
+		<mapping class="br.net.atasacramental.certificado.model.Certificado"/>
+	    <mapping class="br.net.atasacramental.grupo.model.Grupo"/>
+	    <mapping class="br.net.atasacramental.grupo.model.GrupoItem"/>
+	    <mapping class="br.net.atasacramental.log.model.Log"/>
+	    <mapping class="br.net.atasacramental.menu.model.Menu"/>
+	    <mapping class="br.net.atasacramental.menu.model.ItemMenu"/>  
+	    <mapping class="br.net.atasacramental.notificacao.model.ConfigNotificacao"/>
+	    <mapping class="br.net.atasacramental.notificacao.model.ConfigNotificacaoV"/>
+	    <mapping class="br.net.atasacramental.notificacao.model.ConfigNotificacaoGrupo"/>
+    -->
+  </session-factory>
+</hibernate-configuration>

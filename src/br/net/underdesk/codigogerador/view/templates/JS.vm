@@ -1,0 +1,58 @@
+#set( $count = $classe.getAllCampos().size() )
+function $classe.getNome()() {
+#foreach ($campo in $classe.getAllCampos())
+#if($campo.getColuna()!=$classe.getPrimaryKey().getColuna()&&$campo.isFk())
+ServicesSingleTone.addService(new Service("${campo.getFkService()}","${campo.getFkService()}.business.${campo.getFkServiceConstrutor()}BLL.get","id${campo.getFkServiceConstrutor()}","nome"));
+#end  
+
+#set( $campotuput = 'InputText("")' )
+#if($campo.getTipo()=="Date")
+#set( $campotuput = 'DatePicker()' )
+#elseif($campo.getTipo()=="int"&&$campo.getColuna()!=$classe.getPrimaryKey().getColuna()&&!$campo.isFk())
+#set( $campotuput = 'NumericStepper(0)' )
+#elseif($campo.getLimite()>150)
+#set( $campotuput = 'TextArea("")' )
+#elseif($campo.isFk()&&$campo.getColuna()!=$classe.getPrimaryKey().getColuna())
+#set( $campotuput = 'DataFind("'+${campo.getFkService()}+'")' )
+#elseif($campo.getTipo()=="BigDecimal"||$campo.getTipo()=="float")
+#set( $campotuput = 'InputMoney(0)' )
+#end
+this.it$campo.getColunaCapitalize() = new ${campotuput};
+#if($campo.isFk()&&$campo.getColuna()!=$classe.getPrimaryKey().getColuna())
+this.it${campo.getColunaCapitalize()}.setLabel("${campo.getFkService()}");	
+#else
+this.it${campo.getColunaCapitalize()}.setLabel("${campo.getDsCampo()}");	
+#end
+this.it${campo.getColunaCapitalize()}.setSize(2);	
+#end
+this.dtgMain = new DataGrid();
+this.tbMain = new ToolBar({"entity":"${classe.getNome().toLowerCase()}.business.${classe.getNome()}BLL","grid":"dtgMain","dbmap":[	
+#foreach ($campo in $classe.getAllCampos())
+#set( $count = $count - 1 )	
+	{"field":"it$campo.getColunaCapitalize()","column":"$campo.getColuna()","fixed":false}#if($count>0) , #end
+	 
+#end
+]});
+#set( $count = $classe.getAllCampos().size() )
+this.it${classe.getPrimaryKey().getColunaCapitalize()}.setEnable(false);	
+this.dtgMain.setColumns([	
+#foreach ($campo in $classe.getAllCampos())
+#set( $count = $count - 1 )	
+	{"label":"$campo.getDsCampo()","column":"$campo.getColuna()","width":#if($campo.getLimite()>60)${campo.getLimite()}#else 60  #end   #if($count>0) },#else } #end
+						
+#end
+]);
+FormalWindow.apply(this,["$classe.getNome()"]);	
+this._revision = "$Revision: 1 $";
+this.htmlX.addClass("$classe.getNome()");
+this.htmlX[0]["dta"] = this;
+this.append(this.tbMain);
+#foreach ($campo in $classe.getAllCampos())
+this.append(this.it$campo.getColunaCapitalize());
+#end
+this.append(this.dtgMain);
+}
+
+${classe.getNome()}.prototype = Object.create(FormalWindow.prototype);
+${classe.getNome()}.prototype.constructor = ${classe.getNome()};
+

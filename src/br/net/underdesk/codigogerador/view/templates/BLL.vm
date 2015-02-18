@@ -1,0 +1,50 @@
+package ${classe.getPacote()}.${classe.getDominio().toLowerCase()}.business;
+#foreach ($import in $classe.getImports())
+import $import;
+#end
+import ${classe.getPacote()}.${classe.getDominio().toLowerCase()}.model.${classe.getNome()};
+import ${classe.getPacote()}.${classe.getDominio().toLowerCase()}.dao.${classe.getNome()}DAO;
+import java.util.List;
+import under.wsl.service.Service;
+/**
+ * @author alexandre.araujo
+ */
+public class ${classe.getNome()}BLL{
+    private ${classe.getNome()}DAO dao = null;
+    public $classe.getNome()BLL() {
+        this.dao = new $classe.getNome()DAO();
+    }
+    @Service(cache=true)
+    public List<$classe.getNome()> get(){
+        return this.dao.get();
+    }
+#foreach ($campo in $classe.getAllCampos()) 
+    @Service()
+    public List<$classe.getNome()> getBy$campo.getColunaCapitalize()($campo.getTipo() $campo.getColuna()) {
+        return this.dao.getBy$campo.getColunaCapitalize()($campo.getColuna());
+    }
+#if($campo.getTipo()=="Date")
+    @Service()
+    public List<${classe.getNome()}> getByPeriodo${campo.getColunaCapitalize()}(Date DtaI,Date DtaF){
+        return this.dao.getByPeriodo${campo.getColunaCapitalize()}(DtaI,DtaF);
+    }
+#end    
+#end 
+#if ($classe.getTipo()!="view")
+    @Service(remove={"${classe.getNome()}BLL.get"})   
+    public int add($classe.getNome() $classe.getNomeAlias()){    
+        if(this.dao.add($classe.getNomeAlias())){            
+            return ${classe.getNomeAlias()}.get${classe.getPrimaryKey().getColunaCapitalize()}();
+        }
+        return 0;
+    }
+    @Service(remove={"${classe.getNome()}BLL.get"})
+    public boolean editar($classe.getNome() $classe.getNomeAlias()){
+        return this.dao.editar($classe.getNomeAlias());
+    }
+    @Service(remove={"${classe.getNome()}BLL.get"})
+    public boolean excluir($classe.getNome() $classe.getNomeAlias()){
+         return this.dao.excluir($classe.getNomeAlias());
+    }  
+#end    
+}

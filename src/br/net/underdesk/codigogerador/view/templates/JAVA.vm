@@ -1,0 +1,63 @@
+package ${classe.getPacote()}.${classe.getDominio().toLowerCase()}.model;
+
+	import javax.persistence.Entity;
+	import javax.persistence.Column;
+	import javax.persistence.Id;
+#if($classe.getTipo()=="view")
+import org.hibernate.annotations.Immutable;
+import org.hibernate.annotations.Subselect;
+#elseif($classe.getTipo()=="table")	
+	#if($classe.getTpGeracao()=="increment")
+import org.hibernate.annotations.GenericGenerator;
+	import javax.persistence.GeneratedValue;
+	import javax.persistence.GenerationType;
+	#end
+import javax.persistence.Table;
+#end
+#foreach ($import in $classe.getImports())
+	import $import;
+#end
+
+#if($classe.getTipo()=="table")
+@Entity
+@Table(name="${classe.getNomeLogical()}")
+#elseif($classe.getTipo()=="view")	
+@Entity(name="${classe.getNomeLogical()}")
+@Immutable
+@Subselect("SELECT "+
+#foreach ($campo in $classe.getAllCampos())	
+	+" $classe.getNomeAlias().$campo.getColunaLogical(), "
+#end
+	+" FROM $classe.getNomeLogical() $classe.getNomeAlias() ")
+#end
+public class $classe.getNome(){
+
+	@Id 
+	@Column(name="${classe.getPrimaryKey().getColunaLogical()}")
+	#if($classe.getTipo()=="table")	
+	#if($classe.getTpGeracao()=="increment")
+@GenericGenerator(name="seq_${classe.getNomeLogical().toLowerCase()}" , strategy="increment")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="seq_${classe.getNomeLogical().toLowerCase()}")
+	#end
+	#end
+private $classe.getPrimaryKey().getTipoSimple() $classe.getPrimaryKey().getColuna();	
+#foreach ($campo in $classe.getAllCampos())	
+#if($campo.getColuna()!=$classe.getPrimaryKey().getColuna())
+	@Column(name="$campo.getColunaLogical()")	
+	private $campo.getTipo() $campo.getColuna();
+#end
+#end
+
+	public $classe.getNome()(){
+		super();
+	}
+	
+#foreach ($campo in $classe.getAllCampos())	
+	public $campo.getTipo() get$campo.getColunaCapitalize()(){
+		return this.$campo.getColuna();
+	}
+	public void set$campo.getColunaCapitalize()($campo.getTipo() $campo.getColuna()){
+		this.$campo.getColuna() = $campo.getColuna();
+	}	
+#end
+}

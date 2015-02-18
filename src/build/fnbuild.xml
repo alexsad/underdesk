@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" ?>
+<!-- Configuration of the Ant build system to generate a Jar file --> 
+<project name="fnbuilder_ud" default="ExportJs">
+  <property file="fnbuild.properties"/>
+  <target name="ExportJs" description="Export JS files to webapp">
+		<copy includeemptydirs="false" todir="../../${aproject.webfolder}/js">
+		        <fileset dir="../">
+		        <include name="**/*.js"/>
+		        </fileset>
+		</copy>
+  </target>
+  <target name="ExportUnderasJs" description="Export underas JS files">
+	<concat destfile="underas.min.js" force="yes">
+		<fileset dir="../../build/lib">
+			<include name="bootstrap-3.1.1-dist/js/bootstrap-datepicker.js"/>
+			<include name="bootstrap-3.1.1-dist/js/locales/bootstrap-datepicker.pt-BR.js"/>
+			<include name="bootstrap/js/bootstrap-typeahead.js"/>
+			<include name="org/underas/core/*.js"/>
+			<include name="org/underas/util/Array.js"/>
+			<include name="org/underas/container/*.js"/>			
+			<include name="org/underas/controller/*.js"/>
+			<exclude name="**/Tab.js, **/Date.js, **/ColorPicker.js, **/DropBox.js, **/FinderServiceBox.js, **/TreeView.js"/>
+		</fileset>
+				
+		<!--
+		<exclude name="org/underas/container/Tab.js"/>
+		../../${aproject.webfolder}/lib/org/underas/bin/
+		<fileset dir="../../build" includes="lib/bootstrap-3.1.1-dist/js/bootstrap-datepicker.js"/>
+		<fileset dir="../../build" includes="lib/bootstrap-3.1.1-dist/js/locales/bootstrap-datepicker.pt-BR.js"/>
+		<fileset dir="../../build" includes="lib/bootstrap/js/bootstrap-typeahead.js"/>
+		<fileset dir="../../build" includes="lib/org/underas/core/*.js"/>
+		<fileset dir="../../build" includes="lib/org/underas/util/Array.js"/>
+		<fileset dir="../../build" includes="lib/org/underas/container/*.js" excludes="lib/org/underas/container/Application.js, lib/org/underas/container/Tab.js"/>
+		<fileset dir="../../build" includes="lib/org/underas/controller/*.js" excludes="lib/org/underas/controller/Date.js, lib/org/underas/controller/ColorPicker.js, lib/org/underas/controller/DropBox.js, lib/org/underas/controller/FinderServiceBox.js, lib/org/underas/controller/TreeView.js"/>
+		<fileset dir="../../build" includes="lib/org/underas/net/Task2.js, lib/org/underas/net/RequestManager2.js, lib/org/underas/net/ToolBar.js,"/>
+		-->
+	</concat>
+  </target>
+
+  <target name="build-war">
+  	<delete file="${aproject.name}.war"/>
+	<war destfile="${aproject.name}.war" webxml="../../${aproject.webfolder}/WEB-INF/web.xml">
+	   <fileset dir="../../${aproject.webfolder}">
+	  	<include name="**/*.*"/>
+	   	
+	   </fileset>
+	   <fileset dir="../../build" includes="lib/**/*.*"/>		        	
+	   <classes  dir="../../build/classes" includes="**/*.class, hibernate.cfg.xml" excludes="**/SQLiteDialect.class"/>
+	   <!-- <lib dir="../../build/jarlibs" includes="*.jar" excludes="jaybird*.jar, sqlite-jdbc-3.7.2.jar"/>-->
+	   <lib dir="../../build/jarlibs" includes="underwsl*.jar, velocity*.jar, oro*.jar, commons-lang*.jar"/>
+				
+		
+		<manifest>
+				<attribute name="Built-By" value="${builder}" />
+				<attribute name="Built-On" value="${build-info.current-date}" />
+				<attribute name="Built-At" value="${build-info.current-time}" />
+		</manifest>
+	</war>
+  </target>
+</project>
