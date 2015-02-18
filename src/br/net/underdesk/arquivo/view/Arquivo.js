@@ -63,7 +63,7 @@ function Arquivo() {
 				toOpen = arquivo.itCaminho.getValue();				
 			}
 		}
-		this.btBaixar.htmlX.attr("href",toOpen);
+		arquivo.btBaixar.htmlX.attr("href",toOpen);
 	});
 	
 	
