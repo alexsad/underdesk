@@ -97,11 +97,7 @@ function Tabela(){
 	                      		"label" : "tabela",
 	                      		"column" : "dsTabela",
 	                      		"width" : 150
-	                      	}, {
-	                      		"label" : "dominio",
-	                      		"column" : "dominio",
-	                      		"width" : 170
-	                      	} 
+	                      	}
 	             	]);
 	
 	

@@ -62,9 +62,9 @@ function TabelaCampo() {
 	]});
 		
 	this.dtgMain.setColumns([	
-		{"label":"cod.","column":"idTabelaCampo","width": 60      },									
-		{"label":"tipo do campo","column":"tipo","width": 60      },						
-		{"label":"descricao do campo","column":"dsCampo","width":120    }						
+		{"label":"cod.","column":"idTabelaCampo","width": 60},						
+		{"label":"campo","column":"campo","width":120},
+		{"label":"tipo","column":"tipo","width": 60}						
 	]);
 	FormalWindow.apply(this,["campos","campos da tabela"]);	
 	this._revision = "$Revision$";
