@@ -56,11 +56,11 @@ function Arquivo() {
 	this.tbMain.addButton(this.btBaixar,false);
 	
 	
-	this.idArquivo.htmlX.find("input").change(function(){
+	this.itIdArquivo.htmlX.find("input").change(function(){
 		var toOpen = "#";
 		if(this.value!=""){			
 			if(arquivo.itSnPasta.getValue()=="N"){
-				toOpen = arquivo.itCaminho.getValue();				
+				toOpen = "/underdesk"+arquivo.itCaminho.getValue();				
 			}
 		}
 		arquivo.btBaixar.htmlX.attr("href",toOpen);
