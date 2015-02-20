@@ -46,8 +46,8 @@
 	   </fileset>
 	   <fileset dir="../../build" includes="lib/**/*.*"/>		        	
 	   <classes  dir="../../build/classes" includes="**/*.class, hibernate.cfg.xml" excludes="**/SQLiteDialect.class"/>
-	   <!-- <lib dir="../../build/jarlibs" includes="*.jar" excludes="jaybird*.jar, sqlite-jdbc-3.7.2.jar"/>-->
-	   <lib dir="../../build/jarlibs" includes="underwsl*.jar, velocity*.jar, oro*.jar, commons-lang*.jar"/>
+	   <!-- <lib dir="../../build/jarlibs" includes="*.jar" excludes="jaybird*.jar, sqlite-jdbc-3.7.2.jar, commons-lang*.jar"/>-->
+	   <lib dir="../../build/jarlibs" includes="underwsl*.jar, velocity*.jar, oro*.jar"/>
 				
 		
 		<manifest>

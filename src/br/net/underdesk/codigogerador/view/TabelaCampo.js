@@ -86,8 +86,8 @@ function TabelaCampo() {
 TabelaCampo.prototype = Object.create(FormalWindow.prototype);
 TabelaCampo.prototype.constructor = TabelaCampo;
 
-TabelaCampo.prototype.setCampos=function(){
-	tabelacampo.itIdTabela.setValue(tabela.itidTabela.getValue());
+TabelaCampo.prototype.setCampos=function(p_idTabela){
+	tabelacampo.itIdTabela.setValue(p_idTabela);
 	tabelacampo.itCaminho.setValue(tabela.itcaminho.getValue());
 	tabelacampo.dtgMain.setDataProvider(tabela.dtgMain.getSelectedItem(true)["campo"]);
 	tabelacampo.dtgMain.refresh();

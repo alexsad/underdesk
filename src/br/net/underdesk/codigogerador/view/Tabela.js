@@ -61,11 +61,7 @@ function Tabela(){
 	this.itrs.htmlX.find("textarea").css({"backgroundColor":"#272822","color":"#AAA55F","height":"220px"});
 	
 	
-	this.itidTabela.htmlX.find("input").change(function(){
-		if(this.value!=""){
-			_.loadOnceOnlyNoWindow("tabelacampo","TabelaCampo","js/br/net/underdesk/codigogerador/view/TabelaCampo.js","setCampos");
-		}
-	});
+
 	
 	
 	this.dtgMain = new DataGrid();
@@ -77,9 +73,10 @@ function Tabela(){
 	{"field":"itTipo","column":"tipo" },	 
 	{"field":"itChavePrimaria","column":"chavePrimaria" },	 
 	{"field":"itTpGeracao","column":"tpGeracao" },
-	{"field":"itcaminho","column":"caminho","fixed":true}
-	
+	{"field":"itcaminho","column":"caminho","fixed":true}	
 	]});
+	
+	this.tbMain.addAssociation({"mod":"TabelaCampo","url":"js/br/net/underdesk/codigogerador/view/TabelaCampo.js","act":"setCampos","puid":"tabela"});
 	
 	this.btGerarCodigo = new Button("Gerar");
 	this.btGerarCodigo.setIcon("check");
