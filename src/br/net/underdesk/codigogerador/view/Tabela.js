@@ -60,10 +60,6 @@ function Tabela(){
 	this.itrs.setSize(12);
 	this.itrs.htmlX.find("textarea").css({"backgroundColor":"#272822","color":"#AAA55F","height":"220px"});
 	
-	
-
-	
-	
 	this.dtgMain = new DataGrid();
 	this.tbMain = new ToolBar({"entity":"codigogerador.business.TabelaBLL","reload":"","grid":"dtgMain","dbmap":[	
 	{"field":"itidTabela","column":"idTabela" }, 
@@ -110,8 +106,7 @@ function Tabela(){
 	this.append(this.itdominio);
 	this.append(this.itPacote);
 	this.append(this.itChavePrimaria);
-	this.append(this.itTipo);
-	
+	this.append(this.itTipo);	
 	this.append(this.itTpGeracao);
 	this.append(this.itcaminho);
 	this.append(this.ittipoTemplate);

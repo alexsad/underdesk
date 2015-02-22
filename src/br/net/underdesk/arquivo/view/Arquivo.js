@@ -41,7 +41,7 @@ function Arquivo() {
 	this.btExplorar.setIcon("folder-open");
 	this.btExplorar.htmlX.click(function(){
 		if(arquivo.itSnPasta.getValue()=="N"){
-			_.loadOnceOnly("tabela","Tabela","js/br/net/underdesk/codigogerador/view/Tabela.js","getTabelas",[arquivo.itCaminho.getValue()]);
+			_.loadModule({"mod":"Tabela","url":"js/br/net/underdesk/codigogerador/view/Tabela.js","act":"getTabelas","p":[arquivo.itCaminho.getValue()]});
 		}else{
 			arquivo.getByCaminho(arquivo.itCaminho.getValue());
 		}
@@ -92,7 +92,8 @@ Arquivo.prototype.constructor = Arquivo;
 
 Arquivo.prototype.getByCaminho = function(p_caminho){
   rm.addRequest({
-	"p":p_caminho, 
+	"p":p_caminho,
+	"puid":"arquivo",
     "s":"arquivo.business.ArquivoBLL.getByPath",
     "onLoad":function(dta){
     	arquivo.dtgMain.setDataProvider(dta.rs);
@@ -101,6 +102,3 @@ Arquivo.prototype.getByCaminho = function(p_caminho){
     }
   });
 };
-
-
-
