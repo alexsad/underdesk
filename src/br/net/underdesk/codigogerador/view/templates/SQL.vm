@@ -3,7 +3,7 @@ CREATE TABLE ${classe.getNomeLogical()} (
 #foreach ($campo in $classe.getAllCampos())	
 #set( $count = $count - 1 )
 	
-	$campo.getColunaLogical() $campo.getSQLTipo()($campo.getLimite()) #if($campo.getSnNull()=="N") NOT NULL #end #if($campo.getColunaLogical()==$classe.getChavePrimaria()) PRIMARY KEY #end #if($count>0) , #end
+	$campo.getColunaLogical() $campo.getSQLTipo() #if($campo.getSQLTipo()!="DATE") ($campo.getLimite()) #end #if($campo.getSnNull()=="N") NOT NULL #end #if($campo.getColunaLogical()==$classe.getChavePrimaria()) PRIMARY KEY #end #if($count>0) , #end
 #end
 
 )
