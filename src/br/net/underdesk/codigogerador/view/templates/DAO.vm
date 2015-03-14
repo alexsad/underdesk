@@ -37,14 +37,14 @@ public class $classe.getNome()DAO{
 
 #end
 #if ($classe.getTipo()!="view")
-    public boolean add($classe.getNome() $classe.getNomeAlias()){
-        return ConexaoDB.add($classe.getNomeAlias());
+    public boolean insert($classe.getNome() $classe.getNomeAlias()){
+        return ConexaoDB.insert($classe.getNomeAlias());
     }
-    public boolean editar($classe.getNome() $classe.getNomeAlias()){
-        return ConexaoDB.editar($classe.getNomeAlias());
+    public boolean update($classe.getNome() $classe.getNomeAlias()){
+        return ConexaoDB.update($classe.getNomeAlias());
     }
-    public boolean excluir($classe.getNome() $classe.getNomeAlias()){
-        return ConexaoDB.deletar($classe.getNomeAlias());
+    public boolean delete($classe.getNome() $classe.getNomeAlias()){
+        return ConexaoDB.delete($classe.getNomeAlias());
     }
 #end    
 }

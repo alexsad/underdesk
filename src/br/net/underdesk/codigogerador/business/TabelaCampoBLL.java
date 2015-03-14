@@ -1,7 +1,6 @@
 package br.net.underdesk.codigogerador.business;
 import br.net.underdesk.codigogerador.model.TabelaCampo;
 import br.net.underdesk.codigogerador.dao.TabelaCampoDAO;
-import java.util.List;
 import under.wsl.service.Service;
 /**
  * @author alexandre.araujo
@@ -42,18 +41,18 @@ public class TabelaCampoBLL{
     }
     */
     @Service(remove={"TabelaCampoBLL.get"})   
-    public int add(TabelaCampo tc){    
-        if(this.dao.add(tc)){            
+    public int insert(TabelaCampo tc){    
+        if(this.dao.insert(tc)){            
             return tc.getIdTabelaCampo();
         }
         return 0;
     }
     @Service(remove={"TabelaCampoBLL.get"})
-    public boolean editar(TabelaCampo tc){
-        return this.dao.editar(tc);
+    public boolean update(TabelaCampo tc){
+        return this.dao.update(tc);
     }
     @Service(remove={"TabelaCampoBLL.get"})
-    public boolean excluir(TabelaCampo tc){
-         return this.dao.excluir(tc);
+    public boolean delete(TabelaCampo tc){
+         return this.dao.delete(tc);
     }  
 }

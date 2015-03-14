@@ -18,18 +18,18 @@ public class TabelaBLL {
         return this.dao.getByIdTabela(urlc,idTabela);
     }    
     @Service(remove={"TabelaBLL.get"})   
-    public int add(Tabela t){    
-        if(this.dao.add(t)){            
+    public int insert(Tabela t){    
+        if(this.dao.insert(t)){            
             return t.getIdTabela();
         }
         return 0;
     }
     @Service(remove={"TabelaBLL.get"})
-    public boolean editar(Tabela t){
-        return this.dao.editar(t);
+    public boolean update(Tabela t){
+        return this.dao.update(t);
     }
     @Service(remove={"TabelaBLL.get"})
-    public boolean excluir(Tabela t){
-         return this.dao.excluir(t);
+    public boolean delete(Tabela t){
+         return this.dao.delete(t);
     } 
 }

@@ -52,7 +52,7 @@ public class TabelaCampoDAO{
     }
 	*/
 
-    public boolean add(TabelaCampo tc){
+    public boolean insert(TabelaCampo tc){
     	TabelaBLL tbll = new TabelaBLL();
     	Tabela t = tbll.getByIdTabela(tc.getCaminho(),tc.getIdTabela());
     	t.setCaminho(tc.getCaminho());
@@ -61,9 +61,9 @@ public class TabelaCampoDAO{
     	ArrayList<TabelaCampo> campos = t.getCampo();
     	campos.add(tc);
     	t.setCampo(campos);
-        return tbll.editar(t); 
+        return tbll.update(t); 
     }
-    public boolean editar(TabelaCampo tc){
+    public boolean update(TabelaCampo tc){
     	TabelaBLL tbll = new TabelaBLL();
     	Tabela t = tbll.getByIdTabela(tc.getCaminho(),tc.getIdTabela());
     	t.setCaminho(tc.getCaminho());    	
@@ -71,9 +71,9 @@ public class TabelaCampoDAO{
     	ArrayList<TabelaCampo> campos = t.getCampo();
     	campos.set(tc.getIdTabelaCampo()-1, tc);
     	t.setCampo(campos);
-        return tbll.editar(t); 
+        return tbll.update(t); 
     }
-    public boolean excluir(TabelaCampo tc){
+    public boolean delete(TabelaCampo tc){
     	TabelaBLL tbll = new TabelaBLL();
     	Tabela t = tbll.getByIdTabela(tc.getCaminho(),tc.getIdTabela());
     	t.setCaminho(tc.getCaminho());    	
@@ -84,6 +84,6 @@ public class TabelaCampoDAO{
     		campos.get(i).setIdTabelaCampo(i+1);
     	}
     	t.setCampo(campos);
-        return tbll.editar(t); 
+        return tbll.update(t); 
     }
 }

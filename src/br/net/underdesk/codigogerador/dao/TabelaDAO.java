@@ -79,7 +79,7 @@ public class TabelaDAO {
 		return requestCTMP.getRs().get(idTabela-1);
     }
 	
-    public boolean add(Tabela t){
+    public boolean insert(Tabela t){
 		RequestC requestCTMP = null;
 		String urlc = this.getClass().getResource("/").getFile().replace("WEB-INF/classes/","")+t.getCaminho();
 		if(gson == null){
@@ -111,7 +111,7 @@ public class TabelaDAO {
     	return true;
        
     }
-    public boolean editar(Tabela t){
+    public boolean update(Tabela t){
 		RequestC requestCTMP = null;
 		String urlc = this.getClass().getResource("/").getFile().replace("WEB-INF/classes/","")+t.getCaminho();
 		if(gson == null){
@@ -147,7 +147,7 @@ public class TabelaDAO {
         }    	
     	return true;
     }
-    public boolean excluir(Tabela t){
+    public boolean delete(Tabela t){
 		RequestC requestCTMP = null;
 		String urlc = this.getClass().getResource("/").getFile().replace("WEB-INF/classes/","")+t.getCaminho();
 		if(gson == null){

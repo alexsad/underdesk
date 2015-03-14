@@ -32,19 +32,19 @@ public class ${classe.getNome()}BLL{
 #end 
 #if ($classe.getTipo()!="view")
     @Service(remove={"${classe.getNome()}BLL.get"})   
-    public int add($classe.getNome() $classe.getNomeAlias()){    
-        if(this.dao.add($classe.getNomeAlias())){            
+    public int insert($classe.getNome() $classe.getNomeAlias()){    
+        if(this.dao.insert($classe.getNomeAlias())){            
             return ${classe.getNomeAlias()}.get${classe.getPrimaryKey().getColunaCapitalize()}();
         }
         return 0;
     }
     @Service(remove={"${classe.getNome()}BLL.get"})
-    public boolean editar($classe.getNome() $classe.getNomeAlias()){
-        return this.dao.editar($classe.getNomeAlias());
+    public boolean update($classe.getNome() $classe.getNomeAlias()){
+        return this.dao.update($classe.getNomeAlias());
     }
     @Service(remove={"${classe.getNome()}BLL.get"})
-    public boolean excluir($classe.getNome() $classe.getNomeAlias()){
-         return this.dao.excluir($classe.getNomeAlias());
+    public boolean delete($classe.getNome() $classe.getNomeAlias()){
+         return this.dao.delete($classe.getNomeAlias());
     }  
 #end    
 }
