@@ -1,6 +1,6 @@
 var Arquivo = new Class({
-	Extends:ModWindow
-	,initialize:function(){
+	"Extends":ModWindow
+	,"initialize":function(){
 		this.parent("*lista de arquivos no servidor");
 		this._revision = "$Revision$";
 		this.getEle().addClass("Arquivo");
@@ -38,6 +38,8 @@ var Arquivo = new Class({
 		this.itCaminho.setEnable(false);
 		
 		this.mainList = new ListView("arquivos");		
+		this.setMainList("mainList");
+		
 		this.tbMain = new ToolBar({"domain":"arquivo.business.ArquivoBLL"});		
 		
 		this.btExplorar = new Button("Abrir");
@@ -57,10 +59,10 @@ var Arquivo = new Class({
 		
 		this.btBaixar = new Button("Baixar");
 		this.btBaixar.setIcon("download-alt");
-		this.btBaixar.htmlX.attr("target","_blank");
+		this.btBaixar.getEle().set("target","_blank");
 		this.tbMain.addButton(this.btBaixar);
 		
-		
+		/*
 		this.itIdArquivo.getInput().addEvent('change',function(){
 			var toOpen = "#";
 			if(this.value!=""){			
@@ -70,10 +72,10 @@ var Arquivo = new Class({
 			}
 			arquivo.btBaixar.getEle().set("href",toOpen);
 		});
+		*/
 		
 		
-		
-		this.setMainList("mainList");	
+			
 		
 		this.append(this.tbMain);
 		this.append(this.itIdArquivo);
@@ -84,14 +86,17 @@ var Arquivo = new Class({
 		this.append(this.mainList);
 		
 	}
-	,getByCaminho:function(p_caminho){
-	  rm.addRequest({
-		"p":p_caminho,
-		"puid":"arquivo",
-	    "s":"arquivo.business.ArquivoBLL.getByPath",
-	    "onLoad":function(dta){
-	    	arquivo.mainList.setDataProvider(dta.rs).refreshItens();
-	    }
-	  });
+	,"getByCaminho":function(p_caminho){
+		  console.log(p_caminho);
+		  rm.addRequest({
+			"p":p_caminho,
+			"puid":"arquivo",
+		    "s":"arquivo.business.ArquivoBLL.getByPath",
+		    "onLoad":function(dta){
+		    	console.log(dta.rs.length);
+		    	arquivo.itCaminho.setValue(dta.rs.length);
+		    	arquivo.getMainList().setDataProvider(dta.rs).refreshGridDate();		    	
+		    }
+		  });
 	}
 });
