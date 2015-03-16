@@ -26,6 +26,7 @@ public class TabelaDAO {
 	public final static String TP_DAO = "DAO";
 	public final static String TP_BLL = "BLL";
 	public final static String TP_JS = "JS";
+	public final static String TP_JSMOOLTOOLS = "JSMOOLTOOLS";
 	public final static String TP_INDEX = "HTML";
 	public final static String TP_HBC = "HBC";
 	public final static String TP_UML = "UML";

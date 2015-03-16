@@ -3,10 +3,8 @@ var Arquivo = new Class({
 	,"initialize":function(){
 		this.parent("*lista de arquivos no servidor");
 		this._revision = "$Revision$";
-		this.getEle().addClass("Arquivo");
 		
-		
-		this.itIdArquivo = new InputText("");
+		this.itIdArquivo = new InputText("e");
 		this.itIdArquivo.setColumn("idArquivo@itIdArquivo");
 		this.itIdArquivo.setLabel("cod.");	
 		this.itIdArquivo.setSize(2);	
@@ -26,8 +24,8 @@ var Arquivo = new Class({
 		this.itSnPasta = new CheckBox("pasta?", "sim");
 		this.itSnPasta.setColumn("snPasta@itSnPasta");
 		this.itSnPasta.setLabel("pasta?");	
-		this.itSnPasta.setUnCheckedValue("S");
-		this.itSnPasta.setCheckedValue("N");
+		this.itSnPasta.setUnCheckedValue("N");
+		this.itSnPasta.setCheckedValue("S");
 		this.itSnPasta.setSize(3);	
 		this.itSnPasta.setEnable(false);
 		
@@ -44,15 +42,15 @@ var Arquivo = new Class({
 		
 		this.btExplorar = new Button("Abrir");
 		this.btExplorar.setIcon("folder-open");
-		/*
-		this.btExplorar.htmlX.click(function(){
+		
+		this.btExplorar.getEle().addEvent('click',function(){
 			if(arquivo.itSnPasta.getValue()=="N"){
-				_.loadModule({"mod":"Tabela","url":"js/br/net/underdesk/codigogerador/view/Tabela.js","act":"getTabelas","p":[arquivo.itCaminho.getValue()]});
+				_.loadModule({"mod":"Tabela","url":"js/br/net/underdesk/codigogerador/view/Tabela.js","act":"getTabelas","p":[arquivo.itCaminho.getValue()],"icon":"indent-left","title":"*Geracao de Codigo"});
 			}else{
 				arquivo.getByCaminho(arquivo.itCaminho.getValue());
 			}
 		});
-		*/
+		
 		this.tbMain.addButton(this.btExplorar);
 		
 		
@@ -62,7 +60,7 @@ var Arquivo = new Class({
 		this.btBaixar.getEle().set("target","_blank");
 		this.tbMain.addButton(this.btBaixar);
 		
-		/*
+		
 		this.itIdArquivo.getInput().addEvent('change',function(){
 			var toOpen = "#";
 			if(this.value!=""){			
@@ -71,11 +69,7 @@ var Arquivo = new Class({
 				}
 			}
 			arquivo.btBaixar.getEle().set("href",toOpen);
-		});
-		*/
-		
-		
-			
+		});			
 		
 		this.append(this.tbMain);
 		this.append(this.itIdArquivo);
@@ -95,7 +89,8 @@ var Arquivo = new Class({
 		    "onLoad":function(dta){
 		    	console.log(dta.rs.length);
 		    	arquivo.itCaminho.setValue(dta.rs.length);
-		    	arquivo.getMainList().setDataProvider(dta.rs).refreshGridDate();		    	
+		    	arquivo.getMainList().setDataProvider(dta.rs).refreshGridDate();		
+		    	arquivo.tbMain.turnOnItemChangeEvent();
 		    }
 		  });
 	}
