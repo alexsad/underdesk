@@ -48,8 +48,8 @@ var Tabela = new Class({
 		this.itTpGeracao.setLabel("tipo de geracao");	
 		this.itTpGeracao.setColumn("tpGeracao@itTpGeracao");
 		this.itTpGeracao.setSize(6);
-		this.itTpGeracao.setIdData("idTpGeracao");
-		this.itTpGeracao.setLabelData("dsTpGeracao");
+		this.itTpGeracao.setValueField("idTpGeracao");
+		this.itTpGeracao.setLabelField("dsTpGeracao");
 		this.itTpGeracao.setDataProvider([
                     {"idTpGeracao":"increment","dsTpGeracao":"incrementavel"}
                     ,{"idTpGeracao":"unsigned","dsTpGeracao":"fornecida"}
@@ -69,8 +69,8 @@ var Tabela = new Class({
 		this.ittipoTemplate = new Select("tipo_template");
 		this.ittipoTemplate.setLabel("exportar para:");	
 		this.ittipoTemplate.setSize(12);
-		this.ittipoTemplate.setIdData("idTpGeracao");
-		this.ittipoTemplate.setLabelData("dsTpGeracao");
+		this.ittipoTemplate.setValueField("idTpGeracao");
+		this.ittipoTemplate.setLabelField("dsTpGeracao");
 		this.ittipoTemplate.setDataProvider([
                     {"idTipoTemplate":"JAVA","dsTipoTemplate":"arquivo java"}
                     ,{"idTipoTemplate":"DAO","dsTipoTemplate":"arquivo DAO"}
@@ -123,8 +123,7 @@ var Tabela = new Class({
 			"s":"codigogerador.business.TabelaBLL.get",
 			"url":urlcaminho,
 			"onLoad":function(dta){
-			  tabela.lisMain.setDataProvider(dta.rs);
-			  tabela.lisMain.refresh();
+			  tabela.lisMain.setDataProvider(dta.rs).refreshItens();
 			  tabela.tbMain.turnOnItemChangeEvent();
 			}
 		  });  
