@@ -17,7 +17,6 @@ var Tabela = new Class({
 	,"itTipo":null
 	,"itTpGeracao":null
 	,"itChavePrimaria":null
-	,"itcaminho":null
 	,"ittipoTemplate":null
 	,"itrs":null
 	,"btGerarCodigo":null
@@ -70,12 +69,6 @@ var Tabela = new Class({
 		this.itChavePrimaria.setColumn("chavePrimaria@itChavePrimaria");		
 		this.itChavePrimaria.setSize(12);	
 		
-		this.itcaminho = new InputText("");
-		this.itcaminho.setLabel("caminho");
-		this.itcaminho.setColumn("caminho@itcaminho");
-		this.itcaminho.setSize(12);
-		this.itcaminho.setEnable(false);
-		
 		this.ittipoTemplate = new Select("tipo_template");
 		this.ittipoTemplate.setLabel("exportar para:");	
 		this.ittipoTemplate.setSize(12);
@@ -117,7 +110,6 @@ var Tabela = new Class({
 		this.append(this.itChavePrimaria);
 		this.append(this.itTipo);	
 		this.append(this.itTpGeracao);
-		this.append(this.itcaminho);
 		this.append(this.ittipoTemplate);
 		this.append(this.mainList);
 		this.append(this.itrs);		
@@ -126,7 +118,6 @@ var Tabela = new Class({
 	,"getTabelas":function(urlcaminho){
 		 urlcaminho = urlcaminho.substring(1,urlcaminho.length);
 		  //itemmenu.setSize(12);
-		  tabela.itcaminho.setValue(urlcaminho);
 		  //tabela.tbMain.setActAttrConfig(["add","del","edit","reload"],"params",[urlcaminho]);  
 		  rm.addRequest({
 			"idRequest":"123456",  
@@ -152,5 +143,9 @@ var Tabela = new Class({
 						tabela.itrs.setValue(dta.rs);
 				}
 		});	
+	}
+	,"beforeSave":function(p_obj){
+		p_obj["caminho"] = arquivo.itCaminho.getValue();
+		return p_obj;
 	}
 });
