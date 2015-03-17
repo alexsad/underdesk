@@ -1,11 +1,12 @@
 package br.net.underdesk.arquivo.model;
 
 public class Arquivo {
-	int idArquivo;
-	int tmArquivo;
-	String dsArquivo;
-	String snPasta;
+	private int idArquivo;
+	private int tmArquivo;
+	private String dsArquivo;
+	private String snPasta;
 	private String caminho;
+	
 	public Arquivo(int idArquivo, int tmArquivo, String dsArquivo, String snPasta,String caminho) {
 		super();
 		this.idArquivo = idArquivo;

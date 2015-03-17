@@ -1,3 +1,13 @@
+var TabelaRender = new Class({
+					"Extends":Component
+					,"initialize":function(p_obj){						
+						var htmlTmp = '<h4>'+p_obj.dsTabela+'</h4>';								
+						htmlTmp += '<p class="list-group-item-text">'+p_obj.dominio+"</p>";
+						this.parent('div',htmlTmp);
+						this.getEle().addClass("col-xs-6 col-sm-4 col-md-4");
+					}
+				});	
+
 var Tabela = new Class({
 	"Extends":ModWindow
 	,"itidTabela":null
@@ -69,8 +79,8 @@ var Tabela = new Class({
 		this.ittipoTemplate = new Select("tipo_template");
 		this.ittipoTemplate.setLabel("exportar para:");	
 		this.ittipoTemplate.setSize(12);
-		this.ittipoTemplate.setValueField("idTpGeracao");
-		this.ittipoTemplate.setLabelField("dsTpGeracao");
+		this.ittipoTemplate.setValueField("idTipoTemplate");
+		this.ittipoTemplate.setLabelField("dsTipoTemplate");
 		this.ittipoTemplate.setDataProvider([
                     {"idTipoTemplate":"JAVA","dsTipoTemplate":"arquivo java"}
                     ,{"idTipoTemplate":"DAO","dsTipoTemplate":"arquivo DAO"}
@@ -86,6 +96,7 @@ var Tabela = new Class({
 		this.itrs.getEle("textarea").setStyles({"background-color":"#272822","color":"#AAA55F","height":"220px"});
 
 		this.mainList = new ListView("tabelas");
+		this.mainList.setItemRender("TabelaRender");
 		this.setMainList("mainList");
 
 		this.tbMain = new ToolBar({"domain":"codigogerador.business.TabelaBLL"});
@@ -120,19 +131,24 @@ var Tabela = new Class({
 		  rm.addRequest({
 			"idRequest":"123456",  
 			"t":"10",  
+			"puid":this.getVarModule(),
 			"s":"codigogerador.business.TabelaBLL.get",
 			"url":urlcaminho,
 			"onLoad":function(dta){
-			  tabela.lisMain.setDataProvider(dta.rs).refreshItens();
+			  tabela.mainList.setDataProvider(dta.rs).refresh();
 			  tabela.tbMain.turnOnItemChangeEvent();
 			}
 		  });  
 	}
 	,"gerarCodigo":function(){
-		rm.addRequest({
-				"p":[tabela.itcaminho.getValue(),tabela.ittipoTemplate.getValue(),tabela.itidTabela.getValue()], 
-				"s":"codigogerador.business.TabelaBLL.gerarCodigo",
-				"onLoad":function(dta){
+		rm.addRequest({							
+			 	"idTabela":tabela.itidTabela.getValue()			     
+			    ,"tpTemplate":tabela.ittipoTemplate.getValue()
+			    ,"caminho":arquivo.itCaminho.getValue()
+			    //,"caminho":"/assets/uml/ata3_uml.json"
+				,"puid":this.getVarModule()
+				,"s":"codigogerador.business.TabelaBLL.gerarCodigo"
+				,"onLoad":function(dta){
 						tabela.itrs.setValue(dta.rs);
 				}
 		});	

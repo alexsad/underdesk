@@ -10,8 +10,8 @@ public class TabelaBLL {
 		this.dao = new TabelaDAO();
 	}
 	@Service()
-	public String gerarCodigo(String urlc,String tipoTemplate,int idTabela){
-		return this.dao.gerarCodigo(urlc,tipoTemplate,idTabela);
+	public String gerarCodigo(Tabela t){
+		return this.dao.gerarCodigo(t.getCaminho(),t.getTpTemplate(),t.getIdTabela());
 	}	
     @Service()
     public Tabela getByIdTabela(String urlc,int idTabela){

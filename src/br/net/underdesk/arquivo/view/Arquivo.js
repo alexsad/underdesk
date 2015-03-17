@@ -1,3 +1,19 @@
+var ArquivoRender = new Class({
+					"Extends":Component
+					,"initialize":function(p_obj){
+						var iconC = "folder-close";
+						
+						if(p_obj.snPasta=="N"){
+							iconC = "file";
+						}
+						
+						var htmlTmp = '<h4><span class="glyphicon glyphicon-'+iconC+'"></span>&nbsp;'+p_obj.dsArquivo+'</h4>';								
+						htmlTmp += '<p class="list-group-item-text">'+p_obj.caminho+"</p>";
+						this.parent('div',htmlTmp);
+						this.getEle().addClass("col-xs-6 col-sm-3 col-md-2");
+					}
+				});	
+
 var Arquivo = new Class({
 	"Extends":ModWindow
 	,"initialize":function(){
@@ -37,6 +53,7 @@ var Arquivo = new Class({
 		
 		this.mainList = new ListView("arquivos");		
 		this.setMainList("mainList");
+		this.mainList.setItemRender("ArquivoRender");
 		
 		this.tbMain = new ToolBar({"domain":"arquivo.business.ArquivoBLL"});		
 		
@@ -81,15 +98,13 @@ var Arquivo = new Class({
 		
 	}
 	,"getByCaminho":function(p_caminho){
-		  console.log(p_caminho);
 		  rm.addRequest({
 			"p":p_caminho,
-			"puid":"arquivo",
+			"puid":this.getVarModule(),
 		    "s":"arquivo.business.ArquivoBLL.getByPath",
 		    "onLoad":function(dta){
-		    	console.log(dta.rs.length);
 		    	arquivo.itCaminho.setValue(dta.rs.length);
-		    	arquivo.getMainList().setDataProvider(dta.rs).refreshGridDate();		
+		    	arquivo.getMainList().setDataProvider(dta.rs).refresh();		
 		    	arquivo.tbMain.turnOnItemChangeEvent();
 		    }
 		  });

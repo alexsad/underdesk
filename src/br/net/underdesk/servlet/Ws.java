@@ -27,11 +27,17 @@ private static final long serialVersionUID = 1L;
         try {
          out = response.getWriter();        
          //ConexaoDB.iniciarSessao();        
+         
+         
+         
          Controlador.getInstancia().deployWS(request.getParameterMap(),"br.net.underdesk");
+         
+			
+         
          //ConexaoDB.fecharSesssao();
          }catch(Exception ex){
              Controlador.getInstancia().addErro(ex.getMessage().toString());
-             //System.out.println("erro:"+ex.getMessage().toString());
+             System.out.println("erro:"+ex.getMessage().toString());
          }finally {
              out.print(Controlador.getInstancia().getResult(idRequest));
              out.close();

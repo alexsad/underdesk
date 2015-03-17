@@ -2,34 +2,22 @@ package br.net.underdesk.codigogerador.model;
 
 import java.util.ArrayList;
 public class Tabela {
-	int idTabela;
-	String dsTabela;
-    String dominio;
-    String pacote;
-    String tipo;
-    String chavePrimaria;
-    String tpGeracao;
-    String caminho;
+	private int idTabela;
+	private String tpTemplate;
+	private String caminho;
+	private String dsTabela;
+	private String dominio;
+	private String pacote;
+	private String tipo;
+	private String chavePrimaria;
+	private String tpGeracao;
+	
     ArrayList<String> imports = new ArrayList<String>();
 	ArrayList<TabelaCampo> campo = new ArrayList<TabelaCampo>();
+	
 	public Tabela() {
 		super();
 	}	
-    
-    public Tabela(int idTabela, String dsTabela, String dominio, String pacote,
-			String tipo, String chavePrimaria, String tpGeracao) {
-		super();
-		this.idTabela = idTabela;
-		this.dsTabela = dsTabela;
-		this.dominio = dominio;
-		this.pacote = pacote;
-		this.tipo = tipo;
-		this.chavePrimaria = chavePrimaria;
-		this.tpGeracao = tpGeracao;
-	}
-
-
-
 
 	public int getIdTabela() {
 		return idTabela;
@@ -158,5 +146,18 @@ public class Tabela {
 	}
 	public void setCaminho(String caminho) {
 		this.caminho = caminho;
+	}
+
+	public String getTpTemplate() {
+		return tpTemplate;
+	}
+
+	public void setTpTemplate(String tpTemplate) {
+		this.tpTemplate = tpTemplate;
+	}
+
+	public void setImports(ArrayList<String> imports) {
+		this.imports = imports;
 	}	
+	
 }
