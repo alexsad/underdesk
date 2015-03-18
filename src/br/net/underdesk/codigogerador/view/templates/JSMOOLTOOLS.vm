@@ -35,7 +35,13 @@ ${tab}${tab}this.it${campo.getColunaCapitalize()}.setSize(2);
 		
 ${tab}${tab}this.mainList = new ListView("$classe.getNome()");
 ${tab}${tab}this.setMainList("mainList");
-${tab}${tab}this.tbMain = new ToolBar({"domain":"${classe.getNome().toLowerCase()}.business.${classe.getNome()}BLL"});		
+${tab}${tab}this.mainTb = new ToolBar({"domain":"${classe.getNome().toLowerCase()}.business.${classe.getNome()}BLL"});
+
+${tab}${tab}this.append(this.mainTb);
+#foreach ($campo in $classe.getAllCampos())	
+${tab}${tab}this.append(this.it${campo.getColunaCapitalize()});	
+#end
+${tab}${tab}this.append(this.mainList);
 ${tab}}
 ${tab},"getBy${classe.getPrimaryKey().getColunaCapitalize()}":function(p_${classe.getPrimaryKey().getColuna()}){
 ${tab}${tab}rm.addRequest({
@@ -44,7 +50,7 @@ ${tab}${tab}${tab},"s":"codigogerador.business.TabelaBLL.get"
 ${tab}${tab}${tab},"p":p_${classe.getPrimaryKey().getColuna()}
 ${tab}${tab}${tab},"onLoad":function(dta){
 ${tab}${tab}${tab}${tab}${classe.getNome().toLowerCase()}.mainList.setDataProvider(dta.rs).refresh();
-${tab}${tab}${tab}${tab}${classe.getNome().toLowerCase()}.tbMain.turnOnItemChangeEvent();
+${tab}${tab}${tab}${tab}${classe.getNome().toLowerCase()}.mainTb.turnOnItemChangeEvent();
 ${tab}${tab}${tab}}
 ${tab}${tab}}); 
 ${tab}}

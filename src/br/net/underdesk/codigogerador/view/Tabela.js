@@ -113,7 +113,7 @@ var Tabela = new Class({
 		this.append(this.ittipoTemplate);
 		this.append(this.mainList);
 		this.append(this.itrs);		
-		this.tbMain.addAssociation({"mod":"TabelaCampo","url":"js/br/net/underdesk/codigogerador/view/TabelaCampo.js","act":"setCampos","puid":this.getVarModule()});
+		this.addAssociation({"mod":"TabelaCampo","url":"js/br/net/underdesk/codigogerador/view/TabelaCampo.js","act":"setCampos","puid":this.getVarModule()});
 	}
 	,"getTabelas":function(urlcaminho){
 		 urlcaminho = urlcaminho.substring(1,urlcaminho.length);
