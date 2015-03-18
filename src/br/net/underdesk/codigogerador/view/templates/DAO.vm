@@ -11,40 +11,39 @@ import java.util.Map;
 * @author alexandre.araujo
 */
 public class $classe.getNome()DAO{
-	private String[][] ordemP = {{"$classe.getPrimaryKey().getColuna()", "desc"}};
-    public List<$classe.getNome()> get() {
-    	return (List<$classe.getNome()>) ConexaoDB.get(${classe.getNome()}.class,true,1,100,null,ordemP);
-    }
+${tab}private String[][] ordemP = {{"$classe.getPrimaryKey().getColuna()", "desc"}};
+${tab}public List<$classe.getNome()> get() {
+${tab}${tab}return (List<$classe.getNome()>) ConexaoDB.get(${classe.getNome()}.class,true,1,100,null,ordemP);
+${tab}}
 #foreach ($campo in $classe.getAllCampos())  
 #if($campo.getColuna()==$classe.getPrimaryKey().getColuna())  
-	public List<$classe.getNome()> getBy$campo.getColunaCapitalize()($campo.getTipo() $campo.getColuna()){
-        return (List<$classe.getNome()>) ConexaoDB.getById(${classe.getNome()}.class,$campo.getColuna());
-    }
+${tab}public List<$classe.getNome()> getBy$campo.getColunaCapitalize()($campo.getTipo() $campo.getColuna()){
+${tab}${tab}return (List<$classe.getNome()>) ConexaoDB.getById(${classe.getNome()}.class,$campo.getColuna());
+${tab}}
 #else
-    public List<$classe.getNome()> getBy$campo.getColunaCapitalize()($campo.getTipo() $campo.getColuna()){		
-		Map<String,Object> params = new HashMap<String, Object>();
-     	params.put("${campo.getColuna()}", ${campo.getColuna()});
-    	return (List<$classe.getNome()>) ConexaoDB.get(${classe.getNome()}.class,true,1,100,params,ordemP);
-    }
-	#if($campo.getTipo()=="Date")
-    public List<${classe.getNome()}> getByPeriodo${campo.getColunaCapitalize()}(Date DtaI,Date DtaF){
-    	DtaF.setTime(DtaF.getTime()+86399999L);
-		return (List<${classe.getNome()}>) ConexaoDB.getBetween(${classe.getNome()}.class,true,1,100,"${campo.getColuna()}",DtaI,DtaF,ordemP);
-    }
-	#end
+${tab}public List<$classe.getNome()> getBy$campo.getColunaCapitalize()($campo.getTipo() $campo.getColuna()){		
+${tab}${tab}Map<String,Object> params = new HashMap<String, Object>();
+${tab}${tab}params.put("${campo.getColuna()}", ${campo.getColuna()});
+${tab}${tab}return (List<$classe.getNome()>) ConexaoDB.get(${classe.getNome()}.class,true,1,100,params,ordemP);
+${tab}}
+#if($campo.getTipo()=="Date")
+${tab}public List<${classe.getNome()}> getByPeriodo${campo.getColunaCapitalize()}(Date DtaI,Date DtaF){
+${tab}${tab}DtaF.setTime(DtaF.getTime()+86399999L);
+${tab}${tab}return (List<${classe.getNome()}>) ConexaoDB.getBetween(${classe.getNome()}.class,true,1,100,"${campo.getColuna()}",DtaI,DtaF,ordemP);
+${tab}}
 #end
-
+#end
 
 #end
 #if ($classe.getTipo()!="view")
-    public boolean insert($classe.getNome() $classe.getNomeAlias()){
-        return ConexaoDB.insert($classe.getNomeAlias());
-    }
-    public boolean update($classe.getNome() $classe.getNomeAlias()){
-        return ConexaoDB.update($classe.getNomeAlias());
-    }
-    public boolean delete($classe.getNome() $classe.getNomeAlias()){
-        return ConexaoDB.delete($classe.getNomeAlias());
-    }
+${tab}public boolean insert($classe.getNome() $classe.getNomeAlias()){
+${tab}${tab}return ConexaoDB.insert($classe.getNomeAlias());
+${tab}}
+${tab}public boolean update($classe.getNome() $classe.getNomeAlias()){
+${tab}${tab}return ConexaoDB.update($classe.getNomeAlias());
+${tab}}
+${tab}public boolean delete($classe.getNome() $classe.getNomeAlias()){
+${tab}${tab}return ConexaoDB.delete($classe.getNomeAlias());
+${tab}}
 #end    
 }
