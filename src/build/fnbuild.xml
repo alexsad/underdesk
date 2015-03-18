@@ -9,7 +9,7 @@
 		        </fileset>
 		</copy>
   </target>
-  <target name="build-war">
+  <target name="build.war">
   	<delete file="${aproject.name}.war"/>
 	<war destfile="${aproject.name}.war" webxml="../../${aproject.webfolder}/WEB-INF/web.xml">
 	   <fileset dir="../../${aproject.webfolder}">

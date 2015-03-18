@@ -87,7 +87,11 @@ public class Tabela {
 	}
     public ArrayList<TabelaCampo> getAllCampos() {
         ArrayList<TabelaCampo> campotmp = null;
-        campotmp = (ArrayList<TabelaCampo>) this.getCampo().clone();
+        try{
+        	campotmp = (ArrayList<TabelaCampo>) this.getCampo().clone();
+        }catch(Exception e){
+        	System.out.println(e.getMessage().toString());
+        }
         /*
         if(!this.getTipo().equals("view")){
             campotmp.add(0,this.getPrimaryKey());

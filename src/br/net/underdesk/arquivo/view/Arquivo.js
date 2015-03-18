@@ -18,7 +18,7 @@ var Arquivo = new Class({
 	"Extends":ModWindow
 	,"initialize":function(){
 		this.parent("*lista de arquivos no servidor");
-		this._revision = "$Revision$";
+		this.setRevision("$Revision$");
 		
 		this.itIdArquivo = new InputText("e");
 		this.itIdArquivo.setColumn("idArquivo@itIdArquivo");
