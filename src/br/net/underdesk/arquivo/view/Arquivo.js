@@ -2,15 +2,13 @@ var ArquivoRender = new Class({
 					"Extends":Component
 					,"initialize":function(p_obj){
 						var iconC = "folder-close";
-						
 						if(p_obj.snPasta=="N"){
 							iconC = "file";
-						}
-						
+						}						
 						var htmlTmp = '<h4><span class="glyphicon glyphicon-'+iconC+'"></span>&nbsp;'+p_obj.dsArquivo+'</h4>';								
-						htmlTmp += '<p class="list-group-item-text">'+p_obj.caminho+"</p>";
+						//htmlTmp += '<p class="list-group-item-text">'+p_obj.caminho+"</p>";
 						this.parent('div',htmlTmp);
-						this.getEle().addClass("col-xs-6 col-sm-3 col-md-2");
+						this.getEle().addClass("col-xs-12 col-sm-4 col-md-3");
 					}
 				});	
 
