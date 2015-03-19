@@ -47,7 +47,7 @@ var Tabela = new Class({
 		this.itPacote.setSize(12);	
 
 		this.itTipo = new CheckBox("view?", "sim");
-		this.itTipo.setLabel("tipo da tabela");	
+		this.itTipo.setLabel("view?");	
 		this.itTipo.setColumn("tipo@itTipo");
 		this.itTipo.setUnCheckedValue("table");
 		this.itTipo.setCheckedValue("view");
@@ -92,7 +92,7 @@ var Tabela = new Class({
 		this.mainList.setItemRender("TabelaRender");
 		this.setMainList("mainList");
 
-		this.tbMain = new ToolBar({"domain":"codigogerador.business.TabelaBLL"});
+		this.mainTb = new ToolBar({"domain":"codigogerador.business.TabelaBLL"});
 	
 	
 		this.btGerarCodigo = new Button("Gerar");
@@ -100,9 +100,9 @@ var Tabela = new Class({
 		this.btGerarCodigo.getEle().addEvent('click',function(){
 			tabela.gerarCodigo();
 		});
-		this.tbMain.addButton(this.btGerarCodigo,false);
+		this.mainTb.addButton(this.btGerarCodigo,false);
 
-		this.append(this.tbMain);	
+		this.append(this.mainTb);	
 		this.append(this.itidTabela);
 		this.append(this.itdsTabela);
 		this.append(this.itdominio);
@@ -113,7 +113,7 @@ var Tabela = new Class({
 		this.append(this.ittipoTemplate);
 		this.append(this.mainList);
 		this.append(this.itrs);		
-		this.addAssociation({"mod":"TabelaCampo","url":"js/br/net/underdesk/codigogerador/view/TabelaCampo.js","act":"setCampos","puid":this.getVarModule()});
+		this.addAssociation({"mod":"TabelaCampo","url":"js/br/net/underdesk/codigogerador/view/TabelaCampo.js","act":"getCampos","puid":this.getVarModule()});
 	}
 	,"getTabelas":function(urlcaminho){
 		 urlcaminho = urlcaminho.substring(1,urlcaminho.length);
@@ -127,7 +127,7 @@ var Tabela = new Class({
 			"url":urlcaminho,
 			"onLoad":function(dta){
 			  tabela.mainList.setDataProvider(dta.rs).refresh();
-			  tabela.tbMain.turnOnItemChangeEvent();
+			  tabela.mainTb.turnOnItemChangeEvent();
 			}
 		  });  
 	}

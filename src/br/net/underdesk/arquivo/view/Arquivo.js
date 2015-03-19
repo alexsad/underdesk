@@ -20,7 +20,7 @@ var Arquivo = new Class({
 		this.parent("*lista de arquivos no servidor");
 		this.setRevision("$Revision$");
 		
-		this.itIdArquivo = new InputText("e");
+		this.itIdArquivo = new InputText("");
 		this.itIdArquivo.setColumn("idArquivo@itIdArquivo");
 		this.itIdArquivo.setLabel("cod.");	
 		this.itIdArquivo.setSize(2);	
@@ -29,10 +29,11 @@ var Arquivo = new Class({
 		this.itDsArquivo = new InputText("");
 		this.itDsArquivo.setLabel("descricao");
 		this.itDsArquivo.setColumn("dsArquivo@itDsArquivo");	
-		this.itDsArquivo.setSize(8);	
+		this.itDsArquivo.setSize(8);
+		this.itDsArquivo.setEnable(false);	
 		
 		this.itTmArquivo = new NumericStepper(0);
-		this.itTmArquivo.setColumn("tamanho@itTmArquivo");
+		this.itTmArquivo.setColumn("tmArquivo@itTmArquivo");
 		this.itTmArquivo.setLabel("tamanho");	
 		this.itTmArquivo.setSize(2);
 		this.itTmArquivo.setEnable(false);
@@ -55,7 +56,7 @@ var Arquivo = new Class({
 		this.setMainList("mainList");
 		this.mainList.setItemRender("ArquivoRender");
 		
-		this.tbMain = new ToolBar({"domain":"arquivo.business.ArquivoBLL"});		
+		this.mainTb = new ToolBar({"domain":"arquivo.business.ArquivoBLL"});		
 		
 		this.btExplorar = new Button("Abrir");
 		this.btExplorar.setIcon("folder-open");
@@ -68,14 +69,14 @@ var Arquivo = new Class({
 			}
 		});
 		
-		this.tbMain.addButton(this.btExplorar);
+		this.mainTb.addButton(this.btExplorar);
 		
 		
 		
 		this.btBaixar = new Button("Baixar");
 		this.btBaixar.setIcon("download-alt");
 		this.btBaixar.getEle().set("target","_blank");
-		this.tbMain.addButton(this.btBaixar);
+		this.mainTb.addButton(this.btBaixar);
 		
 		
 		this.itIdArquivo.getInput().addEvent('change',function(){
@@ -88,7 +89,7 @@ var Arquivo = new Class({
 			arquivo.btBaixar.getEle().set("href",toOpen);
 		});			
 		
-		this.append(this.tbMain);
+		this.append(this.mainTb);
 		this.append(this.itIdArquivo);
 		this.append(this.itDsArquivo);
 		this.append(this.itTmArquivo);	
@@ -98,15 +99,15 @@ var Arquivo = new Class({
 		
 	}
 	,"getByCaminho":function(p_caminho){
-		  rm.addRequest({
+			this.itCaminho.setValue(p_caminho);	
+			rm.addRequest({
 			"p":p_caminho,
 			"puid":this.getVarModule(),
-		    "s":"arquivo.business.ArquivoBLL.getByPath",
-		    "onLoad":function(dta){
-		    	arquivo.itCaminho.setValue(dta.rs.length);
-		    	arquivo.getMainList().setDataProvider(dta.rs).refresh();		
-		    	arquivo.tbMain.turnOnItemChangeEvent();
-		    }
-		  });
+			"s":"arquivo.business.ArquivoBLL.getByPath",
+			"onLoad":function(dta){
+			    	arquivo.getMainList().setDataProvider(dta.rs).refresh();		
+			    	arquivo.mainTb.turnOnItemChangeEvent();
+			    }
+			  });
 	}
 });

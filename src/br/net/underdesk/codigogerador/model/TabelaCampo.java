@@ -33,15 +33,14 @@ public class TabelaCampo {
 
 	public String getFkService() {
 		String colunaT = this.campo.toLowerCase();
-		if (colunaT.indexOf("_fk") > 0) {
-			return colunaT.substring(colunaT.indexOf("_") + 1,
-					colunaT.indexOf("_fk"));
+		if (colunaT.indexOf("id") == 0) {
+			return colunaT;
 		}
 		return "";
 	}
 
 	public String getFkServiceConstrutor() {
-		String nomeT = this.capitalize(this.getFkService().toLowerCase());
+		String nomeT = this.capitalize(this.getFkService().toLowerCase().replace("id_",""));
 		int posi = nomeT.indexOf("_");
 		while (posi > -1) {
 			String l = nomeT.charAt(posi + 1) + "";

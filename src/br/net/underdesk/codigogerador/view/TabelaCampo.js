@@ -1,3 +1,16 @@
+var TabelaCampoRender = new Class({
+					"Extends":Component
+					,"initialize":function(p_obj){						
+						var htmlTmp = '<h4>'+p_obj.campo+'</h4>';								
+						htmlTmp += '<p class="list-group-item-text">'+p_obj.dsCampo+"</p>";
+						htmlTmp += '<p class="list-group-item-text">tipo:'+p_obj.tipo+"</p>";
+						htmlTmp += '<p class="list-group-item-text">tamanho:'+p_obj.limite+"</p>";
+						htmlTmp += '<p class="list-group-item-text">nulo:'+p_obj.snNull+"</p>";
+						this.parent('div',htmlTmp);
+						this.getEle().addClass("col-xs-6 col-sm-4 col-md-4");
+					}
+				});
+
 var TabelaCampo = new Class({
 	"Extends":ModWindow
 	,"itIdTabelaCampo":null
@@ -6,10 +19,8 @@ var TabelaCampo = new Class({
 	,"itTipo":null
 	,"itLimite":null
 	,"itSnNull":null
-	,"itIdTabela":null
-	,"itCaminho":null
 	,"initialize":function(){
-		this.parents("campos da tabela");
+		this.parent("campos da tabela");
 		this.setRevision("$Revision$");
 		this.setSize(7);	
 		
@@ -32,7 +43,7 @@ var TabelaCampo = new Class({
 		this.itTipo = new Select("tipo_campo");
 		this.itTipo.setColumn("tipo@itTipo");
 		this.itTipo.setLabel("tipo do campo");	
-		this.itTipo.setSize(5);	
+		this.itTipo.setSize(4);	
 		this.itTipo.setValueField("idTpCampo");
 		this.itTipo.setLabelField("dsTpCampo");
 		this.itTipo.setDataProvider([
@@ -45,8 +56,8 @@ var TabelaCampo = new Class({
 		
 		this.itLimite = new NumericStepper(1);
 		this.itLimite.setColumn("limite@itLimite");
-		this.itLimite.setLabel("tamanho");	
-		this.itLimite.setSize(2);	
+		this.itLimite.setLabel("tamanho");
+		this.itLimite.setSize(3);	
 		
 		this.itSnNull = new CheckBox("campo nulo?", "sim");
 		this.itSnNull.setColumn("snNull@itSnNull");
@@ -54,40 +65,35 @@ var TabelaCampo = new Class({
 		this.itSnNull.setSize(5);	
 		this.itSnNull.setUnCheckedValue("N");
 		this.itSnNull.setCheckedValue("S");
-		
-		this.itIdTabela = new InputText("");
-		this.itIdTabela.setColumn("idTabela@itIdTabela");
-		this.itIdTabela.setLabel("cod. tabela");	
-		this.itIdTabela.setSize(2);	
-		this.itIdTabela.setEnable(false);
-		
-		this.itCaminho = new InputText("");
-		this.itCaminho.setColumn("caminho@itCaminho");
-		this.itCaminho.setLabel("caminho");	
-		this.itCaminho.setSize(10);	
-		this.itCaminho.setEnable(false);		
-		
+				
 		this.mainList = new ListView("campos");
+		this.mainList.setItemRender("TabelaCampoRender");
 		this.setMainList("mainList");		
-		this.tbMain = new ToolBar({"domain":"codigogerador.business.TabelaCampoBLL"});
+		this.mainTb = new ToolBar({"domain":"codigogerador.business.TabelaCampoBLL"});
 		
-		this.append(this.tbMain);
+		this.append(this.mainTb);
 		this.append(this.itIdTabelaCampo);
 		this.append(this.itCampo);	
 		this.append(this.itDsCampo);
 		this.append(this.itTipo);
 		this.append(this.itLimite);
-		this.append(this.itSnNull);
-		this.append(this.itIdTabela);
-		this.append(this.itCaminho);	
+		this.append(this.itSnNull);			
 		this.append(this.mainList);
 	}
-	,"setCampos":function(p_idTabela){
-		tabelacampo.itIdTabela.setValue(p_idTabela);
-		tabelacampo.itCaminho.setValue(arquivo.itCaminho.getValue());
-		tabelacampo.dtgMain.setDataProvider(tabela.mainList.getSelectedItem(true)["campo"]);
-		tabelacampo.dtgMain.refresh();
-		tabelacampo.tbMain.setGridChangeEventOnce();	   
+	,"beforeSave":function(p_obj){
+		p_obj["caminho"] = arquivo.itCaminho.getValue();
+		p_obj["idTabela"] = tabela.itidTabela.getValue();
+		return p_obj;
+	}
+	,"beforeDelete":function(p_new_obj,p_old_obj){
+		p_new_obj["caminho"] = arquivo.itCaminho.getValue();
+		p_new_obj["idTabela"] = tabela.itidTabela.getValue();
+		return p_new_obj;
+	}
+	,"getCampos":function(p_idTabela){
+		tabelacampo.mainList.setDataProvider(tabela.mainList.getSelectedItem(true)["campo"]);
+		tabelacampo.mainList.refresh();
+		tabelacampo.mainTb.turnOnItemChangeEvent();	   
 	}
 });
 

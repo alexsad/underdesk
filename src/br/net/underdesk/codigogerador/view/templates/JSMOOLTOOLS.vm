@@ -1,4 +1,23 @@
-#set( $count = $classe.getAllCampos().size() )
+#set( $count = 0 )
+var ${classe.getNome()}ItemRender = new Class({
+${tab}"Extends":Component
+${tab},"initialize":function(p_obj){						
+${tab}${tab}var htmlTmp = '<h4>'+p_obj.${classe.getPrimaryKey().getColuna()}+'-';
+#foreach ($campo in $classe.getAllCampos())
+#if($count==1&&!$campo.isFk())
+${tab}${tab}htmlTmp += p_obj.${campo.getColuna()}+'</h4>';
+#elseif(!($campo.isFk()))
+${tab}${tab}htmlTmp += '<p class="list-group-item-text">${campo.getDsCampo()}:'+p_obj.${campo.getColuna()}+"</p>"; 
+#end
+#set( $count = $count+1 )
+#end
+${tab}${tab}this.parent('div',htmlTmp);
+${tab}${tab}this.getEle().addClass("col-xs-6 col-sm-4 col-md-4");
+${tab}${tab}}
+${tab}});
+
+
+
 var $classe.getNome() = new Class({
 ${tab}"Extends":ModWindow
 #foreach ($campo in $classe.getAllCampos())
@@ -35,6 +54,7 @@ ${tab}${tab}this.it${campo.getColunaCapitalize()}.setSize(2);
 		
 ${tab}${tab}this.mainList = new ListView("$classe.getNome()");
 ${tab}${tab}this.setMainList("mainList");
+${tab}${tab}this.setMainList("${classe.getNome()}ItemRender");
 ${tab}${tab}this.mainTb = new ToolBar({"domain":"${classe.getNome().toLowerCase()}.business.${classe.getNome()}BLL"});
 
 ${tab}${tab}this.append(this.mainTb);
@@ -42,6 +62,13 @@ ${tab}${tab}this.append(this.mainTb);
 ${tab}${tab}this.append(this.it${campo.getColunaCapitalize()});	
 #end
 ${tab}${tab}this.append(this.mainList);
+
+#foreach ($campo in $classe.getAllCampos())
+#if($campo.getColuna()!=$classe.getPrimaryKey().getColuna()&&$campo.isFk())
+${tab}${tab}this.addAssociation({"mod":"${campo.getFkServiceConstrutor()}","url":"js/${pacote_url}/${classe.getDominio()}/view/${campo.getFkServiceConstrutor()}.js","act":"getBy${campo.getColunaCapitalize()}","puid":this.getVarModule()});
+#end
+#end
+
 ${tab}}
 ${tab},"getBy${classe.getPrimaryKey().getColunaCapitalize()}":function(p_${classe.getPrimaryKey().getColuna()}){
 ${tab}${tab}rm.addRequest({

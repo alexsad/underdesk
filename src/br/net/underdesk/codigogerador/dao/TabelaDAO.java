@@ -52,6 +52,7 @@ public class TabelaDAO {
 			context.put("project_name","underdesk");
 			context.put("project_desc","underdesk");			
 			context.put("pacote",this.getPackageUrl(tabelaC));	
+			context.put("pacote_url",tabelaC.getPacote().replaceAll("[.]","/"));
 			context.put("tab", "\t");
 			context.put("classe",tabelaC);
 			t.merge(context, writer);		
