@@ -148,4 +148,8 @@ var Tabela = new Class({
 		p_obj["caminho"] = arquivo.itCaminho.getValue();
 		return p_obj;
 	}
+	,"beforeDelete":function(p_new_obj,p_old_obj){
+		p_new_obj["caminho"] = arquivo.itCaminho.getValue();
+		return p_new_obj;
+	}
 });
