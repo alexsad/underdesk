@@ -65,15 +65,16 @@ ${tab}${tab}this.append(this.mainList);
 
 #foreach ($campo in $classe.getAllCampos())
 #if($campo.getColuna()!=$classe.getPrimaryKey().getColuna()&&$campo.isFk())
-//${tab}${tab}this.addAssociation({"mod":"${$classe.getNome()}","url":"js/${pacote_url}/${classe.getDominio()}/view/${$classe.getNome()}.js","act":"getBy${classe.getPrimaryKey().getColuna()}","puid":this.getVarModule()});
+//${tab}${tab}this.addAssociation({"mod":"${classe.getNome()}","url":"js/${pacote_url}/${classe.getDominio()}/view/${classe.getNome()}.js","act":"getBy${classe.getPrimaryKey().getColuna()}","puid":this.getVarModule()});
 #end
 #end
 
 ${tab}}
 ${tab},"getBy${classe.getPrimaryKey().getColunaCapitalize()}":function(p_${classe.getPrimaryKey().getColuna()}){
+${tab}${tab}this.it${classe.getPrimaryKey().getColuna()}.setValue(p_${classe.getPrimaryKey().getColuna()});
 ${tab}${tab}rm.addRequest({
 ${tab}${tab}${tab}"puid":this.getVarModule()
-${tab}${tab}${tab},"s":"codigogerador.business.TabelaBLL.get"
+${tab}${tab}${tab},"s":"${classe.getDominio()}.business.${classe.getNome()}BLL.getBy${classe.getPrimaryKey().getColunaCapitalize()}"
 ${tab}${tab}${tab},"p":p_${classe.getPrimaryKey().getColuna()}
 ${tab}${tab}${tab},"onLoad":function(dta){
 ${tab}${tab}${tab}${tab}${classe.getNome().toLowerCase()}.mainList.setDataProvider(dta.rs).refresh();

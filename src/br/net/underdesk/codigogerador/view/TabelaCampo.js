@@ -57,12 +57,12 @@ var TabelaCampo = new Class({
 		this.itLimite = new NumericStepper(1);
 		this.itLimite.setColumn("limite@itLimite");
 		this.itLimite.setLabel("tamanho");
-		this.itLimite.setSize(3);	
+		this.itLimite.setSize(4);	
 		
 		this.itSnNull = new CheckBox("campo nulo?", "sim");
 		this.itSnNull.setColumn("snNull@itSnNull");
 		this.itSnNull.setLabel("campo nulo?");	
-		this.itSnNull.setSize(5);	
+		this.itSnNull.setSize(4);	
 		this.itSnNull.setUnCheckedValue("N");
 		this.itSnNull.setCheckedValue("S");
 				
