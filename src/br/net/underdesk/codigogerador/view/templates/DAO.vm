@@ -3,7 +3,7 @@ package ${classe.getPacote()}.${classe.getDominio().toLowerCase()}.dao;
 import $import;
 #end
 import ${classe.getPacote()}.${classe.getDominio().toLowerCase()}.model.${classe.getNome()};
-import ${pacote}.util.ConexaoDB;
+import ${classe.getPacote()}.util.ConexaoDB;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;

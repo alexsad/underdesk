@@ -34,7 +34,7 @@ ${tab}${tab}this.setRevision("$Revision: 1 $");
 #elseif($campo.getLimite()>150)
 #set( $campotuput = 'TextArea("")' )
 #elseif($campo.isFk()&&$campo.getColuna()!=$classe.getPrimaryKey().getColuna())
-#set( $campotuput = 'DataFind("'+${campo.getFkService()}+'")' )
+#set( $campotuput = 'Select("'+${campo.getFkService()}+'")' )
 #elseif($campo.getTipo()=="BigDecimal"||$campo.getTipo()=="float")
 #set( $campotuput = 'InputMoney(0)' )
 #end
@@ -53,8 +53,8 @@ ${tab}${tab}this.it${campo.getColunaCapitalize()}.setSize(2);
 #end		
 		
 ${tab}${tab}this.mainList = new ListView("$classe.getNome()");
+${tab}${tab}this.mainList.setItemRender("${classe.getNome()}ItemRender");
 ${tab}${tab}this.setMainList("mainList");
-${tab}${tab}this.setMainList("${classe.getNome()}ItemRender");
 ${tab}${tab}this.mainTb = new ToolBar({"domain":"${classe.getNome().toLowerCase()}.business.${classe.getNome()}BLL"});
 
 ${tab}${tab}this.append(this.mainTb);
@@ -65,7 +65,7 @@ ${tab}${tab}this.append(this.mainList);
 
 #foreach ($campo in $classe.getAllCampos())
 #if($campo.getColuna()!=$classe.getPrimaryKey().getColuna()&&$campo.isFk())
-${tab}${tab}this.addAssociation({"mod":"${campo.getFkServiceConstrutor()}","url":"js/${pacote_url}/${classe.getDominio()}/view/${campo.getFkServiceConstrutor()}.js","act":"getBy${campo.getColunaCapitalize()}","puid":this.getVarModule()});
+//${tab}${tab}this.addAssociation({"mod":"${$classe.getNome()}","url":"js/${pacote_url}/${classe.getDominio()}/view/${$classe.getNome()}.js","act":"getBy${classe.getPrimaryKey().getColuna()}","puid":this.getVarModule()});
 #end
 #end
 
