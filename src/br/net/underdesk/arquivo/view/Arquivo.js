@@ -44,7 +44,7 @@ var Arquivo = new Class({
 		this.itSnPasta.setSize(3);	
 		this.itSnPasta.setEnable(false);
 		
-		this.itCaminho = new InputText("");
+		this.itCaminho = new InputText("/");
 		this.itCaminho.setColumn("caminho@itCaminho");
 		this.itCaminho.setLabel("caminho");	
 		this.itCaminho.setSize(9);
@@ -107,5 +107,10 @@ var Arquivo = new Class({
 			    	arquivo.mainTb.turnOnItemChangeEvent();
 			    }
 			  });
+	}
+	,"beforeQuery":function(p_req_obj){
+		p_req_obj["p"]=this.itCaminho.getValue();
+		p_req_obj["s"]="arquivo.business.ArquivoBLL.getByPath";
+		return p_req_obj;
 	}
 });

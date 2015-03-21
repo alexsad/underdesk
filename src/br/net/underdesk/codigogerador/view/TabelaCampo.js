@@ -91,9 +91,13 @@ var TabelaCampo = new Class({
 		return p_new_obj;
 	}
 	,"getCampos":function(p_idTabela){
-		tabelacampo.mainList.setDataProvider(tabela.mainList.getSelectedItem(true)["campo"]);
-		tabelacampo.mainList.refresh();
-		tabelacampo.mainTb.turnOnItemChangeEvent();	   
+		if(tabela.mainList.getSelectedItem(true)["campo"]){
+			tabelacampo.mainList.setDataProvider(tabela.mainList.getSelectedItem(true)["campo"]).refresh();				  
+		}else{
+			tabelacampo.mainList.setDataProvider([]).refresh();				  
+		}
+		tabelacampo.mainTb.turnOnItemChangeEvent();
+ 
 	}
 });
 

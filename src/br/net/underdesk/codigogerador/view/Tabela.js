@@ -131,6 +131,14 @@ var Tabela = new Class({
 			}
 		  });  
 	}
+	,"beforeQuery":function(p_obj_req){
+		 var urlcaminho = arquivo.itCaminho.getValue().substring(1,arquivo.itCaminho.getValue().length);
+		 p_obj_req["idRequest"]="123456";
+		 p_obj_req["t"]="10";
+		 p_obj_req["s"]="codigogerador.business.TabelaBLL.get";
+		 p_obj_req["url"]=urlcaminho; 
+		 return p_obj_req;
+	}
 	,"gerarCodigo":function(){
 		rm.addRequest({							
 			 	"idTabela":tabela.itidTabela.getValue()			     
