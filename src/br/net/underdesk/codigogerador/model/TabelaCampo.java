@@ -1,14 +1,46 @@
 package br.net.underdesk.codigogerador.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Immutable;
+import org.hibernate.annotations.Subselect;
+
+@Entity(name="TabelaCampo")
+@Immutable
+@Subselect("select "
+		+ "ORDINAL_POSITION as id_tabela_campo "
+		+ ",table_name as ds_tabela "
+		+ ",column_name as campo "
+		+ ",column_name as ds_campo "
+		+ ",if(is_nullable='YES','S','N') as sn_null "
+		+ ",data_type as tipo "
+		+ ",ifnull(character_maximum_length,10) as limite "
+		+ ",column_key "
+		+ ",'' as caminho "
+		+ "from information_schema.columns where table_schema=database()")
 public class TabelaCampo {
-	int idTabela;
-	String caminho;
-	int idTabelaCampo;
-	String campo;
-	String tipo;
-	String dsCampo;
-	int limite;
-	String snNull = "N";
+	@Id
+	@Column(name="id_tabela_campo")
+	private int idTabelaCampo;
+	@Column(name="ds_tabela")
+	private String dsTabela;
+	@Transient
+	private int idTabela;
+	@Column(name="caminho")
+	private String caminho;
+	@Column(name="campo")
+	private String campo;
+	@Column(name="tipo")
+	private String tipo;
+	@Column(name="ds_campo")
+	private String dsCampo;
+	@Column(name="limite")
+	private int limite;
+	@Column(name="sn_null")
+	private String snNull = "N";
 
 	public TabelaCampo() {
 		super();
@@ -161,5 +193,13 @@ public class TabelaCampo {
 	}
 	public void setCaminho(String caminho) {
 		this.caminho = caminho;
-	}	
+	}
+
+	public String getDsTabela() {
+		return dsTabela;
+	}
+
+	public void setDsTabela(String dsTabela) {
+		this.dsTabela = dsTabela;
+	}
 }

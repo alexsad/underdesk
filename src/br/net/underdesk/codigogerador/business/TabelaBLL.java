@@ -1,5 +1,7 @@
 package br.net.underdesk.codigogerador.business;
 
+import java.util.List;
+
 import under.wsl.service.Service;
 import br.net.underdesk.codigogerador.dao.TabelaDAO;
 import br.net.underdesk.codigogerador.model.Tabela;
@@ -9,6 +11,14 @@ public class TabelaBLL {
 	public TabelaBLL(){
 		this.dao = new TabelaDAO();
 	}
+    @Service(cache=false)
+    public List<Tabela> get(){
+        return this.dao.get();
+    }
+    @Service()
+    public List<Tabela> getByDsTabela(String dsTabela) {
+        return this.dao.getByDsTabela(dsTabela);
+    }
 	@Service()
 	public String gerarCodigo(Tabela t){
 		return this.dao.gerarCodigo(t.getCaminho(),t.getTpTemplate(),t.getIdTabela());

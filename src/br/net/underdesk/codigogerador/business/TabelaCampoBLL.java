@@ -1,4 +1,6 @@
 package br.net.underdesk.codigogerador.business;
+import java.util.List;
+
 import br.net.underdesk.codigogerador.model.TabelaCampo;
 import br.net.underdesk.codigogerador.dao.TabelaCampoDAO;
 import under.wsl.service.Service;
@@ -9,6 +11,14 @@ public class TabelaCampoBLL{
     private TabelaCampoDAO dao = null;
     public TabelaCampoBLL() {
         this.dao = new TabelaCampoDAO();
+    }
+    @Service(cache=false)
+    public List<TabelaCampo> get(){
+        return this.dao.get();
+    }
+    @Service()
+    public List<TabelaCampo> getByDsTabela(String dsTabela) {
+        return this.dao.getByDsTabela(dsTabela);
     }
     /*
     @Service(cache=true)

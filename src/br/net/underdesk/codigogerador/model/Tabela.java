@@ -1,19 +1,53 @@
 package br.net.underdesk.codigogerador.model;
 
 import java.util.ArrayList;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Immutable;
+import org.hibernate.annotations.Subselect;
+
+@Entity(name="Tabela")
+@Immutable
+@Subselect(" SELECT  UNIX_TIMESTAMP(update_time) as  id_tabela "
+		+ ",table_name as ds_tabela "
+		+ ",'table' as tipo"
+		+ " ,concat('id_',table_name) as chave_primaria "
+		+ ",REPLACE(table_name,'_','') as dominio "
+		+ ",'increment' as tp_geracao  "
+		+ ",'STBJSON' as tp_template "
+		+ ",'' as caminho ,concat('br.net.',DATABASE()) as pacote "
+		+ "FROM information_schema.TABLES"
+		+ " WHERE"
+		+ " TABLE_SCHEMA=DATABASE()")
 public class Tabela {
+	@Id
+	@Column(name="id_tabela")
 	private int idTabela;
+	@Column(name="tp_template")
 	private String tpTemplate;
+	@Column(name="caminho")
 	private String caminho;
+	@Column(name="ds_tabela")
 	private String dsTabela;
+	@Column(name="dominio")
 	private String dominio;
+	@Column(name="pacote")
 	private String pacote;
+	@Column(name="tipo")
 	private String tipo;
+	@Column(name="chave_primaria")
 	private String chavePrimaria;
+	@Column(name="tp_geracao")
 	private String tpGeracao;
 	
-    ArrayList<String> imports = new ArrayList<String>();
-	ArrayList<TabelaCampo> campo = new ArrayList<TabelaCampo>();
+	@Transient
+	private ArrayList<String> imports = new ArrayList<String>();
+	@Transient
+	private ArrayList<TabelaCampo> campo = new ArrayList<TabelaCampo>();
 	
 	public Tabela() {
 		super();

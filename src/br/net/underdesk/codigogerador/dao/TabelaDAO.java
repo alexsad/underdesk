@@ -15,10 +15,14 @@ import com.google.gson.Gson;
 
 import br.net.underdesk.codigogerador.model.Tabela;
 import br.net.underdesk.codigogerador.model.RequestC;
+import br.net.underdesk.util.ConexaoDB;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TabelaDAO {
 	public final static String TP_HBM = "HBM";
@@ -31,9 +35,25 @@ public class TabelaDAO {
 	public final static String TP_HBC = "HBC";
 	public final static String TP_UML = "UML";
 	
-	Gson gson = null;
-	
+	Gson gson = null;	
 	private String urlTemplates =  "br/net/underdesk/codigogerador/view/templates/";
+	
+	
+	
+	private String[][] ordemP = {{"dsTabela", "desc"}};
+	public List<Tabela> get() {
+		return (List<Tabela>) ConexaoDB.get(Tabela.class,true,1,100,null,ordemP);
+	}
+	
+	public List<Tabela> getByDsTabela(String dsTabela){		
+		Map<String,Object> params = new HashMap<String, Object>();
+		params.put("dsTabela", dsTabela);
+		return (List<Tabela>) ConexaoDB.get(Tabela.class,true,1,100,params,ordemP);
+	}
+	
+	
+	
+	
 	private String getPackageUrl(Tabela cls){    	
 	    return cls.getDominio().replaceAll("[.]","/");   	
 	}

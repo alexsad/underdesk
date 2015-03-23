@@ -2,12 +2,31 @@ package br.net.underdesk.codigogerador.dao;
 import br.net.underdesk.codigogerador.business.TabelaBLL;
 import br.net.underdesk.codigogerador.model.Tabela;
 import br.net.underdesk.codigogerador.model.TabelaCampo;
+import br.net.underdesk.util.ConexaoDB;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 /**
 * @author alexandre.araujo
 */
 public class TabelaCampoDAO{
+	
+	
+	
+	private String[][] ordemP = {{"idTabelaCampo", "desc"}};
+	public List<TabelaCampo> get() {
+		return (List<TabelaCampo>) ConexaoDB.get(TabelaCampo.class,true,1,100,null,ordemP);
+	}
+	
+	public List<TabelaCampo> getByDsTabela(String dsTabela){		
+		Map<String,Object> params = new HashMap<String, Object>();
+		params.put("dsTabela", dsTabela);
+		return (List<TabelaCampo>) ConexaoDB.get(TabelaCampo.class,true,1,100,params,ordemP);
+	}
+	
+	
 	/*
     public List<TabelaCampo> get() {
     	return (List<TabelaCampo>) ConexaoDB.get(TabelaCampo.class,true,1,100,null,ordemP);
