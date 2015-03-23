@@ -1,11 +1,11 @@
 {
 	"idTabela":1
-	,"caminho":""
-	,"dsTabela":""
-	,"dominio":""
-	,"pacote":""
-	,"tipo":""
-	,"chavePrimaria":""
+	,"caminho":"${classe.getPrimaryKey().getCaminho()}"
+	,"dsTabela":"${classe.getNome()}"
+	,"dominio":"${classe.getDominio()}"
+	,"pacote":"${classe.getPrimaryKey().getPacote()}"
+	,"tipo":"${classe.getPrimaryKey().getTipo()}"
+	,"chavePrimaria":"${classe.getPrimaryKey().getColuna()}"
 	,"tpGeracao":"increment"
 	,"imports":[]
 	,"campo":[
