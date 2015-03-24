@@ -11,7 +11,8 @@ import org.hibernate.annotations.Subselect;
 @Entity(name="TabelaCampo")
 @Immutable
 @Subselect("select "
-		+ "ORDINAL_POSITION as id_tabela_campo "
+		+ "column_name as id_row "
+		+ ",@rownum2:=@rownum2+1 as id_tabela_campo "
 		+ ",table_name as ds_tabela "
 		+ ",column_name as campo "
 		+ ",column_name as ds_campo "
@@ -20,9 +21,15 @@ import org.hibernate.annotations.Subselect;
 		+ ",ifnull(character_maximum_length,10) as limite "
 		+ ",column_key "
 		+ ",'' as caminho "
-		+ "from information_schema.columns where table_schema=database()")
+		+ "from " 
+		+" (SELECT @rownum2:=0) x"
+		+" ,information_schema.columns " 
+		+" where" 
+		+" table_schema=database()")
 public class TabelaCampo {
 	@Id
+	@Column(name="id_row")
+	private String idRow;
 	@Column(name="id_tabela_campo")
 	private int idTabelaCampo;
 	@Column(name="ds_tabela")

@@ -34,13 +34,14 @@ public class TabelaDAO {
 	public final static String TP_INDEX = "HTML";
 	public final static String TP_HBC = "HBC";
 	public final static String TP_UML = "UML";
+	public final static String TP_STB = "STBJSON";
 	
 	Gson gson = null;	
 	private String urlTemplates =  "br/net/underdesk/codigogerador/view/templates/";
 	
 	
 	
-	private String[][] ordemP = {{"dsTabela", "desc"}};
+	private String[][] ordemP = {{"idTabela", "asc"}};
 	public List<Tabela> get() {
 		return (List<Tabela>) ConexaoDB.get(Tabela.class,true,1,100,null,ordemP);
 	}
@@ -57,9 +58,7 @@ public class TabelaDAO {
 	private String getPackageUrl(Tabela cls){    	
 	    return cls.getDominio().replaceAll("[.]","/");   	
 	}
-	public String gerarCodigo(String urlc,String tipoTemplate,int idTabela){
-		Tabela tabelaC = this.getByIdTabela(urlc, idTabela);		
-	
+	public String gerarCodigo(Tabela tabelaC,String tipoTemplate){	
 		VelocityContext context = new VelocityContext();
 		String local = this.urlTemplates+tipoTemplate;
 		VelocityEngine ve = new VelocityEngine();
@@ -76,7 +75,7 @@ public class TabelaDAO {
 			context.put("tab", "\t");
 			context.put("classe",tabelaC);
 			t.merge(context, writer);		
-			System.out.println("ex:\n"+writer.toString());
+			//System.out.println("ex:\n"+writer.toString());
 		} catch (Exception e) {
 			return "erro: "+e.getMessage().toUpperCase();
 		}

@@ -1,111 +1,26 @@
-{
-	"idTabela":1
-	,"caminho":"${classe.getPrimaryKey().getCaminho()}"
-	,"dsTabela":"${classe.getNome()}"
-	,"dominio":"${classe.getDominio()}"
-	,"pacote":"${classe.getPrimaryKey().getPacote()}"
-	,"tipo":"${classe.getPrimaryKey().getTipo()}"
-	,"chavePrimaria":"${classe.getPrimaryKey().getColuna()}"
-	,"tpGeracao":"increment"
-	,"imports":[]
-	,"campo":[
-	
-	]
-}
-
-
-
-
-
-
-
-
-
-
-
 #set( $count = 0 )
-var ${classe.getNome()}ItemRender = new Class({
-${tab}"Extends":Component
-${tab},"initialize":function(p_obj){						
-${tab}${tab}var htmlTmp = '<h4>'+p_obj.${classe.getPrimaryKey().getColuna()}+'-';
-#foreach ($campo in $classe.getAllCampos())
-#if($count==1&&!$campo.isFk())
-${tab}${tab}htmlTmp += p_obj.${campo.getColuna()}+'</h4>';
-#elseif(!($campo.isFk()))
-${tab}${tab}htmlTmp += '<p class="list-group-item-text">${campo.getDsCampo()}:'+p_obj.${campo.getColuna()}+"</p>"; 
-#end
-#set( $count = $count+1 )
-#end
-${tab}${tab}this.parent('div',htmlTmp);
-${tab}${tab}this.getEle().addClass("col-xs-6 col-sm-4 col-md-4");
-${tab}${tab}}
-${tab}});
 
-
-
-var $classe.getNome() = new Class({
-${tab}"Extends":ModWindow
-#foreach ($campo in $classe.getAllCampos())
-${tab},"$campo.getColuna()":null	 
-#end
-${tab},"initialize":function(){
-${tab}${tab}this.parent("$classe.getNome()");
-${tab}${tab}this.setRevision("$Revision: 1 $");		
-#foreach ($campo in $classe.getAllCampos())		
-#set( $campotuput = 'InputText("")' )
-#if($campo.getTipo()=="Date")
-#set( $campotuput = 'DatePicker()' )		#elseif($campo.getTipo()=="int"&&$campo.getColuna()!=$classe.getPrimaryKey().getColuna()&&!$campo.isFk())
-#set( $campotuput = 'NumericStepper(0)' )
-#elseif($campo.getLimite()>150)
-#set( $campotuput = 'TextArea("")' )
-#elseif($campo.isFk()&&$campo.getColuna()!=$classe.getPrimaryKey().getColuna())
-#set( $campotuput = 'Select("'+${campo.getFkService()}+'")' )
-#elseif($campo.getTipo()=="BigDecimal"||$campo.getTipo()=="float")
-#set( $campotuput = 'InputMoney(0)' )
-#end
-
-${tab}${tab}this.it$campo.getColunaCapitalize() = new ${campotuput};
-#if($campo.isFk()&&$campo.getColuna()!=$classe.getPrimaryKey().getColuna())
-${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabel("${campo.getFkService()}");	
-#else
-${tab}${tab}this.it${campo.getColunaCapitalize()}.setColumn("${campo.getColuna()}@it${campo.getColunaCapitalize()}");
-${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabel("${campo.getDsCampo()}");
-#if($campo.getColuna()==$classe.getPrimaryKey().getColuna())
-${tab}${tab}this.it${classe.getPrimaryKey().getColunaCapitalize()}.setEnable(false);	
-#end
-#end
-${tab}${tab}this.it${campo.getColunaCapitalize()}.setSize(2);	
-#end		
-		
-${tab}${tab}this.mainList = new ListView("$classe.getNome()");
-${tab}${tab}this.mainList.setItemRender("${classe.getNome()}ItemRender");
-${tab}${tab}this.setMainList("mainList");
-${tab}${tab}this.mainTb = new ToolBar({"domain":"${classe.getNome().toLowerCase()}.business.${classe.getNome()}BLL"});
-
-${tab}${tab}this.append(this.mainTb);
+${tab}#if($classe.getIdTabela() > 1),#end{
+${tab}${tab}"idTabela":${classe.getIdTabela()}
+${tab}${tab},"caminho":"${classe.getPrimaryKey().getCaminho()}"
+${tab}${tab},"dsTabela":"${classe.getDsTabela()}"
+${tab}${tab},"dominio":"${classe.getDominio().toLowerCase()}"
+${tab}${tab},"pacote":"${classe.getPacote()}"
+${tab}${tab},"tipo":"${classe.getTipo()}"
+${tab}${tab},"chavePrimaria":"${classe.getPrimaryKey().getColuna()}"
+${tab}${tab},"tpGeracao":"increment"
+${tab}${tab},"imports":[]
+${tab}${tab},"campo":[
 #foreach ($campo in $classe.getAllCampos())	
-${tab}${tab}this.append(this.it${campo.getColunaCapitalize()});	
-#end
-${tab}${tab}this.append(this.mainList);
-
-#foreach ($campo in $classe.getAllCampos())
-#if($campo.getColuna()!=$classe.getPrimaryKey().getColuna()&&$campo.isFk())
-//${tab}${tab}this.addAssociation({"mod":"${classe.getNome()}","url":"js/${pacote_url}/${classe.getDominio()}/view/${classe.getNome()}.js","act":"getBy${classe.getPrimaryKey().getColuna()}","puid":this.getVarModule()});
-#end
-#end
-
-${tab}}
-${tab},"getBy${classe.getPrimaryKey().getColunaCapitalize()}":function(p_${classe.getPrimaryKey().getColuna()}){
-${tab}${tab}this.it${classe.getPrimaryKey().getColuna()}.setValue(p_${classe.getPrimaryKey().getColuna()});
-${tab}${tab}rm.addRequest({
-${tab}${tab}${tab}"puid":this.getVarModule()
-${tab}${tab}${tab},"s":"${classe.getDominio()}.business.${classe.getNome()}BLL.getBy${classe.getPrimaryKey().getColunaCapitalize()}"
-${tab}${tab}${tab},"p":p_${classe.getPrimaryKey().getColuna()}
-${tab}${tab}${tab},"onLoad":function(dta){
-${tab}${tab}${tab}${tab}${classe.getNome().toLowerCase()}.mainList.setDataProvider(dta.rs).refresh();
-${tab}${tab}${tab}${tab}${classe.getNome().toLowerCase()}.mainTb.turnOnItemChangeEvent();
+#set( $count = $count+1 )
+${tab}${tab}${tab}#if($count > 1),#end{
+${tab}${tab}${tab}${tab}"idTabelaCampo":${campo.getIdTabelaCampo()}
+${tab}${tab}${tab}${tab},"campo":"${campo.getColunaLogical()}"
+${tab}${tab}${tab}${tab},"tipo":"${campo.getSQLTipo().toLowerCase()}"
+${tab}${tab}${tab}${tab},"dsCampo":"${campo.getDsCampo()}"
+${tab}${tab}${tab}${tab},"limite":${campo.getLimite()}
+${tab}${tab}${tab}${tab},"snNull":"${campo.getSnNull()}"
 ${tab}${tab}${tab}}
-${tab}${tab}}); 
+#end	
+${tab}${tab}]
 ${tab}}
-});
-

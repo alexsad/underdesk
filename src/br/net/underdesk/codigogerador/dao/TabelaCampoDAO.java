@@ -3,8 +3,6 @@ import br.net.underdesk.codigogerador.business.TabelaBLL;
 import br.net.underdesk.codigogerador.model.Tabela;
 import br.net.underdesk.codigogerador.model.TabelaCampo;
 import br.net.underdesk.util.ConexaoDB;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +13,7 @@ public class TabelaCampoDAO{
 	
 	
 	
-	private String[][] ordemP = {{"idTabelaCampo", "desc"}};
+	private String[][] ordemP = {{"idTabelaCampo", "asc"}};
 	public List<TabelaCampo> get() {
 		return (List<TabelaCampo>) ConexaoDB.get(TabelaCampo.class,true,1,100,null,ordemP);
 	}
@@ -77,7 +75,7 @@ public class TabelaCampoDAO{
     	t.setCaminho(tc.getCaminho());
     	tc.setIdTabelaCampo(t.getCampo().size()+1);
     	tc.setCaminho("");
-    	ArrayList<TabelaCampo> campos = t.getCampo();
+    	List<TabelaCampo> campos = t.getCampo();
     	campos.add(tc);
     	t.setCampo(campos);
         return tbll.update(t); 
@@ -87,7 +85,7 @@ public class TabelaCampoDAO{
     	Tabela t = tbll.getByIdTabela(tc.getCaminho(),tc.getIdTabela());
     	t.setCaminho(tc.getCaminho());    	
     	tc.setCaminho("");
-    	ArrayList<TabelaCampo> campos = t.getCampo();
+    	List<TabelaCampo> campos = t.getCampo();
     	campos.set(tc.getIdTabelaCampo()-1, tc);
     	t.setCampo(campos);
         return tbll.update(t); 
@@ -96,7 +94,7 @@ public class TabelaCampoDAO{
     	TabelaBLL tbll = new TabelaBLL();
     	Tabela t = tbll.getByIdTabela(tc.getCaminho(),tc.getIdTabela());
     	t.setCaminho(tc.getCaminho());    	
-    	ArrayList<TabelaCampo> campos = t.getCampo();
+    	List<TabelaCampo> campos = t.getCampo();
     	campos.remove(tc.getIdTabelaCampo()-1);
     	int tmtc = campos.size();
     	for(int i=0;i<tmtc;i++){

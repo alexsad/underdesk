@@ -1,6 +1,7 @@
 package br.net.underdesk.codigogerador.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,15 +13,17 @@ import org.hibernate.annotations.Subselect;
 
 @Entity(name="Tabela")
 @Immutable
-@Subselect(" SELECT  UNIX_TIMESTAMP(update_time) as  id_tabela "
+@Subselect("SELECT @rownum:=@rownum+1 as id_tabela "
 		+ ",table_name as ds_tabela "
 		+ ",'table' as tipo"
 		+ " ,concat('id_',table_name) as chave_primaria "
 		+ ",REPLACE(table_name,'_','') as dominio "
 		+ ",'increment' as tp_geracao  "
 		+ ",'STBJSON' as tp_template "
-		+ ",'' as caminho ,concat('br.net.',DATABASE()) as pacote "
-		+ "FROM information_schema.TABLES"
+		+ ",'' as caminho ,concat('br.net.',REPLACE(DATABASE(),'_','')) as pacote "
+		+ "FROM " 
+		+ "(SELECT @rownum:=0) r " 
+		+ ", information_schema.TABLES "
 		+ " WHERE"
 		+ " TABLE_SCHEMA=DATABASE()")
 public class Tabela {
@@ -45,9 +48,9 @@ public class Tabela {
 	private String tpGeracao;
 	
 	@Transient
-	private ArrayList<String> imports = new ArrayList<String>();
+	private List<String> imports = new ArrayList<String>();
 	@Transient
-	private ArrayList<TabelaCampo> campo = new ArrayList<TabelaCampo>();
+	private List<TabelaCampo> campo = null;
 	
 	public Tabela() {
 		super();
@@ -81,7 +84,7 @@ public class Tabela {
 	}
 	
 	
-	public void setCampo(ArrayList<TabelaCampo> campo) {
+	public void setCampo(List<TabelaCampo> campo) {
 		this.campo = campo;
 	}
 	public TabelaCampo getPrimaryKey() {    	
@@ -116,13 +119,13 @@ public class Tabela {
     public String getNomeLogical() {
             return this.dsTabela;
 	}
-	public ArrayList<TabelaCampo> getCampo() {
+	public List<TabelaCampo> getCampo() {
 		return campo;
 	}
-    public ArrayList<TabelaCampo> getAllCampos() {
-        ArrayList<TabelaCampo> campotmp = null;
+    public List<TabelaCampo> getAllCampos() {
+        List<TabelaCampo> campotmp = null;
         try{
-        	campotmp = (ArrayList<TabelaCampo>) this.getCampo().clone();
+        	campotmp = (List<TabelaCampo>) this.getCampo();
         }catch(Exception e){
         	System.out.println(e.getMessage().toString());
         }
@@ -155,7 +158,7 @@ public class Tabela {
 		}
 	}
 	
-    public ArrayList<String> getImports() {
+    public List<String> getImports() {
 		return imports;
 	}
 	private String capitalize(String line){
