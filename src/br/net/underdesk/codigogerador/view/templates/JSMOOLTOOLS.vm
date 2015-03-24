@@ -40,14 +40,14 @@ ${tab}${tab}this.setRevision("$Revision: 1 $");
 #end
 
 ${tab}${tab}this.it$campo.getColunaCapitalize() = new ${campotuput};
-#if($campo.isFk()&&$campo.getColuna()!=$classe.getPrimaryKey().getColuna())
-${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabel("${campo.getFkService()}");	
-#else
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setColumn("${campo.getColuna()}@it${campo.getColunaCapitalize()}");
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabel("${campo.getDsCampo()}");
+#if($campo.isFk()&&$campo.getColuna()!=$classe.getPrimaryKey().getColuna())
+${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabelField("${campo.getFkService()}");
+${tab}${tab}this.it${campo.getColunaCapitalize()}.setValueField("${campo.getFkService()}");
+#end
 #if($campo.getColuna()==$classe.getPrimaryKey().getColuna())
 ${tab}${tab}this.it${classe.getPrimaryKey().getColunaCapitalize()}.setEnable(false);	
-#end
 #end
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setSize(2);	
 #end		
