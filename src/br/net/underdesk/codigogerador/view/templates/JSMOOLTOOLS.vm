@@ -7,7 +7,7 @@ ${tab}${tab}var htmlTmp = '<h4>'+p_obj.${classe.getPrimaryKey().getColuna()}+'-'
 #if($count==1&&!$campo.isFk())
 ${tab}${tab}htmlTmp += p_obj.${campo.getColuna()}+'</h4>';
 #elseif(!($campo.isFk()))
-${tab}${tab}htmlTmp += '<p class="list-group-item-text">${campo.getDsCampo()}:'+p_obj.${campo.getColuna()}+"</p>"; 
+${tab}${tab}htmlTmp += '<p class="list-group-item-text">${campo.getDsCampo()}:'+p_obj.${campo.getColuna()}+'</p>'; 
 #end
 #set( $count = $count+1 )
 #end
@@ -21,7 +21,7 @@ ${tab}});
 var $classe.getNome() = new Class({
 ${tab}"Extends":ModWindow
 #foreach ($campo in $classe.getAllCampos())
-${tab},"$campo.getColuna()":null	 
+${tab},"it${campo.getColunaCapitalize()}":null	 
 #end
 ${tab},"initialize":function(){
 ${tab}${tab}this.parent("$classe.getNome()");
@@ -41,10 +41,10 @@ ${tab}${tab}this.setRevision("$Revision: 1 $");
 
 ${tab}${tab}this.it$campo.getColunaCapitalize() = new ${campotuput};
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setColumn("${campo.getColuna()}@it${campo.getColunaCapitalize()}");
-${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabel("${campo.getDsCampo()}");
+${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabel("${campo.getDsCampo().toLowerCase()}");
 #if($campo.isFk()&&$campo.getColuna()!=$classe.getPrimaryKey().getColuna())
-${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabelField("${campo.getFkService()}");
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setValueField("${campo.getFkService()}");
+${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabelField("${campo.getFkService()}");
 #end
 #if($campo.getColuna()==$classe.getPrimaryKey().getColuna())
 ${tab}${tab}this.it${classe.getPrimaryKey().getColunaCapitalize()}.setEnable(false);	
@@ -68,7 +68,14 @@ ${tab}${tab}this.append(this.mainList);
 //${tab}${tab}this.addAssociation({"mod":"${classe.getNome()}","url":"js/${pacote_url}/${classe.getDominio()}/view/${classe.getNome()}.js","act":"getBy${classe.getPrimaryKey().getColuna()}","puid":this.getVarModule()});
 #end
 #end
-
+${tab}}
+${tab},"onStart":function(){
+#foreach ($campo in $classe.getAllCampos())
+#if($campo.getColuna()!=$classe.getPrimaryKey().getColuna()&&$campo.isFk())
+${tab}${tab}this.it${campo.getColunaCapitalize()}.fromService(".business.BLL.get");
+#end
+#end
+${tab}${tab}
 ${tab}}
 ${tab},"getBy${classe.getPrimaryKey().getColunaCapitalize()}":function(p_${classe.getPrimaryKey().getColuna()}){
 ${tab}${tab}this.it${classe.getPrimaryKey().getColuna()}.setValue(p_${classe.getPrimaryKey().getColuna()});

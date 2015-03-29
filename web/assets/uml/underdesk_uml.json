@@ -4,7 +4,7 @@
 	,"tk":1
 	,"format":"json"
 	,"callback":"callback"
-	,"erro":[]
+	,"erro":null
 	,"s":""
 	,"cache":"true"
 	,"tipo":"list"
