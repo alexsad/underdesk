@@ -78,7 +78,7 @@ ${tab}${tab}this.it${campo.getColunaCapitalize()}.fromService(".business.BLL.get
 ${tab}${tab}
 ${tab}}
 ${tab},"getBy${classe.getPrimaryKey().getColunaCapitalize()}":function(p_${classe.getPrimaryKey().getColuna()}){
-${tab}${tab}this.it${classe.getPrimaryKey().getColuna()}.setValue(p_${classe.getPrimaryKey().getColuna()});
+${tab}${tab}this.it${classe.getPrimaryKey().getColunaCapitalize()}.setValue(p_${classe.getPrimaryKey().getColuna()});
 ${tab}${tab}rm.addRequest({
 ${tab}${tab}${tab}"puid":this.getVarModule()
 ${tab}${tab}${tab},"s":"${classe.getDominio()}.business.${classe.getNome()}BLL.getBy${classe.getPrimaryKey().getColunaCapitalize()}"
