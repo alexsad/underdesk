@@ -40,7 +40,9 @@ public class TabelaBLL {
 	@Service()
 	public String gerarCodigo(Tabela t){
 		Tabela tabelaC = this.getByIdTabela(t.getCaminho(),t.getIdTabela());
-		return this.dao.gerarCodigo(tabelaC,t.getTpTemplate());
+		String rs = this.dao.gerarCodigo(tabelaC,t.getTpTemplate());
+		System.out.println(rs);
+		return rs;
 	}	
     @Service()
     public Tabela getByIdTabela(String urlc,int idTabela){
