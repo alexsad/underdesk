@@ -364,6 +364,14 @@
 						,"snNull":"N"
 					}
 					,{
+						"idTabelaCampo":991
+						,"campo":"ID_TRIMESTRE"
+						,"tipo":"int"
+						,"dsCampo":"ID_EVENTO"
+						,"limite":10
+						,"snNull":"N"
+					}
+					,{
 						"idTabelaCampo":9
 						,"campo":"DESCRICAO"
 						,"tipo":"varchar"
@@ -861,9 +869,9 @@
 					}
 					,{
 						"idTabelaCampo":83
-						,"campo":"DT_VALIDADE"
-						,"tipo":"date"
-						,"dsCampo":"DT_VALIDADE"
+						,"campo":"ID_TRIMESTRE"
+						,"tipo":"int"
+						,"dsCampo":"TRIMESTRE"
 						,"limite":10
 						,"snNull":"S"
 					}
@@ -916,6 +924,51 @@
 			}
 			,{
 				"idTabela":17
+				,"caminho":""
+				,"dsTabela":"TRIMESTRE"
+				,"dominio":"trimestre"
+				,"pacote":"br.net.atasacramental"
+				,"tipo":"table"
+				,"chavePrimaria":"idTrimestre"
+				,"tpGeracao":"increment"
+				,"imports":[]
+				,"campo":[
+					{
+						"idTabelaCampo":992
+						,"campo":"ID_TRIMESTRE"
+						,"tipo":"int"
+						,"dsCampo":"ID_EVENTO"
+						,"limite":10
+						,"snNull":"N"
+					}
+					,{
+						"idTabelaCampo":993
+						,"campo":"ANO"
+						,"tipo":"int"
+						,"dsCampo":"ANO"
+						,"limite":4
+						,"snNull":"S"
+					}
+					,{
+						"idTabelaCampo":994
+						,"campo":"NR_TRIMESTRE"
+						,"tipo":"int"
+						,"dsCampo":"NUMERO DO TRIMESTRE"
+						,"limite":1
+						,"snNull":"S"
+					}
+					,{
+						"idTabelaCampo":995
+						,"campo":"SN_ABERTO"
+						,"tipo":"varchar"
+						,"dsCampo":"DISPONIVEL"
+						,"limite":1
+						,"snNull":"S"
+					}
+				]
+			}			
+			,{
+				"idTabela":18
 				,"caminho":""
 				,"dsTabela":"USUARIO"
 				,"dominio":"usuario"
