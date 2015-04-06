@@ -4,7 +4,7 @@ var TabelaRender = new Class({
 						var htmlTmp = '<h4>'+p_obj.dsTabela+'</h4>';								
 						htmlTmp += '<p class="list-group-item-text">'+p_obj.dominio+"</p>";
 						this.parent('div',htmlTmp);
-						this.getEle().addClass("col-xs-6 col-sm-6 col-md-6");
+						this.getEle().addClass("col-xs-12 col-sm-12 col-md-12");
 					}
 				});	
 
