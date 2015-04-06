@@ -40,14 +40,18 @@ ${tab}${tab}this.setRevision("$Revision: 1 $");
 #end
 
 ${tab}${tab}this.it$campo.getColunaCapitalize() = new ${campotuput};
+#if($campo.isFk()&&$campo.getColuna()!=$classe.getPrimaryKey().getColuna())
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setColumn("${campo.getColuna()}@it${campo.getColunaCapitalize()}");
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabel("${campo.getDsCampo().toLowerCase()}");
-#if($campo.isFk()&&$campo.getColuna()!=$classe.getPrimaryKey().getColuna())
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setValueField("${campo.getFkService()}");
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabelField("${campo.getFkService()}");
-#end
-#if($campo.getColuna()==$classe.getPrimaryKey().getColuna())
+#elseif($campo.getColuna()==$classe.getPrimaryKey().getColuna())
+${tab}${tab}this.it${campo.getColunaCapitalize()}.setColumn("${campo.getColuna()}$it${campo.getColunaCapitalize()}");
+${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabel("cod.");
 ${tab}${tab}this.it${classe.getPrimaryKey().getColunaCapitalize()}.setEnable(false);	
+#else
+${tab}${tab}this.it${campo.getColunaCapitalize()}.setColumn("${campo.getColuna()}@it${campo.getColunaCapitalize()}");
+${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabel("${campo.getDsCampo().toLowerCase()}");
 #end
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setSize(2);	
 #end		
@@ -65,7 +69,7 @@ ${tab}${tab}this.append(this.mainList);
 
 #foreach ($campo in $classe.getAllCampos())
 #if($campo.getColuna()!=$classe.getPrimaryKey().getColuna()&&$campo.isFk())
-//${tab}${tab}this.addAssociation({"mod":"${classe.getNome()}","url":"js/${pacote_url}/${classe.getDominio()}/view/${classe.getNome()}.js","act":"getBy${classe.getPrimaryKey().getColuna()}","puid":this.getVarModule()});
+//${tab}${tab}this.addAssociation({"mod":"${classe.getNome()}","url":"js/${pacote_url}/${classe.getDominio()}/view/${classe.getNome()}.js","act":"getBy${classe.getPrimaryKey().getColunaCapitalize()}","puid":this.getVarModule()});
 #end
 #end
 ${tab}}
