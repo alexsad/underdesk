@@ -1,8 +1,6 @@
 package br.net.underdesk.codigogerador.business;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import under.wsl.service.Service;
 import br.net.underdesk.codigogerador.dao.TabelaDAO;
 import br.net.underdesk.codigogerador.model.Tabela;

@@ -79,7 +79,7 @@ ${tab},"onStart":function(){
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.fromService(".business.BLL.get");
 #end
 #end
-${tab}${tab}
+${tab}${tab}this.mainTb.turnOnItemChangeEvent();
 ${tab}}
 ${tab},"getBy${classe.getPrimaryKey().getColunaCapitalize()}":function(p_${classe.getPrimaryKey().getColuna()}){
 ${tab}${tab}this.it${classe.getPrimaryKey().getColunaCapitalize()}.setValue(p_${classe.getPrimaryKey().getColuna()});

@@ -4,7 +4,7 @@
  */
 package br.net.underdesk.servlet;
 
-//import br.net.underdesk.util.ConexaoDB;
+import br.net.underdesk.util.ConexaoDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -26,7 +26,7 @@ private static final long serialVersionUID = 1L;
         int idRequest = Integer.parseInt(request.getParameter("idRequest"));
         try {
          out = response.getWriter();        
-         //ConexaoDB.iniciarSessao();        
+         ConexaoDB.iniciarSessao();        
          
          
          
@@ -34,7 +34,7 @@ private static final long serialVersionUID = 1L;
          
 			
          
-         //ConexaoDB.fecharSesssao();
+         ConexaoDB.fecharSesssao();
          }catch(Exception ex){
              Controlador.getInstancia().addErro(ex.getMessage().toString());
              System.out.println("erro:"+ex.getMessage().toString());
