@@ -7,7 +7,7 @@ import java.util.Map;
 import org.hibernate.SessionFactory;
 //import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.cfg.Configuration;
 import under.wsl.controle.Controlador;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -23,7 +23,7 @@ public class ConexaoDB{
 	private static ThreadLocal<Session> threadSession = new ThreadLocal<Session>();
 	public static void inicializa() {
         try {
-        	 sf = new AnnotationConfiguration()       
+        	 sf = new Configuration()       
              .configure("/hibernate.cfg.xml")
              .buildSessionFactory();
         } catch (Throwable ex) {

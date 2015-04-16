@@ -51,7 +51,6 @@ public class TabelaCampo {
 
 	public TabelaCampo() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public TabelaCampo(int idTabelaCampo, String campo, String tipo, String dsCampo,

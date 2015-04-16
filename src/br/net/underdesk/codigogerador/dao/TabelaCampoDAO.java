@@ -3,28 +3,25 @@ import br.net.underdesk.codigogerador.business.TabelaBLL;
 import br.net.underdesk.codigogerador.model.Tabela;
 import br.net.underdesk.codigogerador.model.TabelaCampo;
 import br.net.underdesk.util.ConexaoDB;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 /**
 * @author alexandre.araujo
 */
-public class TabelaCampoDAO{
-	
-	
-	
+public class TabelaCampoDAO{	
 	private String[][] ordemP = {{"idTabelaCampo", "asc"}};
+	@SuppressWarnings("unchecked")
 	public List<TabelaCampo> get() {
 		return (List<TabelaCampo>) ConexaoDB.get(TabelaCampo.class,true,1,100,null,ordemP);
 	}
-	
+	@SuppressWarnings("unchecked")
 	public List<TabelaCampo> getByDsTabela(String dsTabela){		
 		Map<String,Object> params = new HashMap<String, Object>();
 		params.put("dsTabela", dsTabela);
 		return (List<TabelaCampo>) ConexaoDB.get(TabelaCampo.class,true,1,100,params,ordemP);
 	}
-	
-	
 	/*
     public List<TabelaCampo> get() {
     	return (List<TabelaCampo>) ConexaoDB.get(TabelaCampo.class,true,1,100,null,ordemP);
@@ -32,15 +29,11 @@ public class TabelaCampoDAO{
 	public List<TabelaCampo> getByIdTabelaCampo(int idTabelaCampo){
         return (List<TabelaCampo>) ConexaoDB.getById(TabelaCampo.class,idTabelaCampo);
     }
-
-
     public List<TabelaCampo> getByCampo(String campo){		
 		Map<String,Object> params = new HashMap<String, Object>();
      	params.put("campo", campo);
     	return (List<TabelaCampo>) ConexaoDB.get(TabelaCampo.class,true,1,100,params,ordemP);
     }
-	
-
     public List<TabelaCampo> getByTipo(String tipo){		
 		Map<String,Object> params = new HashMap<String, Object>();
      	params.put("tipo", tipo);

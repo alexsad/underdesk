@@ -37,24 +37,18 @@ public class TabelaDAO {
 	public final static String TP_STB = "STBJSON";
 	
 	Gson gson = null;	
-	private String urlTemplates =  "br/net/underdesk/codigogerador/view/templates/";
-	
-	
-	
+	private String urlTemplates =  "br/net/underdesk/codigogerador/view/templates/";	
 	private String[][] ordemP = {{"idTabela", "asc"}};
+	@SuppressWarnings("unchecked")
 	public List<Tabela> get() {
 		return (List<Tabela>) ConexaoDB.get(Tabela.class,true,1,100,null,ordemP);
 	}
-	
+	@SuppressWarnings("unchecked")
 	public List<Tabela> getByDsTabela(String dsTabela){		
 		Map<String,Object> params = new HashMap<String, Object>();
 		params.put("dsTabela", dsTabela);
 		return (List<Tabela>) ConexaoDB.get(Tabela.class,true,1,100,params,ordemP);
-	}
-	
-	
-	
-	
+	}	
 	private String getPackageUrl(Tabela cls){    	
 	    return cls.getDominio().replaceAll("[.]","/");   	
 	}
