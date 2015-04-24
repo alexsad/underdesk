@@ -1,6 +1,6 @@
 #set( $count = 0 )
 var ${classe.getNome()}ItemRender = new Class({
-${tab}"Extends":Component
+${tab}"Extends":ListViewItemRender
 ${tab},"initialize":function(p_obj){						
 ${tab}${tab}var htmlTmp = '<h4>'+p_obj.${classe.getPrimaryKey().getColuna()}+'-';
 #foreach ($campo in $classe.getAllCampos())
