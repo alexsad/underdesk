@@ -41,12 +41,12 @@ ${tab}${tab}this.setRevision("$Revision: 1 $");
 
 ${tab}${tab}this.it$campo.getColunaCapitalize() = new ${campotuput};
 #if($campo.isFk()&&$campo.getColuna()!=$classe.getPrimaryKey().getColuna())
-${tab}${tab}this.it${campo.getColunaCapitalize()}.setColumn("${campo.getColuna()}@it${campo.getColunaCapitalize()}");
+${tab}${tab}this.it${campo.getColunaCapitalize()}.setColumn("@${campo.getColuna()}");
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabel("${campo.getDsCampo().toLowerCase()}");
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setValueField("${campo.getFkService()}");
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabelField("${campo.getFkService()}");
 #elseif($campo.getColuna()==$classe.getPrimaryKey().getColuna())
-${tab}${tab}this.it${campo.getColunaCapitalize()}.setColumn("${campo.getColuna()}$it${campo.getColunaCapitalize()}");
+${tab}${tab}this.it${campo.getColunaCapitalize()}.setColumn("$${campo.getColuna()}");
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabel("cod.");
 ${tab}${tab}this.it${classe.getPrimaryKey().getColunaCapitalize()}.setEnable(false);	
 #else
