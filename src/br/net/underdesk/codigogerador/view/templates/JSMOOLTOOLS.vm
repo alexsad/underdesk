@@ -79,7 +79,7 @@ ${tab},"onStart":function(){
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.fromService(".business.BLL.get");
 #end
 #end
-${tab}${tab}this.mainTb.turnOnItemChangeEvent();
+${tab}${tab}this.mainTb.activate(true);
 ${tab}}
 ${tab},"getBy${classe.getPrimaryKey().getColunaCapitalize()}":function(p_${classe.getPrimaryKey().getColuna()}){
 ${tab}${tab}this.it${classe.getPrimaryKey().getColunaCapitalize()}.setValue(p_${classe.getPrimaryKey().getColuna()});
@@ -88,8 +88,7 @@ ${tab}${tab}${tab}"puid":this.getVarModule()
 ${tab}${tab}${tab},"s":"${classe.getDominio()}.business.${classe.getNome()}BLL.getBy${classe.getPrimaryKey().getColunaCapitalize()}"
 ${tab}${tab}${tab},"p":p_${classe.getPrimaryKey().getColuna()}
 ${tab}${tab}${tab},"onLoad":function(dta){
-${tab}${tab}${tab}${tab}${classe.getNome().toLowerCase()}.mainList.setDataProvider(dta.rs).refresh();
-${tab}${tab}${tab}${tab}${classe.getNome().toLowerCase()}.mainTb.turnOnItemChangeEvent();
+${tab}${tab}${tab}${tab}${classe.getNome().toLowerCase()}.mainList.setDataProvider(dta.rs);
 ${tab}${tab}${tab}}
 ${tab}${tab}}); 
 ${tab}}
