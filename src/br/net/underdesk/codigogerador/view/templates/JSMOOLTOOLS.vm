@@ -1,6 +1,6 @@
 #set( $count = 0 )
 var ${classe.getNome()}ItemRender = new Class({
-${tab}"Extends":ListViewItemRender
+${tab}"Extends":js.underas.controller.ListViewItemRender
 ${tab},"initialize":function(p_obj){						
 ${tab}${tab}var htmlTmp = '<h4>'+p_obj.${classe.getPrimaryKey().getColuna()}+'-';
 #foreach ($campo in $classe.getAllCampos())
@@ -15,7 +15,6 @@ ${tab}${tab}this.parent('div',htmlTmp);
 ${tab}${tab}this.getEle().addClass("col-xs-6 col-sm-4 col-md-4");
 ${tab}${tab}}
 ${tab}});
-
 
 
 var $classe.getNome() = new Class({
@@ -39,7 +38,7 @@ ${tab}${tab}this.setRevision("$Revision: 1 $");
 #set( $campotuput = 'InputMoney(0)' )
 #end
 
-${tab}${tab}this.it$campo.getColunaCapitalize() = new ${campotuput};
+${tab}${tab}this.it$campo.getColunaCapitalize() = new js.underas.controller.${campotuput};
 #if($campo.isFk()&&$campo.getColuna()!=$classe.getPrimaryKey().getColuna())
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setColumn("@${campo.getColuna()}");
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabel("${campo.getDsCampo().toLowerCase()}");
@@ -56,10 +55,10 @@ ${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabel("${campo.getDsCampo()
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setSize(2);	
 #end		
 		
-${tab}${tab}this.mainList = new ListView("$classe.getNome()");
+${tab}${tab}this.mainList = new js.underas.controller.ListView("$classe.getNome()");
 ${tab}${tab}this.mainList.setItemRender("${classe.getNome()}ItemRender");
 ${tab}${tab}this.setMainList("mainList");
-${tab}${tab}this.mainTb = new ToolBar({"domain":"${classe.getNome().toLowerCase()}.business.${classe.getNome()}BLL"});
+${tab}${tab}this.mainTb = new js.underas.net.ToolBar({"domain":"${classe.getNome().toLowerCase()}.business.${classe.getNome()}BLL"});
 
 ${tab}${tab}this.append(this.mainTb);
 #foreach ($campo in $classe.getAllCampos())	
