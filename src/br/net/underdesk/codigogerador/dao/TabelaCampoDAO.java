@@ -2,66 +2,28 @@ package br.net.underdesk.codigogerador.dao;
 import br.net.underdesk.codigogerador.business.TabelaBLL;
 import br.net.underdesk.codigogerador.model.Tabela;
 import br.net.underdesk.codigogerador.model.TabelaCampo;
-import br.net.underdesk.util.ConexaoDB;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import org.springframework.stereotype.Repository;
 /**
 * @author alexandre.araujo
 */
+@Repository
 public class TabelaCampoDAO{	
-	private String[][] ordemP = {{"idTabelaCampo", "asc"}};
-	@SuppressWarnings("unchecked")
+	
+	@PersistenceContext()
+	private EntityManager manager;
+	
 	public List<TabelaCampo> get() {
-		return (List<TabelaCampo>) ConexaoDB.get(TabelaCampo.class,true,1,100,null,ordemP);
+		return manager.createQuery("From TabelaCampo tc order by tc.idTabelaCampo asc", TabelaCampo.class).getResultList();
 	}
-	@SuppressWarnings("unchecked")
-	public List<TabelaCampo> getByDsTabela(String dsTabela){		
-		Map<String,Object> params = new HashMap<String, Object>();
-		params.put("dsTabela", dsTabela);
-		return (List<TabelaCampo>) ConexaoDB.get(TabelaCampo.class,true,1,100,params,ordemP);
+	public List<TabelaCampo> getByDsTabela(String dsTabela){
+		return manager.createQuery("From TabelaCampo tc where tc.dsTabela = :dsTabela order by tc.idTabelaCampo asc", TabelaCampo.class)
+				.setParameter("dsTabela", dsTabela)
+				.getResultList();	
 	}
-	/*
-    public List<TabelaCampo> get() {
-    	return (List<TabelaCampo>) ConexaoDB.get(TabelaCampo.class,true,1,100,null,ordemP);
-    }
-	public List<TabelaCampo> getByIdTabelaCampo(int idTabelaCampo){
-        return (List<TabelaCampo>) ConexaoDB.getById(TabelaCampo.class,idTabelaCampo);
-    }
-    public List<TabelaCampo> getByCampo(String campo){		
-		Map<String,Object> params = new HashMap<String, Object>();
-     	params.put("campo", campo);
-    	return (List<TabelaCampo>) ConexaoDB.get(TabelaCampo.class,true,1,100,params,ordemP);
-    }
-    public List<TabelaCampo> getByTipo(String tipo){		
-		Map<String,Object> params = new HashMap<String, Object>();
-     	params.put("tipo", tipo);
-    	return (List<TabelaCampo>) ConexaoDB.get(TabelaCampo.class,true,1,100,params,ordemP);
-    }
 	
-
-    public List<TabelaCampo> getByDsCampo(String dsCampo){		
-		Map<String,Object> params = new HashMap<String, Object>();
-     	params.put("dsCampo", dsCampo);
-    	return (List<TabelaCampo>) ConexaoDB.get(TabelaCampo.class,true,1,100,params,ordemP);
-    }
-	
-
-    public List<TabelaCampo> getByLimite(int limite){		
-		Map<String,Object> params = new HashMap<String, Object>();
-     	params.put("limite", limite);
-    	return (List<TabelaCampo>) ConexaoDB.get(TabelaCampo.class,true,1,100,params,ordemP);
-    }
-	
-
-    public List<TabelaCampo> getBySnNull(String snNull){		
-		Map<String,Object> params = new HashMap<String, Object>();
-     	params.put("snNull", snNull);
-    	return (List<TabelaCampo>) ConexaoDB.get(TabelaCampo.class,true,1,100,params,ordemP);
-    }
-	*/
-
     public boolean insert(TabelaCampo tc){
     	TabelaBLL tbll = new TabelaBLL();
     	Tabela t = tbll.getByIdTabela(tc.getCaminho(),tc.getIdTabela());

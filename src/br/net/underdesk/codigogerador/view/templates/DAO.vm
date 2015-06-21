@@ -3,19 +3,26 @@ package ${classe.getPacote()}.${classe.getDominio().toLowerCase()}.dao;
 import $import;
 #end
 import ${classe.getPacote()}.${classe.getDominio().toLowerCase()}.model.${classe.getNome()};
-import ${classe.getPacote()}.util.ConexaoDB;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 /**
 * @author alexandre.araujo
 */
+@Repository
 public class $classe.getNome()DAO{
-${tab}private String[][] ordemP = {{"$classe.getPrimaryKey().getColuna()", "desc"}};
-${tab}@SuppressWarnings("unchecked")
-${tab}public List<$classe.getNome()> get() {
-${tab}${tab}return (List<$classe.getNome()>) ConexaoDB.get(${classe.getNome()}.class,true,1,100,null,ordemP);
+
+${tab}@PersistenceContext()
+${tab}private EntityManager manager;
+
+${tab}public List<$classe.getNome()> get() {		
+${tab}${tab}return manager.createQuery("From ${classe.getNome()} ${classe.getNomeAlias()} order by ${classe.getNomeAlias()}.${classe.getPrimaryKey().getColuna()} desc",${classe.getNome()}.class).getResultList();
 ${tab}}
+
 #foreach ($campo in $classe.getAllCampos())  
 #if($campo.getColuna()==$classe.getPrimaryKey().getColuna())  
 ${tab}public ${classe.getNome()} getBy$campo.getColunaCapitalize()($campo.getTipo() $campo.getColuna()){
@@ -39,6 +46,7 @@ ${tab}}
 
 #end
 #if ($classe.getTipo()!="view")
+${tab}@Transactional
 ${tab}public boolean insert($classe.getNome() $classe.getNomeAlias()){
 ${tab}${tab}return ConexaoDB.insert($classe.getNomeAlias());
 ${tab}}

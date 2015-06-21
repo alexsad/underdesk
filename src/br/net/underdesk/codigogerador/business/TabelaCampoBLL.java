@@ -1,68 +1,47 @@
 package br.net.underdesk.codigogerador.business;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
 import br.net.underdesk.codigogerador.model.TabelaCampo;
 import br.net.underdesk.codigogerador.dao.TabelaCampoDAO;
-import under.wsl.service.Service;
+
 /**
  * @author alexandre.araujo
  */
+
+@RestController
+@RequestMapping(value="/codigogerador/tabelacampo")
 public class TabelaCampoBLL{
-    private TabelaCampoDAO dao = null;
-    public TabelaCampoBLL() {
-        this.dao = new TabelaCampoDAO();
-    }
-    @Service(cache=false)
+	@Autowired
+    private TabelaCampoDAO dao;
+	
+	@RequestMapping(method=RequestMethod.GET)
     public List<TabelaCampo> get(){
         return this.dao.get();
     }
-    @Service()
-    public List<TabelaCampo> getByDsTabela(String dsTabela) {
+	@RequestMapping(value="/getByDsTabela/{dsTabela}",method=RequestMethod.GET)
+    public List<TabelaCampo> getByDsTabela(@PathVariable("dsTabela") String dsTabela) {
         return this.dao.getByDsTabela(dsTabela);
     }
-    /*
-    @Service(cache=true)
-    public List<TabelaCampo> get(){
-        return this.dao.get();
-    }
-    @Service()
-    public List<TabelaCampo> getByIdTabelaCampo(int idTabelaCampo) {
-        return this.dao.getByIdTabelaCampo(idTabelaCampo);
-    }
-    @Service()
-    public List<TabelaCampo> getByCampo(String campo) {
-        return this.dao.getByCampo(campo);
-    }
-    @Service()
-    public List<TabelaCampo> getByTipo(String tipo) {
-        return this.dao.getByTipo(tipo);
-    }
-    @Service()
-    public List<TabelaCampo> getByDsCampo(String dsCampo) {
-        return this.dao.getByDsCampo(dsCampo);
-    }
-    @Service()
-    public List<TabelaCampo> getByLimite(int limite) {
-        return this.dao.getByLimite(limite);
-    }
-    @Service()
-    public List<TabelaCampo> getBySnNull(String snNull) {
-        return this.dao.getBySnNull(snNull);
-    }
-    */
-    @Service(remove={"TabelaCampoBLL.get"})   
-    public int insert(TabelaCampo tc){    
+	@RequestMapping(method=RequestMethod.POST)  
+    public int insert(@RequestBody TabelaCampo tc){    
         if(this.dao.insert(tc)){            
             return tc.getIdTabelaCampo();
         }
         return 0;
     }
-    @Service(remove={"TabelaCampoBLL.get"})
-    public boolean update(TabelaCampo tc){
+    @RequestMapping(method=RequestMethod.PUT)
+    public boolean update(@RequestBody TabelaCampo tc){
         return this.dao.update(tc);
     }
-    @Service(remove={"TabelaCampoBLL.get"})
-    public boolean delete(TabelaCampo tc){
+    @RequestMapping(method=RequestMethod.DELETE)
+    public boolean delete(@RequestBody TabelaCampo tc){
          return this.dao.delete(tc);
     }  
 }

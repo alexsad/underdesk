@@ -1,25 +1,34 @@
 package br.net.underdesk.codigogerador.business;
 
 import java.util.List;
-import under.wsl.service.Service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import br.net.underdesk.codigogerador.dao.TabelaDAO;
 import br.net.underdesk.codigogerador.model.Tabela;
 import br.net.underdesk.codigogerador.model.TabelaCampo;
 
+@RestController
+@RequestMapping(value="/codigogerador/tabela")
 public class TabelaBLL {
-	private TabelaDAO dao = null;
-	public TabelaBLL(){
-		this.dao = new TabelaDAO();
-	}
-    @Service(cache=false)
+	
+	@Autowired
+	private TabelaDAO dao;
+
+    @RequestMapping(method=RequestMethod.GET)
     public List<Tabela> get(){
         return this.dao.get();
     }
-    @Service()
-    public List<Tabela> getByDsTabela(String dsTabela) {
+    @RequestMapping(value="/getByDsTabela/{dsTabela}",method=RequestMethod.GET)
+    public List<Tabela> getByDsTabela(@PathVariable("dsTabela") String dsTabela) {
         return this.dao.getByDsTabela(dsTabela);
     }
-	@Service()
+    @RequestMapping(value="/gerarSTB",method=RequestMethod.GET)
 	public String gerarSTB(){
 		List<Tabela> tbs = this.dao.get();
 		int tmT = tbs.size();
@@ -35,30 +44,30 @@ public class TabelaBLL {
 		System.out.println(stbS);
 		return stbS;
 	}
-	@Service()
-	public String gerarCodigo(Tabela t){
+    @RequestMapping(value="/gerarCodigo",method=RequestMethod.POST)
+	public String gerarCodigo(@RequestBody Tabela t){
 		Tabela tabelaC = this.getByIdTabela(t.getCaminho(),t.getIdTabela());
 		String rs = this.dao.gerarCodigo(tabelaC,t.getTpTemplate());
 		System.out.println(rs);
 		return rs;
 	}	
-    @Service()
-    public Tabela getByIdTabela(String urlc,int idTabela){
+    @RequestMapping(value="/getByDsTabela/{idTabela}",method=RequestMethod.GET)
+    public Tabela getByIdTabela(@RequestParam(value = "urlc") String urlc,@PathVariable("idTabela") int idTabela){
         return this.dao.getByIdTabela(urlc,idTabela);
     }    
-    @Service(remove={"TabelaBLL.get"})   
-    public int insert(Tabela t){    
+    @RequestMapping(method=RequestMethod.POST)
+    public int insert(@RequestBody Tabela t){    
         if(this.dao.insert(t)){            
             return t.getIdTabela();
         }
         return 0;
     }
-    @Service(remove={"TabelaBLL.get"})
-    public boolean update(Tabela t){
+    @RequestMapping(method=RequestMethod.PUT)
+    public boolean update(@RequestBody Tabela t){
         return this.dao.update(t);
     }
-    @Service(remove={"TabelaBLL.get"})
-    public boolean delete(Tabela t){
+    @RequestMapping(method=RequestMethod.DELETE)
+    public boolean delete(@RequestBody Tabela t){
          return this.dao.delete(t);
     } 
 }

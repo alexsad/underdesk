@@ -1,14 +1,4 @@
-{
-	"idRequest":123456
-	,"t":10
-	,"tk":1
-	,"format":"json"
-	,"callback":"callback"
-	,"erro":null
-	,"s":""
-	,"cache":"true"
-	,"tipo":"list"
-	,"rs":[
+[
 
 			{
 				"idTabela":1
@@ -1037,4 +1027,3 @@
 				]
 			}
 	]
-}

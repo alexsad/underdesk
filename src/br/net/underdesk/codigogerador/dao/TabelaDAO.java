@@ -4,27 +4,29 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.StringWriter;
-
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
-
+import org.springframework.stereotype.Repository;
 import com.google.gson.Gson;
-
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
 import br.net.underdesk.codigogerador.model.Tabela;
-import br.net.underdesk.codigogerador.model.RequestC;
-import br.net.underdesk.util.ConexaoDB;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
+@Repository
 public class TabelaDAO {
+	
+	@PersistenceContext()
+	private EntityManager manager;
+	
 	public final static String TP_HBM = "HBM";
 	public final static String TP_JAVA = "JAVA";
 	public final static String TP_DAO = "DAO";
@@ -38,16 +40,15 @@ public class TabelaDAO {
 	
 	Gson gson = null;	
 	private String urlTemplates =  "br/net/underdesk/codigogerador/view/templates/";	
-	private String[][] ordemP = {{"idTabela", "asc"}};
-	@SuppressWarnings("unchecked")
+
 	public List<Tabela> get() {
-		return (List<Tabela>) ConexaoDB.get(Tabela.class,true,1,100,null,ordemP);
+		return manager.createQuery("From Tabela t order by t.idTabela asc", Tabela.class).getResultList();
 	}
-	@SuppressWarnings("unchecked")
+
 	public List<Tabela> getByDsTabela(String dsTabela){		
-		Map<String,Object> params = new HashMap<String, Object>();
-		params.put("dsTabela", dsTabela);
-		return (List<Tabela>) ConexaoDB.get(Tabela.class,true,1,100,params,ordemP);
+		return manager.createQuery("From Tabela t where t.dsTabela = :dsTabela order by t.idTabela asc", Tabela.class)
+		.setParameter("dsTabela", dsTabela)
+		.getResultList();		
 	}	
 	private String getPackageUrl(Tabela cls){    	
 	    return cls.getDominio().replaceAll("[.]","/");   	
@@ -78,44 +79,48 @@ public class TabelaDAO {
 	
 	
 	public Tabela getByIdTabela(String urlc,int idTabela){
-		RequestC requestCTMP = null;
+		List<Tabela> lst = null;
 		urlc = this.getClass().getResource("/").getFile().replace("WEB-INF/classes/","")+urlc;
 		if(gson == null){
 			gson = new Gson(); 
 		}
 		try{
 			BufferedReader br = new BufferedReader(new FileReader(urlc));  
-			requestCTMP = gson.fromJson(br, RequestC.class); 
+			Type listType = new TypeToken<ArrayList<Tabela>>(){
+            }.getType();
+			lst = gson.fromJson(br,listType); 
 			br.close();
 		}catch(Exception e){
 			System.out.println("erro: "+e.getMessage().toUpperCase());
 		 	return null;
 		}	
-		return requestCTMP.getRs().get(idTabela-1);
+		return lst.get(idTabela-1);
     }
 	
     public boolean insert(Tabela t){
-		RequestC requestCTMP = null;
+    	List<Tabela> lst = null;
 		String urlc = this.getClass().getResource("/").getFile().replace("WEB-INF/classes/","")+t.getCaminho();
 		if(gson == null){
 			gson = new Gson(); 
 		}
 		try{
 			BufferedReader br = new BufferedReader(new FileReader(urlc));  
-			requestCTMP = gson.fromJson(br, RequestC.class); 
+			Type listType = new TypeToken<ArrayList<Tabela>>(){
+            }.getType();
+			lst = gson.fromJson(br,listType); 
 			br.close();
 		}catch(Exception e){
 			System.out.println("erro: "+e.getMessage().toUpperCase());
 		 	return false;
 		}		
-		int tmmax = requestCTMP.getRs().size();		
+		int tmmax = lst.size();		
 		t.setIdTabela(tmmax+1);
 		t.setCaminho("");
-		requestCTMP.getRs().add(t);
+		lst.add(t);
 		
 		BufferedWriter br = null;  
         try {        	
-    		String ret = gson.toJson(requestCTMP);
+    		String ret = gson.toJson(lst);
     		br = new BufferedWriter(new FileWriter(new File(urlc)));
     		br.write(ret); 
     		br.close();        	
@@ -127,32 +132,31 @@ public class TabelaDAO {
        
     }
     public boolean update(Tabela t){
-		RequestC requestCTMP = null;
+    	List<Tabela> lst = null;
 		String urlc = this.getClass().getResource("/").getFile().replace("WEB-INF/classes/","")+t.getCaminho();
 		if(gson == null){
 			gson = new Gson(); 
 		}
 		try{
 			BufferedReader br = new BufferedReader(new FileReader(urlc));  
-			requestCTMP = gson.fromJson(br, RequestC.class); 
+			Type listType = new TypeToken<ArrayList<Tabela>>(){
+            }.getType();
+			lst = gson.fromJson(br,listType);  
 			br.close();
 		}catch(Exception e){
 			System.out.println("erro: "+e.getMessage().toUpperCase());
 		 	return false;
-		}		
+		}	
 			
 		if(t.getCampo().size()==0){
 			Tabela t1 = this.getByIdTabela(t.getCaminho(),t.getIdTabela());
 			t.setCampo(t1.getCampo());
 		}
 		t.setCaminho("");
-		//requestCTMP.getRs().remove(t.getIdTabela()-1);
-		requestCTMP.getRs().set(t.getIdTabela()-1, t);
-		//requestCTMP.getRs().get(t.getIdTabela()-1) = t;
-		
+		lst.set(t.getIdTabela()-1, t);
 		BufferedWriter br = null;  
         try {        	
-    		String ret = gson.toJson(requestCTMP);
+    		String ret = gson.toJson(lst);
     		br = new BufferedWriter(new FileWriter(new File(urlc)));
     		br.write(ret); 
     		br.close();        	
@@ -163,39 +167,30 @@ public class TabelaDAO {
     	return true;
     }
     public boolean delete(Tabela t){
-		RequestC requestCTMP = null;
+    	List<Tabela> lst = null;
 		String urlc = this.getClass().getResource("/").getFile().replace("WEB-INF/classes/","")+t.getCaminho();
 		if(gson == null){
 			gson = new Gson(); 
 		}
 		try{
 			BufferedReader br = new BufferedReader(new FileReader(urlc));  
-			requestCTMP = gson.fromJson(br, RequestC.class); 
+			Type listType = new TypeToken<ArrayList<Tabela>>(){
+            }.getType();
+			lst = gson.fromJson(br,listType); 
 			br.close();
 		}catch(Exception e){
 			System.out.println("erro: "+e.getMessage().toUpperCase());
 		 	return false;
-		}		
-			
-		/*
-		Tabela t1 = this.getByIdTabela(t.getCaminho(),t.getIdTabela());
-		t.setCampo(t1.getCampo());
-		*/
-		ArrayList<Tabela> tlst = requestCTMP.getRs();
-		tlst.remove(t.getIdTabela()-1);
-		//requestCTMP.getRs().set(t.getIdTabela()-1, t);
-		//requestCTMP.getRs().get(t.getIdTabela()-1) = t;
-		
+		}
+		List<Tabela> tlst = lst;
+		tlst.remove(t.getIdTabela()-1);	
 		int tmmax = tlst.size();	
 		for(int x=0;x<tmmax;x++){
 			tlst.get(x).setIdTabela(x+1);
-		}
-		
-		requestCTMP.setRs(tlst);
-		
+		}		
 		BufferedWriter br = null;  
         try {        	
-    		String ret = gson.toJson(requestCTMP);
+    		String ret = gson.toJson(tlst);
     		br = new BufferedWriter(new FileWriter(new File(urlc)));
     		br.write(ret); 
     		br.close();        	
