@@ -20,7 +20,7 @@ public class ArquivoBLL {
 		return this.dao.get();
 	}
 	
-	@RequestMapping(value="/getByPath",method=RequestMethod.GET)
+	@RequestMapping(value="/getbypath",method=RequestMethod.GET)
 	public List<Arquivo> getByPath(@RequestParam(value = "urlpath") String urlpath){
 		return this.dao.getByPath(urlpath);
 	}

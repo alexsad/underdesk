@@ -4,8 +4,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import br.net.underdesk.arquivo.model.Arquivo;
 
+@Component
 public class ArquivoDAO {
 	public List<Arquivo> get(){
 		return new ArrayList<Arquivo>();

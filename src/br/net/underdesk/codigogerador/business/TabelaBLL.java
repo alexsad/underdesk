@@ -24,11 +24,11 @@ public class TabelaBLL {
     public List<Tabela> get(){
         return this.dao.get();
     }
-    @RequestMapping(value="/getByDsTabela/{dsTabela}",method=RequestMethod.GET)
+    @RequestMapping(value="/getbydstabela/{dsTabela}",method=RequestMethod.GET)
     public List<Tabela> getByDsTabela(@PathVariable("dsTabela") String dsTabela) {
         return this.dao.getByDsTabela(dsTabela);
     }
-    @RequestMapping(value="/gerarSTB",method=RequestMethod.GET)
+    @RequestMapping(value="/gerarstb",method=RequestMethod.GET)
 	public String gerarSTB(){
 		List<Tabela> tbs = this.dao.get();
 		int tmT = tbs.size();
@@ -44,14 +44,14 @@ public class TabelaBLL {
 		System.out.println(stbS);
 		return stbS;
 	}
-    @RequestMapping(value="/gerarCodigo",method=RequestMethod.POST)
+    @RequestMapping(value="/gerarcodigo",method=RequestMethod.POST)
 	public String gerarCodigo(@RequestBody Tabela t){
 		Tabela tabelaC = this.getByIdTabela(t.getCaminho(),t.getIdTabela());
 		String rs = this.dao.gerarCodigo(tabelaC,t.getTpTemplate());
 		System.out.println(rs);
 		return rs;
 	}	
-    @RequestMapping(value="/getByDsTabela/{idTabela}",method=RequestMethod.GET)
+    @RequestMapping(value="/getbydstabela/{idTabela}",method=RequestMethod.GET)
     public Tabela getByIdTabela(@RequestParam(value = "urlc") String urlc,@PathVariable("idTabela") int idTabela){
         return this.dao.getByIdTabela(urlc,idTabela);
     }    
