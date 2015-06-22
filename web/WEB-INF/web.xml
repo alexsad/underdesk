@@ -3,11 +3,6 @@
   <display-name>underdesk</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
     <servlet-name>rest</servlet-name>
@@ -19,9 +14,10 @@
        <param-value>/WEB-INF/servlet-context.xml</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
+
   </servlet>
-  <servlet-mapping>
-    <servlet-name>rest</servlet-name>
-    <url-pattern>/*</url-pattern>
-  </servlet-mapping>
+    <servlet-mapping>
+    	<servlet-name>rest</servlet-name>
+   	 	<url-pattern>/ws/*</url-pattern>5
+  	</servlet-mapping>
 </web-app>

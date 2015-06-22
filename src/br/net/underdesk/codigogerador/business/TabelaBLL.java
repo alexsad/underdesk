@@ -34,12 +34,15 @@ public class TabelaBLL {
 		int tmT = tbs.size();
 		TabelaCampoBLL tcb = new TabelaCampoBLL();
 		String stbS = "";
-		for(int x =0 ;x<tmT;x++){
+		for(int x =0 ;x < tmT;x++){
 			//tbs.get(x).setIdTabela(x+1);
 			List<TabelaCampo> tbcs = tcb.getByDsTabela(tbs.get(x).getDsTabela());  
-			tbs.get(x).setCampo(tbcs);
-			stbS += this.dao.gerarCodigo(tbs.get(x),TabelaDAO.TP_STB);
-		}
+			System.out.println("tm:"+tbcs.size()+" xs:"+x);
+			if(tbcs.size()>0){
+				tbs.get(x).setCampo(tbcs);
+				stbS += this.dao.gerarCodigo(tbs.get(x),TabelaDAO.TP_STB);
+			};
+		};
 		//return "";
 		System.out.println(stbS);
 		return stbS;
@@ -51,7 +54,7 @@ public class TabelaBLL {
 		System.out.println(rs);
 		return rs;
 	}	
-    @RequestMapping(value="/getbydstabela/{idTabela}",method=RequestMethod.GET)
+    @RequestMapping(value="/getbyidtabela/{idTabela}",method=RequestMethod.GET)
     public Tabela getByIdTabela(@RequestParam(value = "urlc") String urlc,@PathVariable("idTabela") int idTabela){
         return this.dao.getByIdTabela(urlc,idTabela);
     }    

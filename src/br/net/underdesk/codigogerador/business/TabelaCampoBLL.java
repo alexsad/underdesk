@@ -27,6 +27,7 @@ public class TabelaCampoBLL{
     }
 	@RequestMapping(value="/getbydstabela/{dsTabela}",method=RequestMethod.GET)
     public List<TabelaCampo> getByDsTabela(@PathVariable("dsTabela") String dsTabela) {
+		System.out.println("ds:"+dsTabela);
         return this.dao.getByDsTabela(dsTabela);
     }
 	@RequestMapping(method=RequestMethod.POST)  
