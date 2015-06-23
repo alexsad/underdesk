@@ -3,7 +3,7 @@
 <project name="fnbuilder_ud" default="ExportJs">
   <property file="fnbuild.properties"/>
   <target name="ExportJs" description="Export JS files to webapp">
-		<copy includeemptydirs="false" todir="../../${aproject.webfolder}/js">
+		<copy includeemptydirs="false" todir="../../${aproject.webfolder}">
 		        <fileset dir="../">
 		        <include name="**/*.js"/>
 		        </fileset>

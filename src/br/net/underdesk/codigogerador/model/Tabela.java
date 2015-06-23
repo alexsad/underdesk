@@ -82,10 +82,11 @@ public class Tabela {
 	public void setPacote(String pacote) {
 		this.pacote=pacote;
 	}
-	
-	
-	public void setCampo(List<TabelaCampo> campo) {
-		this.campo = campo;
+	public List<TabelaCampo> getCampo() {
+		return campo;
+	}	
+	public void setCampo(List<TabelaCampo> campos) {
+		this.campo = campos;
 	}
 	public TabelaCampo getPrimaryKey() {    	
         return this.campo.get(0);
@@ -119,9 +120,7 @@ public class Tabela {
     public String getNomeLogical() {
             return this.dsTabela;
 	}
-	public List<TabelaCampo> getCampo() {
-		return campo;
-	}
+
     public List<TabelaCampo> getAllCampos() {
         List<TabelaCampo> campotmp = null;
         try{

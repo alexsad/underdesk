@@ -3,8 +3,10 @@ import br.net.underdesk.codigogerador.business.TabelaBLL;
 import br.net.underdesk.codigogerador.model.Tabela;
 import br.net.underdesk.codigogerador.model.TabelaCampo;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import org.springframework.stereotype.Repository;
 /**
 * @author alexandre.araujo
@@ -19,9 +21,9 @@ public class TabelaCampoDAO{
 		return manager.createQuery("From TabelaCampo tc order by tc.idTabelaCampo asc", TabelaCampo.class).getResultList();
 	}
 	public List<TabelaCampo> getByDsTabela(String dsTabela){
-		return manager.createQuery("From TabelaCampo tc where tc.dsTabela = :dsTabela order by tc.idTabelaCampo asc", TabelaCampo.class)
-				.setParameter("dsTabela", dsTabela)
-				.getResultList();	
+		return  manager.createQuery("From TabelaCampo tc where tc.dsTabela = :dsTabela order by tc.idTabelaCampo asc", TabelaCampo.class)
+					.setParameter("dsTabela", dsTabela)
+					.getResultList();
 	}
 	
     public boolean insert(TabelaCampo tc){

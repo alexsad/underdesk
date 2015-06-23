@@ -19,6 +19,8 @@ public class TabelaBLL {
 	
 	@Autowired
 	private TabelaDAO dao;
+	@Autowired
+	private TabelaCampoBLL tcb;
 
     @RequestMapping(method=RequestMethod.GET)
     public List<Tabela> get(){
@@ -32,12 +34,11 @@ public class TabelaBLL {
 	public String gerarSTB(){
 		List<Tabela> tbs = this.dao.get();
 		int tmT = tbs.size();
-		TabelaCampoBLL tcb = new TabelaCampoBLL();
 		String stbS = "";
 		for(int x =0 ;x < tmT;x++){
-			//tbs.get(x).setIdTabela(x+1);
+			//System.out.println("ds:"+tbs.get(x).getDsTabela()+" xs:"+x);
 			List<TabelaCampo> tbcs = tcb.getByDsTabela(tbs.get(x).getDsTabela());  
-			System.out.println("tm:"+tbcs.size()+" xs:"+x);
+			//System.out.println("tm:"+tbcs.size()+" xs:"+x);
 			if(tbcs.size()>0){
 				tbs.get(x).setCampo(tbcs);
 				stbS += this.dao.gerarCodigo(tbs.get(x),TabelaDAO.TP_STB);

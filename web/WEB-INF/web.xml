@@ -18,6 +18,6 @@
   </servlet>
     <servlet-mapping>
     	<servlet-name>rest</servlet-name>
-   	 	<url-pattern>/ws/*</url-pattern>5
+   	 	<url-pattern>/ws/*</url-pattern>
   	</servlet-mapping>
 </web-app>

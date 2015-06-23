@@ -1,6 +1,5 @@
 package br.net.underdesk.codigogerador.business;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,8 +26,7 @@ public class TabelaCampoBLL{
     }
 	@RequestMapping(value="/getbydstabela/{dsTabela}",method=RequestMethod.GET)
     public List<TabelaCampo> getByDsTabela(@PathVariable("dsTabela") String dsTabela) {
-		System.out.println("ds:"+dsTabela);
-        return this.dao.getByDsTabela(dsTabela);
+		return this.dao.getByDsTabela(dsTabela);
     }
 	@RequestMapping(method=RequestMethod.POST)  
     public int insert(@RequestBody TabelaCampo tc){    
