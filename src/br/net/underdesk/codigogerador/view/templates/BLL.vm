@@ -5,46 +5,48 @@ import $import;
 import ${classe.getPacote()}.${classe.getDominio().toLowerCase()}.model.${classe.getNome()};
 import ${classe.getPacote()}.${classe.getDominio().toLowerCase()}.dao.${classe.getNome()}DAO;
 import java.util.List;
-import under.wsl.service.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 /**
  * @author alexandre.araujo
  */
+@RestController
+@RequestMapping("/${classe.getDominio().toLowerCase()}/${classe.getNome().toLowerCase()}/")
 public class ${classe.getNome()}BLL{
-    private ${classe.getNome()}DAO dao = null;
-    public $classe.getNome()BLL() {
-        this.dao = new $classe.getNome()DAO();
-    }
-    @Service(cache=true)
-    public List<$classe.getNome()> get(){
-        return this.dao.get();
-    }
-#foreach ($campo in $classe.getAllCampos()) 
-    @Service()
-    public List<$classe.getNome()> getBy$campo.getColunaCapitalize()($campo.getTipo() $campo.getColuna()) {
-        return this.dao.getBy$campo.getColunaCapitalize()($campo.getColuna());
-    }
-#if($campo.getTipo()=="Date")
-    @Service()
-    public List<${classe.getNome()}> getByPeriodo${campo.getColunaCapitalize()}(Date DtaI,Date DtaF){
-        return this.dao.getByPeriodo${campo.getColunaCapitalize()}(DtaI,DtaF);
-    }
-#end    
-#end 
+${tab}@Autowired
+${tab}private ${classe.getNome()}DAO dao = null;
+${tab}@RequestMapping( method = RequestMethod.GET,headers="Accept=application/json")
+${tab}public List<$classe.getNome()> get(){
+${tab}${tab}return this.dao.get();
+${tab}}
+${tab}@RequestMapping(value = "/{${classe.getPrimaryKey().getColuna()}}", method = RequestMethod.GET,headers="Accept=application/json")    
+${tab}public ${classe.getNome()} getBy${classe.getPrimaryKey().getColunaCapitalize()}(@PathVariable $classe.getPrimaryKey().getTipo() $classe.getPrimaryKey().getColuna()){
+${tab}${tab}return this.dao.getBy$classe.getPrimaryKey().getColunaCapitalize()($classe.getPrimaryKey().getColuna());
+${tab}}
+
 #if ($classe.getTipo()!="view")
-    @Service(remove={"${classe.getNome()}BLL.get"})   
-    public int insert($classe.getNome() $classe.getNomeAlias()){    
-        if(this.dao.insert($classe.getNomeAlias())){            
-            return ${classe.getNomeAlias()}.get${classe.getPrimaryKey().getColunaCapitalize()}();
-        }
-        return 0;
-    }
-    @Service(remove={"${classe.getNome()}BLL.get"})
-    public boolean update($classe.getNome() $classe.getNomeAlias()){
-        return this.dao.update($classe.getNomeAlias());
-    }
-    @Service(remove={"${classe.getNome()}BLL.get"})
-    public boolean delete($classe.getNome() $classe.getNomeAlias()){
-         return this.dao.delete($classe.getNomeAlias());
-    }  
+
+${tab}@RequestMapping(method = RequestMethod.POST,headers="Accept=application/json")
+${tab}public int insert(@RequestBody $classe.getNome() $classe.getNomeAlias()){
+${tab}${tab}if(this.dao.insert($classe.getNomeAlias())){
+${tab}${tab}${tab}return ${classe.getNomeAlias()}.get${classe.getPrimaryKey().getColunaCapitalize()}();
+${tab}${tab}}
+${tab}${tab}return 0;
+${tab}}
+
+${tab}@RequestMapping(method = RequestMethod.PUT,headers="Accept=application/json")
+${tab}public boolean update(@RequestBody $classe.getNome() $classe.getNomeAlias()){
+${tab}${tab}return this.dao.update($classe.getNomeAlias());
+${tab}}
+
+${tab}@RequestMapping(value = "/{${classe.getPrimaryKey().getColuna()}}",method = RequestMethod.DELETE,headers="Accept=application/json")
+${tab}public boolean delete(@PathVariable int ${classe.getPrimaryKey().getColuna()}){	
+${tab}${tab}return this.dao.delete(${classe.getPrimaryKey().getColuna()});
+${tab}}    
+      
 #end    
 }

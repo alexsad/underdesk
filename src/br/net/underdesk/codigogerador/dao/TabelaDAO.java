@@ -37,6 +37,9 @@ public class TabelaDAO {
 	public final static String TP_HBC = "HBC";
 	public final static String TP_UML = "UML";
 	public final static String TP_STB = "STBJSON";
+	public final static String TP_NODESCHEMA = "NODE_SCHEMA";
+	public final static String TP_NODEBLL = "NODE_BLL";
+	public final static String TP_NODEROUTES = "NODE_ROUTES";
 	
 	Gson gson = null;	
 	private String urlTemplates =  "br/net/underdesk/codigogerador/view/templates/";	

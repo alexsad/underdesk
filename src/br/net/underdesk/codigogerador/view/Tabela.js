@@ -114,6 +114,9 @@ var Tabela = new Class({
 		                                     ,{"idTipoTemplate":"JS","dsTipoTemplate":"arquivo java script"}
 		                 					 ,{"idTipoTemplate":"JSMOOLTOOLS","dsTipoTemplate":"arquivo java script mooltools"}
 		                                     ,{"idTipoTemplate":"SQL","dsTipoTemplate":"arquivo SQL"}
+		                                     ,{"idTipoTemplate":"NODE_SCHEMA","dsTipoTemplate":"arquivo de schema NODE"}
+		                 					 ,{"idTipoTemplate":"NODE_BLL","dsTipoTemplate":"arquivo de controller NODE"}
+		                                     ,{"idTipoTemplate":"NODE_ROUTES","dsTipoTemplate":"arquivo de rota NODE"}
 		                                     ]);
 		
 		this.itTpGeracao.setDataProvider([

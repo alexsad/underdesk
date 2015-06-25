@@ -23,38 +23,26 @@ ${tab}public List<$classe.getNome()> get() {
 ${tab}${tab}return manager.createQuery("From ${classe.getNome()} ${classe.getNomeAlias()} order by ${classe.getNomeAlias()}.${classe.getPrimaryKey().getColuna()} desc",${classe.getNome()}.class).getResultList();
 ${tab}}
 
-#foreach ($campo in $classe.getAllCampos())  
-#if($campo.getColuna()==$classe.getPrimaryKey().getColuna())  
-${tab}public ${classe.getNome()} getBy$campo.getColunaCapitalize()($campo.getTipo() $campo.getColuna()){
-${tab}${tab}return (${classe.getNome()}) ConexaoDB.getById(${classe.getNome()}.class,$campo.getColuna());
+${tab}public ${classe.getNome()} getBy${classe.getPrimaryKey().getColunaCapitalize()}($classe.getPrimaryKey().getTipo() $classe.getPrimaryKey().getColuna()){
+${tab}${tab}return manager.find(${classe.getNome()}.class,$classe.getPrimaryKey().getColuna());
 ${tab}}
-#else
-${tab}@SuppressWarnings("unchecked")
-${tab}public List<$classe.getNome()> getBy$campo.getColunaCapitalize()($campo.getTipo() $campo.getColuna()){		
-${tab}${tab}Map<String,Object> params = new HashMap<String, Object>();
-${tab}${tab}params.put("${campo.getColuna()}", ${campo.getColuna()});
-${tab}${tab}return (List<$classe.getNome()>) ConexaoDB.get(${classe.getNome()}.class,true,1,100,params,ordemP);
-${tab}}
-#if($campo.getTipo()=="Date")
-${tab}@SuppressWarnings("unchecked")
-${tab}public List<${classe.getNome()}> getByPeriodo${campo.getColunaCapitalize()}(Date DtaI,Date DtaF){
-${tab}${tab}DtaF.setTime(DtaF.getTime()+86399999L);
-${tab}${tab}return (List<${classe.getNome()}>) ConexaoDB.getBetween(${classe.getNome()}.class,true,1,100,"${campo.getColuna()}",DtaI,DtaF,ordemP);
-${tab}}
-#end
-#end
 
-#end
 #if ($classe.getTipo()!="view")
 ${tab}@Transactional
 ${tab}public boolean insert($classe.getNome() $classe.getNomeAlias()){
-${tab}${tab}return ConexaoDB.insert($classe.getNomeAlias());
+${tab}${tab}manager.persist($classe.getNomeAlias());
+${tab}${tab}return true;
 ${tab}}
+${tab}@Transactional
 ${tab}public boolean update($classe.getNome() $classe.getNomeAlias()){
-${tab}${tab}return ConexaoDB.update($classe.getNomeAlias());
+${tab}${tab}manager.merge($classe.getNomeAlias());
+${tab}${tab}return true;
 ${tab}}
-${tab}public boolean delete($classe.getNome() $classe.getNomeAlias()){
-${tab}${tab}return ConexaoDB.delete($classe.getNomeAlias());
+${tab}@Transactional
+${tab}public boolean delete($classe.getPrimaryKey().getTipo() $classe.getPrimaryKey().getColuna()){
+${tab}${tab}$classe.getNome() $classe.getNomeAlias() = manager.find(${classe.getNome()}.class,$classe.getPrimaryKey().getColuna());
+${tab}${tab}manager.remove($classe.getNomeAlias());		
+${tab}${tab}return true;
 ${tab}}
 #end    
 }
