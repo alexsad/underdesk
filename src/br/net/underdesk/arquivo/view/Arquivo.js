@@ -1,5 +1,5 @@
 var ArquivoRender = new Class({
-					"Extends":Component
+					"Extends":js.underas.controller.ListViewItemRender
 					,"initialize":function(p_obj){
 						var iconC = "folder-close";
 						if(p_obj.snPasta=="N"){
@@ -13,55 +13,55 @@ var ArquivoRender = new Class({
 				});	
 
 var Arquivo = new Class({
-	"Extends":ModWindow
+	"Extends":js.underas.container.ModWindow
 	,"initialize":function(){
 		this.parent("*lista de arquivos no servidor");
 		this.setRevision("$Revision$");
 		
-		this.itIdArquivo = new InputText("");
-		this.itIdArquivo.setColumn("idArquivo@itIdArquivo");
+		this.itIdArquivo = new js.underas.controller.InputText("");
+		this.itIdArquivo.setColumn("$idArquivo");
 		this.itIdArquivo.setLabel("cod.");	
 		this.itIdArquivo.setSize(2);	
 		this.itIdArquivo.setEnable(false);	
 		
-		this.itDsArquivo = new InputText("");
+		this.itDsArquivo = new js.underas.controller.InputText("");
 		this.itDsArquivo.setLabel("descricao");
-		this.itDsArquivo.setColumn("dsArquivo@itDsArquivo");	
+		this.itDsArquivo.setColumn("@dsArquivo");	
 		this.itDsArquivo.setSize(8);
 		this.itDsArquivo.setEnable(false);	
 		
-		this.itTmArquivo = new NumericStepper(0);
-		this.itTmArquivo.setColumn("tmArquivo@itTmArquivo");
+		this.itTmArquivo = new js.underas.controller.NumericStepper(0);
+		this.itTmArquivo.setColumn("@tmArquivo");
 		this.itTmArquivo.setLabel("tamanho");	
 		this.itTmArquivo.setSize(2);
 		this.itTmArquivo.setEnable(false);
 		
-		this.itSnPasta = new CheckBox("pasta?", "sim");
-		this.itSnPasta.setColumn("snPasta@itSnPasta");
+		this.itSnPasta = new js.underas.controller.CheckBox("pasta?", "sim");
+		this.itSnPasta.setColumn("@snPasta");
 		this.itSnPasta.setLabel("pasta?");	
 		this.itSnPasta.setUnCheckedValue("N");
 		this.itSnPasta.setCheckedValue("S");
 		this.itSnPasta.setSize(3);	
 		this.itSnPasta.setEnable(false);
 		
-		this.itCaminho = new InputText("/");
-		this.itCaminho.setColumn("caminho@itCaminho");
+		this.itCaminho = new js.underas.controller.InputText("/");
+		this.itCaminho.setColumn("@caminho");
 		this.itCaminho.setLabel("caminho");	
 		this.itCaminho.setSize(9);
 		this.itCaminho.setEnable(false);
 		
-		this.mainList = new ListView("arquivos");		
+		this.mainList = new js.underas.controller.ListView("arquivos");		
 		this.setMainList("mainList");
 		this.mainList.setItemRender("ArquivoRender");
 		
-		this.mainTb = new ToolBar({"domain":"arquivo.business.ArquivoBLL"});		
+		this.mainTb = new js.underas.net.ToolBar({"domain":"ws/arquivo/arquivo"});		
 		
-		this.btExplorar = new Button("Abrir");
+		this.btExplorar = new js.underas.controller.Button("Abrir");
 		this.btExplorar.setIcon("folder-open");
 		
-		this.btExplorar.getEle().addEvent('click',function(){
+		this.btExplorar.addEvent('click',function(){
 			if(arquivo.itSnPasta.getValue()=="N"){
-				_.loadModule({"mod":"Tabela","url":"js/br/net/underdesk/codigogerador/view/Tabela.js","act":"getTabelas","p":[arquivo.itCaminho.getValue()],"icon":"indent-left","title":"*Geracao de Codigo"});
+				js.underas.core.Underas.loadModule({"mod":"br.net.underdesk.codigogerador.view.Tabela","act":"getTabelas","p":[arquivo.itCaminho.getValue()],"icon":"indent-left","title":"*Geracao de Codigo"});
 			}else{
 				arquivo.getByCaminho(arquivo.itCaminho.getValue());
 			}
@@ -71,21 +71,10 @@ var Arquivo = new Class({
 		
 		
 		
-		this.btBaixar = new Button("Baixar");
+		this.btBaixar = new js.underas.controller.Button("Baixar");
 		this.btBaixar.setIcon("download-alt");
 		this.btBaixar.getEle().set("target","_blank");
-		this.mainTb.addButton(this.btBaixar);
-		
-		
-		this.itIdArquivo.getInput().addEvent('change',function(){
-			var toOpen = "#";
-			if(this.value!=""){			
-				if(arquivo.itSnPasta.getValue()=="N"){
-					toOpen = "/underdesk"+arquivo.itCaminho.getValue();				
-				}
-			}
-			arquivo.btBaixar.getEle().set("href",toOpen);
-		});			
+		this.mainTb.addButton(this.btBaixar);		
 		
 		this.append(this.mainTb);
 		this.append(this.itIdArquivo);
@@ -96,16 +85,26 @@ var Arquivo = new Class({
 		this.append(this.mainList);
 		
 	}
-	,"getByCaminho":function(p_caminho){
+	,"onStart":function(){
+		this.mainTb.activate(true);
+	}
+	,"onChangeItem":function(p_obj){
+		var toOpen = "#";		
+		if(p_obj.snPasta=="N"){
+			toOpen = "/underdesk"+arquivo.itCaminho.getValue();				
+		}
+		this.btBaixar.getEle().set("href",toOpen);
+		return p_obj;
+	}
+	,"getByCaminho":function(p_caminho){		
 			this.itCaminho.setValue(p_caminho);	
-			rm.addRequest({
-			"p":p_caminho,
-			"puid":this.getVarModule(),
-			"s":"arquivo.business.ArquivoBLL.getByPath",
-			"onLoad":function(dta){
-			    	arquivo.getMainList().setDataProvider(dta.rs).refresh();		
-			    	arquivo.mainTb.turnOnItemChangeEvent();
-			    }
+			js.underas.net.RequestManager.addRequest({
+				"urlpath":p_caminho,
+				"puid":this.getVarModule(),
+				"url":"ws/arquivo/arquivo/getbypath",
+				"onLoad":function(dta){
+				    	this.getMainList().setDataProvider(dta);
+				    }.bind(this)
 			  });
 	}
 	,"beforeQuery":function(p_req_obj){

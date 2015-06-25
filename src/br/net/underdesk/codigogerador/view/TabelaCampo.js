@@ -1,5 +1,5 @@
 var TabelaCampoRender = new Class({
-					"Extends":Component
+					"Extends":js.underas.controller.ListViewItemRender
 					,"initialize":function(p_obj){						
 						var htmlTmp = '<h4>'+p_obj.campo+'</h4>';								
 						htmlTmp += '<p class="list-group-item-text">'+p_obj.dsCampo+"</p>";
@@ -12,7 +12,7 @@ var TabelaCampoRender = new Class({
 				});
 
 var TabelaCampo = new Class({
-	"Extends":ModWindow
+	"Extends":js.underas.container.ModWindow
 	,"itIdTabelaCampo":null
 	,"itCampo":null
 	,"itDsCampo":null
@@ -22,54 +22,47 @@ var TabelaCampo = new Class({
 	,"initialize":function(){
 		this.parent("campos da tabela");
 		this.setRevision("$Revision$");
-		this.setSize(7);	
+		this.setSize(7);
 		
-		this.itIdTabelaCampo = new InputText("");
-		this.itIdTabelaCampo.setColumn("idTabelaCampo@itIdTabelaCampo");
+		this.itIdTabelaCampo = new js.underas.controller.InputText("");
+		this.itIdTabelaCampo.setColumn("$idTabelaCampo");
 		this.itIdTabelaCampo.setLabel("cod.");
 		this.itIdTabelaCampo.setSize(2);	
 		this.itIdTabelaCampo.setEnable(false);
 		
-		this.itCampo = new InputText("");
-		this.itCampo.setColumn("campo@itCampo");
+		this.itCampo = new js.underas.controller.InputText("");
+		this.itCampo.setColumn("@campo");
 		this.itCampo.setLabel("campo");	
 		this.itCampo.setSize(4);	
 		
-		this.itDsCampo = new InputText("");
-		this.itDsCampo.setColumn("dsCampo@itDsCampo");
+		this.itDsCampo = new js.underas.controller.InputText("");
+		this.itDsCampo.setColumn("@dsCampo");
 		this.itDsCampo.setLabel("descricao do campo");	
 		this.itDsCampo.setSize(6);		
 		
-		this.itTipo = new Select("tipo_campo");
-		this.itTipo.setColumn("tipo@itTipo");
+		this.itTipo = new js.underas.controller.Select("tipo_campo");
+		this.itTipo.setColumn("@tipo");
 		this.itTipo.setLabel("tipo do campo");	
 		this.itTipo.setSize(4);	
 		this.itTipo.setValueField("idTpCampo");
 		this.itTipo.setLabelField("dsTpCampo");
-		this.itTipo.setDataProvider([
-                    {"idTpCampo":"int","dsTpCampo":"inteiro"}
-                    ,{"idTpCampo":"varchar","dsTpCampo":"texto"}
-                    ,{"idTpCampo":"date","dsTpCampo":"data"}
-                    ,{"idTpCampo":"real","dsTpCampo":"flutuante"}
-                    ,{"idTpCampo":"decimal","dsTpCampo":"decimal"}
-                    ]);
 		
-		this.itLimite = new NumericStepper(1);
-		this.itLimite.setColumn("limite@itLimite");
+		this.itLimite = new js.underas.controller.NumericStepper(1);
+		this.itLimite.setColumn("@limite");
 		this.itLimite.setLabel("tamanho");
 		this.itLimite.setSize(4);	
 		
-		this.itSnNull = new CheckBox("campo nulo?", "sim");
-		this.itSnNull.setColumn("snNull@itSnNull");
+		this.itSnNull = new js.underas.controller.CheckBox("campo nulo?", "sim");
+		this.itSnNull.setColumn("@snNull");
 		this.itSnNull.setLabel("campo nulo?");	
 		this.itSnNull.setSize(4);	
 		this.itSnNull.setUnCheckedValue("N");
 		this.itSnNull.setCheckedValue("S");
 				
-		this.mainList = new ListView("campos");
+		this.mainList = new js.underas.controller.ListView("campos");
 		this.mainList.setItemRender("TabelaCampoRender");
 		this.setMainList("mainList");		
-		this.mainTb = new ToolBar({"domain":"codigogerador.business.TabelaCampoBLL"});
+		this.mainTb = new js.underas.net.ToolBar({"domain":"ws/codigogerador/tabelacampo"});
 		
 		this.append(this.mainTb);
 		this.append(this.itIdTabelaCampo);
@@ -79,6 +72,17 @@ var TabelaCampo = new Class({
 		this.append(this.itLimite);
 		this.append(this.itSnNull);			
 		this.append(this.mainList);
+	}
+	,"onStart":function(){
+		this.mainTb.activate(true);	
+		this.itTipo.setDataProvider([
+		                             {"idTpCampo":"int","dsTpCampo":"inteiro"}
+		                             ,{"idTpCampo":"varchar","dsTpCampo":"texto"}
+		                             ,{"idTpCampo":"date","dsTpCampo":"data"}
+		                             ,{"idTpCampo":"real","dsTpCampo":"flutuante"}
+		                             ,{"idTpCampo":"decimal","dsTpCampo":"decimal"}
+		                             ]);
+	
 	}
 	,"beforeSave":function(p_obj){
 		p_obj["caminho"] = arquivo.itCaminho.getValue();
@@ -92,12 +96,10 @@ var TabelaCampo = new Class({
 	}
 	,"getCampos":function(p_idTabela){
 		if(tabela.mainList.getSelectedItem(true)["campo"]){
-			tabelacampo.mainList.setDataProvider(tabela.mainList.getSelectedItem(true)["campo"]).refresh();				  
+			tabelacampo.mainList.setDataProvider(tabela.mainList.getSelectedItem(true)["campo"]);				  
 		}else{
-			tabelacampo.mainList.setDataProvider([]).refresh();				  
-		}
-		tabelacampo.mainTb.turnOnItemChangeEvent();
- 
+			tabelacampo.mainList.setDataProvider([]);				  
+		} 
 	}
 });
 

@@ -1,15 +1,16 @@
-{
-		"idTabela":1
-		,"caminho":""
-		,"dsTabela":"atividade_privilegio_grupo"
-		,"dominio":"atividadeprivilegiogrupo"
-		,"pacote":"br.net.ata3prd"
-		,"tipo":"table"
-		,"chavePrimaria":"idAtividadePrivilegioGrupo"
-		,"tpGeracao":"increment"
-		,"imports":[]
-		,"campo":[
-			{
+[
+	{
+	"idTabela":1
+	,"caminho":""
+	,"dsTabela":"atividade_privilegio_grupo"
+	,"dominio":"atividadeprivilegiogrupo"
+	,"pacote":"br.net.ata3prd"
+	,"tipo":"table"
+	,"chavePrimaria":"idAtividadePrivilegioGrupo"
+	,"tpGeracao":"increment"
+	,"imports":[]
+	,"campo":[
+		{
 				"idTabelaCampo":1
 				,"campo":"ID_ATIVIDADE_PRIVILEGIO_GRUPO"
 				,"tipo":"int"
@@ -1032,3 +1033,4 @@
 			}
 		]
 	}
+]
