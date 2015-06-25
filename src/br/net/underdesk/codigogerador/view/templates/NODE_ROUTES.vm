@@ -1,0 +1,39 @@
+module.exports = function(app) {
+${tab}app.get("/${classe.getNome().toLowerCase()}",function(req, res){
+${tab}${tab}app.controllers.${classe.getNome().toLowerCase()}.get({},
+${tab}${tab}${tab}function(dta){
+${tab}${tab}${tab}${tab}res.json(dta);
+${tab}${tab}${tab}}
+${tab}${tab}${tab},function(erro){
+${tab}${tab}${tab}${tab}res.json(dta);
+${tab}${tab}${tab}}
+${tab}${tab});		
+${tab}}).delete("/${classe.getNome().toLowerCase()}/:p_id",function(req, res){	
+${tab}${tab}app.controllers.${classe.getNome().toLowerCase()}.delete(req.params.p_id,
+${tab}${tab}${tab}function(dta){
+${tab}${tab}${tab}${tab}res.json(dta);
+${tab}${tab}${tab}}
+${tab}${tab}${tab},function(erro){
+${tab}${tab}${tab}${tab}res.json(dta);
+${tab}${tab}${tab}}
+${tab}${tab});		
+${tab}}).post("/${classe.getNome().toLowerCase()}",function(req, res){	
+${tab}${tab}app.controllers.${classe.getNome().toLowerCase()}.insert(req.body,
+${tab}${tab}${tab}function(dta){
+${tab}${tab}${tab}${tab}res.json(dta);
+${tab}${tab}${tab}}
+${tab}${tab}${tab},function(erro){
+${tab}${tab}${tab}${tab}res.json(dta);
+${tab}${tab}${tab}}
+${tab}${tab});		
+${tab}}).put("/${classe.getNome().toLowerCase()}",function(req, res){	
+${tab}${tab}app.controllers.${classe.getNome().toLowerCase()}.update(req.body,
+${tab}${tab}${tab}function(dta){
+${tab}${tab}${tab}${tab}res.json(dta);
+${tab}${tab}${tab}}
+${tab}${tab}${tab},function(erro){
+${tab}${tab}${tab}${tab}res.json(dta);
+${tab}${tab}${tab}}
+${tab}${tab});		
+${tab}});
+};
