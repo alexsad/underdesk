@@ -1,10 +1,14 @@
 package br.net.underdesk.codigogerador.business;
 
-import java.io.BufferedInputStream; import java.io.BufferedOutputStream; import java.io.File; import java.io.FileInputStream; import java.io.FileOutputStream; import java.io.IOException; import java.util.zip.ZipEntry; import java.util.zip.ZipOutputStream;
+import java.io.BufferedInputStream; import java.io.BufferedOutputStream; import java.io.File; import java.io.FileInputStream; import java.io.FileOutputStream; import java.io.FileWriter;
+import java.io.IOException; import java.io.PrintWriter;
+import java.nio.file.Paths;
+import java.util.zip.ZipEntry; import java.util.zip.ZipOutputStream;
 
 public class CompactadorBLL {
 	
 	static final int TAMANHO_BUFFER = 4096; // 4kb     
+	private static PrintWriter gravarArq;
 
 	// método para compactar arquivo
 	public static void compactarParaZip(String arqSaida, String arqEntrada)
@@ -33,7 +37,26 @@ public class CompactadorBLL {
 			throw new IOException(e.getMessage());
 		}
 	}
-
+    public static void criaDiretorio(String novoDiretorio){         
+        try { 
+             if (!Paths.get(novoDiretorio).toFile().exists()) { // Verifica se o diretório existe.   
+                 (new File(novoDiretorio)).mkdir();   // Cria o diretório   
+             }   
+        } catch (Exception ex) {   
+            System.out.println("Erro ao criar o diretório" + ex.toString());   
+        }  
+    }  
+    public static void criaArquivo(String nmArquivo,String conteudo){         
+    	FileWriter arq;
+		try {
+			arq = new FileWriter(nmArquivo);
+			gravarArq = new PrintWriter(arq);
+		    gravarArq.printf(conteudo);
+		    arq.close();
+		} catch (IOException e){			
+			e.printStackTrace();
+		}       
+      }  
 	 public static void compactarPasta (String arqSaida ,String pathEntrada) {   
 	        int i, cont;   
 	        byte[] dados = new byte[TAMANHO_BUFFER];   

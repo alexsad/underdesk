@@ -71,12 +71,12 @@ var Tabela = new Class({
 		this.ittipoTemplate.setValueField("idTipoTemplate");
 		this.ittipoTemplate.setLabelField("dsTipoTemplate");
 
-		
+		/*
 		this.itrs = new js.underas.controller.TextArea("");
 		this.itrs.setLabel("resultado:");
 		this.itrs.setSize(12);
 		this.itrs.getEle("textarea").setStyles({"background-color":"#272822","color":"#AAA55F","height":"220px"});
-
+		 */
 		this.mainList = new js.underas.controller.ListView("tabelas");
 		this.mainList.setItemRender("TabelaRender");
 		this.setMainList("mainList");
@@ -100,23 +100,22 @@ var Tabela = new Class({
 		this.append(this.itTipo);	
 		this.append(this.itTpGeracao);
 		this.append(this.ittipoTemplate);
-		this.append(this.mainList);
-		this.append(this.itrs);		
+		this.append(this.mainList);	
 		this.addAssociation({"mod":"br.net.underdesk.codigogerador.view.TabelaCampo","act":"getCampos","puid":this.getVarModule()});
 	}
 	,"onStart":function(){
 		this.mainTb.activate(true);
 		
 		this.ittipoTemplate.setDataProvider([
-		                                     {"idTipoTemplate":"JAVA","dsTipoTemplate":"arquivo java"}
-		                                     ,{"idTipoTemplate":"DAO","dsTipoTemplate":"arquivo DAO"}
-		                                     ,{"idTipoTemplate":"BLL","dsTipoTemplate":"arquivo BLL"}
-		                                     ,{"idTipoTemplate":"JS","dsTipoTemplate":"arquivo java script"}
-		                 					 ,{"idTipoTemplate":"JSMOOLTOOLS","dsTipoTemplate":"arquivo java script mooltools"}
-		                                     ,{"idTipoTemplate":"SQL","dsTipoTemplate":"arquivo SQL"}
-		                                     ,{"idTipoTemplate":"NODE_SCHEMA","dsTipoTemplate":"arquivo de schema NODE"}
-		                 					 ,{"idTipoTemplate":"NODE_BLL","dsTipoTemplate":"arquivo de controller NODE"}
-		                                     ,{"idTipoTemplate":"NODE_ROUTES","dsTipoTemplate":"arquivo de rota NODE"}
+		                                     {"idTipoTemplate":"JAVA@java","dsTipoTemplate":"arquivo java"}
+		                                     ,{"idTipoTemplate":"DAO@java","dsTipoTemplate":"arquivo DAO"}
+		                                     ,{"idTipoTemplate":"BLL@java","dsTipoTemplate":"arquivo BLL"}
+		                                     ,{"idTipoTemplate":"JS@js","dsTipoTemplate":"arquivo java script"}
+		                 					 ,{"idTipoTemplate":"JSMOOLTOOLS@js","dsTipoTemplate":"arquivo java script mooltools"}
+		                                     ,{"idTipoTemplate":"SQL@sql","dsTipoTemplate":"arquivo SQL"}
+		                                     ,{"idTipoTemplate":"NODE_SCHEMA@js","dsTipoTemplate":"arquivo de schema NODE"}
+		                 					 ,{"idTipoTemplate":"NODE_BLL@js","dsTipoTemplate":"arquivo de controller NODE"}
+		                                     ,{"idTipoTemplate":"NODE_ROUTES@js","dsTipoTemplate":"arquivo de rota NODE"}
 		                                     ]);
 		
 		this.itTpGeracao.setDataProvider([
@@ -142,7 +141,7 @@ var Tabela = new Class({
 		 p_obj_req["url"]=urlcaminho; 
 		 return p_obj_req;
 	}
-	,"gerarCodigo":function(){
+	,"gerarCodigoSingle":function(){
 		js.underas.net.RequestManager.addRequest({							
 			 	"idTabela":tabela.itidTabela.getValue()			     
 			    ,"tpTemplate":tabela.ittipoTemplate.getValue()
@@ -153,6 +152,32 @@ var Tabela = new Class({
 				,"url":"ws/codigogerador/tabela/gerarcodigo"
 				,"onLoad":function(dta){
 						this.itrs.setValue(dta);
+				}.bind(this)
+		});	
+	}
+	,"gerarCodigo":function(){
+		
+		var tabSelection = Object.merge({			 	
+			"idTabela":tabela.itidTabela.getValue()			     
+		    ,"tpTemplate":tabela.ittipoTemplate.getValue()
+		    ,"caminho":arquivo.itCaminho.getValue()
+		    ,"exportsto":[tabela.ittipoTemplate.getValue()]
+			},this.getMainList().getSelectedItem());
+		
+		var tabSelection2 = Object.merge({			 	
+			"idTabela":tabela.itidTabela.getValue()			     
+		    ,"tpTemplate":tabela.ittipoTemplate.getValue()
+		    ,"caminho":arquivo.itCaminho.getValue()
+		    ,"exportsto":[tabela.ittipoTemplate.getValue(),"JSMOOLTOOLS@js","NODE_BLL@js"]
+			},this.getMainList().getSelectedItem());
+		
+		js.underas.net.RequestManager.addRequest({	
+				"data":[tabSelection,tabSelection2]
+				,"puid":this.getVarModule()
+				,"method":"post"
+				,"url":"ws/codigogerador/tabela/gerarcodigo"
+				,"onLoad":function(dta){
+						//this.itrs.setValue(dta);
 				}.bind(this)
 		});	
 	}

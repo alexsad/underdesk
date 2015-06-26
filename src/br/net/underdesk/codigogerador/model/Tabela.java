@@ -45,12 +45,13 @@ public class Tabela {
 	@Column(name="chave_primaria")
 	private String chavePrimaria;
 	@Column(name="tp_geracao")
-	private String tpGeracao;
-	
+	private String tpGeracao;	
 	@Transient
 	private List<String> imports = new ArrayList<String>();
 	@Transient
-	private List<TabelaCampo> campo = null;
+	private List<TabelaCampo> campo = null;	
+	@Transient
+	private String[] exportsto=null;
 	
 	public Tabela() {
 		super();
@@ -198,6 +199,12 @@ public class Tabela {
 
 	public void setImports(ArrayList<String> imports) {
 		this.imports = imports;
+	}
+
+	public String[] getExportsto() {
+		return exportsto;
+	}
+	public void setExportsto(String[] exportsto) {
+		this.exportsto = exportsto;
 	}	
-	
 }

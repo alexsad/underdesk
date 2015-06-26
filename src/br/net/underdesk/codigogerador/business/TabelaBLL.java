@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import br.net.underdesk.codigogerador.dao.TabelaDAO;
 import br.net.underdesk.codigogerador.model.Tabela;
 import br.net.underdesk.codigogerador.model.TabelaCampo;
@@ -48,13 +49,33 @@ public class TabelaBLL {
 		System.out.println(stbS);
 		return stbS;
 	}
-    @RequestMapping(value="/gerarcodigo",method=RequestMethod.POST)
-	public String gerarCodigo(@RequestBody Tabela t){
+    @RequestMapping(value="/gerarcodigobytabela",method=RequestMethod.POST)
+	public String gerarCodigoByTabela(@RequestBody Tabela t){
 		Tabela tabelaC = this.getByIdTabela(t.getCaminho(),t.getIdTabela());
 		String rs = this.dao.gerarCodigo(tabelaC,t.getTpTemplate());
 		System.out.println(rs);
 		return rs;
 	}	
+    @RequestMapping(value="/gerarcodigo",method=RequestMethod.POST)
+	public String gerarCodigo(@RequestBody List<Tabela> lsttab){    	
+		int tmT = lsttab.size();
+		String dirBase = "/mnt/arquivos/tmp/gen"; 
+		for(int x =0 ;x < tmT;x++){			
+			if(lsttab.get(x).getAllCampos().size()>0){				
+				int tmtoexport = lsttab.get(x).getExportsto().length;				
+				for(int y=0;y<tmtoexport;y++){	
+					String tmpExport = lsttab.get(x).getExportsto()[y];
+					String tmpPath = dirBase+"/"+this.dao.getTipo(tmpExport);
+					CompactadorBLL.criaDiretorio(tmpPath);
+					CompactadorBLL.criaArquivo(tmpPath+"/"+lsttab.get(x).getNome()+"."+this.dao.getExtencao(tmpExport), this.dao.gerarCodigo(lsttab.get(x),tmpExport));
+				}				
+				//CompactadorBLL.criaDiretorio(lsttab.get(x).getExportsto()[1]);				
+			};
+		};
+		//return "";
+		//System.out.println(stbS);		
+		return "url";
+	}
     @RequestMapping(value="/getbyidtabela/{idTabela}",method=RequestMethod.GET)
     public Tabela getByIdTabela(@RequestParam(value = "urlc") String urlc,@PathVariable("idTabela") int idTabela){
         return this.dao.getByIdTabela(urlc,idTabela);

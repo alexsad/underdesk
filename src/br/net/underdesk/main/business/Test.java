@@ -5,10 +5,13 @@ import br.net.underdesk.codigogerador.business.CompactadorBLL;
 public class Test {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		try {
+			String dirBase = "/mnt/arquivos/tmp/gen/";
 			//CompactadorBLL.compactarParaZip("C:\\temp\\zipado.zip", "C:\\temp\\resol.pdf");
-			CompactadorBLL.compactarPasta("C:\\temp\\zipadopasta.zip","C:\\temp\\zipado");
+			CompactadorBLL.compactarPasta(dirBase+"zipadopasta.zip",dirBase);
+			
+			//CompactadorBLL.criaDiretorio(dirBase+"tozip");
+			//CompactadorBLL.criaArquivo(dirBase+"tozip/teste.txt","vamo ver se sim funciona?");
 			
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -19,7 +19,7 @@
     <context:property-placeholder location="file:C:/sistemas/db/underdesk_configuration.properties" />
     <context:property-placeholder location="file:/mnt/arquivos/workspace/db/ata3/ata3_configuration.properties" />
      -->
-     <context:property-placeholder location="file:C:/sistemas/db/underdesk_configuration.properties" />        
+    <context:property-placeholder location="file:/mnt/arquivos/workspace/db/ata3/ata3_configuration.properties" />        
     <!-- JSR-303 support will be detected on classpath and enabled automatically -->	
 	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" /> 
 	

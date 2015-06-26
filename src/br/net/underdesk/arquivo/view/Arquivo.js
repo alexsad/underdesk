@@ -99,10 +99,10 @@ var Arquivo = new Class({
 	,"getByCaminho":function(p_caminho){		
 			this.itCaminho.setValue(p_caminho);	
 			js.underas.net.RequestManager.addRequest({
-				"urlpath":p_caminho,
-				"puid":this.getVarModule(),
-				"url":"ws/arquivo/arquivo/getbypath",
-				"onLoad":function(dta){
+				"data":{"urlpath":p_caminho}
+				,"puid":this.getVarModule()
+				,"url":"ws/arquivo/arquivo/getbypath"
+				,"onLoad":function(dta){
 				    	this.getMainList().setDataProvider(dta);
 				    }.bind(this)
 			  });

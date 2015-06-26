@@ -4,20 +4,26 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.StringWriter;
+
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.springframework.stereotype.Repository;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import java.lang.reflect.Type;
+
 import br.net.underdesk.codigogerador.model.Tabela;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -27,19 +33,19 @@ public class TabelaDAO {
 	@PersistenceContext()
 	private EntityManager manager;
 	
-	public final static String TP_HBM = "HBM";
-	public final static String TP_JAVA = "JAVA";
-	public final static String TP_DAO = "DAO";
-	public final static String TP_BLL = "BLL";
-	public final static String TP_JS = "JS";
-	public final static String TP_JSMOOLTOOLS = "JSMOOLTOOLS";
-	public final static String TP_INDEX = "HTML";
-	public final static String TP_HBC = "HBC";
-	public final static String TP_UML = "UML";
-	public final static String TP_STB = "STBJSON";
-	public final static String TP_NODESCHEMA = "NODE_SCHEMA";
-	public final static String TP_NODEBLL = "NODE_BLL";
-	public final static String TP_NODEROUTES = "NODE_ROUTES";
+	public final static String TP_HBM = "HBM@java";
+	public final static String TP_JAVA = "JAVA@java";
+	public final static String TP_DAO = "DAO@java";
+	public final static String TP_BLL = "BLL@java";
+	public final static String TP_JS = "JS@js";
+	public final static String TP_JSMOOLTOOLS = "JSMOOLTOOLS@js";
+	public final static String TP_INDEX = "HTML@html";
+	public final static String TP_HBC = "HBC@xml";
+	public final static String TP_UML = "UML@html";
+	public final static String TP_STB = "STBJSON@json";
+	public final static String TP_NODESCHEMA = "NODE_SCHEMA@js";
+	public final static String TP_NODEBLL = "NODE_BLL@js";
+	public final static String TP_NODEROUTES = "NODE_ROUTES@js";
 	
 	Gson gson = null;	
 	private String urlTemplates =  "br/net/underdesk/codigogerador/view/templates/";	
@@ -56,9 +62,15 @@ public class TabelaDAO {
 	private String getPackageUrl(Tabela cls){    	
 	    return cls.getDominio().replaceAll("[.]","/");   	
 	}
+	public String getTipo(String tipo){
+		return tipo.substring(0,tipo.indexOf("@"));
+	}
+	public String getExtencao(String tipo){
+		return tipo.substring(tipo.indexOf("@")+1);		
+	}
 	public String gerarCodigo(Tabela tabelaC,String tipoTemplate){	
 		VelocityContext context = new VelocityContext();
-		String local = this.urlTemplates+tipoTemplate;
+		String local = this.urlTemplates+this.getTipo(tipoTemplate);
 		VelocityEngine ve = new VelocityEngine();
 		ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
 		ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
