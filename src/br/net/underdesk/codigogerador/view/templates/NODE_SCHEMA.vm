@@ -14,5 +14,6 @@ ${tab}${tab}}
 #set( $count = $count + 1 )	 
 #end
 ${tab}});
+schema.virtual("${classe.getPrimaryKey().getColuna()}").get(function() {return this._id; });
 ${tab}return mongoose.model("${classe.getNome()}",schema);
 };

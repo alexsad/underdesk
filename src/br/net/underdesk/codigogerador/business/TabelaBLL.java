@@ -68,6 +68,7 @@ public class TabelaBLL {
 					String tmpExport = lsttab.get(x).getExportsto()[y];
 					String tmpPath = dirBase+"/"+this.dao.getTipo(tmpExport);
 					CompactadorBLL.criaDiretorio(tmpPath);
+					lsttab.get(x).setTpTemplate(this.dao.getTipo(tmpExport));
 					CompactadorBLL.criaArquivo(tmpPath+"/"+lsttab.get(x).getNome()+"."+this.dao.getExtencao(tmpExport), this.dao.gerarCodigo(lsttab.get(x),tmpExport));
 				}				
 				//CompactadorBLL.criaDiretorio(lsttab.get(x).getExportsto()[1]);				

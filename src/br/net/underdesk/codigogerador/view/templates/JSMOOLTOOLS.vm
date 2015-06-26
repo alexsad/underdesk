@@ -45,7 +45,11 @@ ${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabel("${campo.getDsCampo()
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setValueField("${campo.getFkService()}");
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabelField("${campo.getFkService()}");
 #elseif($campo.getColuna()==$classe.getPrimaryKey().getColuna())
+#if($classe.getTpTemplate()=="NODE_SCHEMA")
+${tab}${tab}this.it${campo.getColunaCapitalize()}.setColumn("$_id");
+#else
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setColumn("$${campo.getColuna()}");
+#end
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabel("cod.");
 ${tab}${tab}this.it${classe.getPrimaryKey().getColunaCapitalize()}.setEnable(false);	
 #else
