@@ -1,6 +1,6 @@
 module.exports = function(app) {	
 ${tab}return {
-${tab}${tab}"get":function(p_${classe.getNome().toLowerCase()},p_fnsuccess,p_fnerror){
+${tab}${tab}"get":function(p_fnsuccess,p_fnerror){
 ${tab}${tab}${tab}app.models.${classe.getNome().toLowerCase()}.find().exec().then(p_fnsuccess,p_fnerror);
 ${tab}${tab}}
 ${tab}${tab},"insert":function(p_${classe.getNome().toLowerCase()},p_fnsuccess,p_fnerror) {		

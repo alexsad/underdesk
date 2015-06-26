@@ -59,7 +59,8 @@ public class TabelaBLL {
     @RequestMapping(value="/gerarcodigo",method=RequestMethod.POST)
 	public String gerarCodigo(@RequestBody List<Tabela> lsttab){    	
 		int tmT = lsttab.size();
-		String dirBase = "/mnt/arquivos/tmp/gen"; 
+		//String dirBase = "/mnt/arquivos/tmp/gen"; 
+		String dirBase = "C:/temp/gen"; 
 		for(int x =0 ;x < tmT;x++){			
 			if(lsttab.get(x).getAllCampos().size()>0){				
 				int tmtoexport = lsttab.get(x).getExportsto().length;				

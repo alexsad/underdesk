@@ -65,11 +65,69 @@ var Tabela = new Class({
 		this.itChavePrimaria.setColumn("@chavePrimaria");		
 		this.itChavePrimaria.setSize(12);	
 		
+		/*
 		this.ittipoTemplate = new js.underas.controller.Select("tipo_template");
 		this.ittipoTemplate.setLabel("exportar para:");	
 		this.ittipoTemplate.setSize(12);
 		this.ittipoTemplate.setValueField("idTipoTemplate");
 		this.ittipoTemplate.setLabelField("dsTipoTemplate");
+		*/
+		
+		this.itSnModelJava = new js.underas.controller.CheckBox("Valido?", "Sim");
+		this.itSnModelJava.setEnable(true);
+		this.itSnModelJava.setSize(4);
+		this.itSnModelJava.setLabel("arquivo de modelo java:");
+		this.itSnModelJava.setCheckedValue("JAVA@java");
+		this.itSnModelJava.setUnCheckedValue("");		
+		this.append(this.itSnModelJava);
+		
+		this.itSnDaoJava = new js.underas.controller.CheckBox("Valido?", "Sim");
+		this.itSnDaoJava.setEnable(true);
+		this.itSnDaoJava.setSize(4);
+		this.itSnDaoJava.setLabel("arquivo de DAO java:");
+		this.itSnDaoJava.setCheckedValue("DAO@java");
+		this.itSnDaoJava.setUnCheckedValue("");		
+		this.append(this.itSnDaoJava);
+		
+		this.itSnBLLJava = new js.underas.controller.CheckBox("Valido?", "Sim");
+		this.itSnBLLJava.setEnable(true);
+		this.itSnBLLJava.setSize(4);
+		this.itSnBLLJava.setLabel("arquivo de negocio java:");
+		this.itSnBLLJava.setCheckedValue("BLL@java");
+		this.itSnBLLJava.setUnCheckedValue("");		
+		this.append(this.itSnBLLJava);
+		
+		this.itSnJsMoolTools = new js.underas.controller.CheckBox("Valido?", "Sim");
+		this.itSnJsMoolTools.setEnable(true);
+		this.itSnJsMoolTools.setSize(12);
+		this.itSnJsMoolTools.setLabel("arquivo visual javascript mootools:");
+		this.itSnJsMoolTools.setCheckedValue("JSMOOLTOOLS@js");
+		this.itSnJsMoolTools.setUnCheckedValue("");		
+		this.append(this.itSnJsMoolTools);
+		
+		this.itSnNodeSchemaJs = new js.underas.controller.CheckBox("Valido?", "Sim");
+		this.itSnNodeSchemaJs.setEnable(true);
+		this.itSnNodeSchemaJs.setSize(4);
+		this.itSnNodeSchemaJs.setLabel("arquivo Schema NODEJS:");
+		this.itSnNodeSchemaJs.setCheckedValue("NODE_SCHEMA@js");
+		this.itSnNodeSchemaJs.setUnCheckedValue("");		
+		this.append(this.itSnNodeSchemaJs);
+		
+		this.itSnNodeBLLJs = new js.underas.controller.CheckBox("Valido?", "Sim");
+		this.itSnNodeBLLJs.setEnable(true);
+		this.itSnNodeBLLJs.setSize(4);
+		this.itSnNodeBLLJs.setLabel("arquivo negocio NODEJS:");
+		this.itSnNodeBLLJs.setCheckedValue("NODE_BLL@js");
+		this.itSnNodeBLLJs.setUnCheckedValue("");		
+		this.append(this.itSnNodeBLLJs);
+		
+		this.itSnNodeRouteJs = new js.underas.controller.CheckBox("Valido?", "Sim");
+		this.itSnNodeRouteJs.setEnable(true);
+		this.itSnNodeRouteJs.setSize(4);
+		this.itSnNodeRouteJs.setLabel("arquivo rota NODEJS:");
+		this.itSnNodeRouteJs.setCheckedValue("NODE_ROUTES@js");
+		this.itSnNodeRouteJs.setUnCheckedValue("");		
+		this.append(this.itSnNodeRouteJs);
 
 		/*
 		this.itrs = new js.underas.controller.TextArea("");
@@ -99,25 +157,28 @@ var Tabela = new Class({
 		this.append(this.itChavePrimaria);
 		this.append(this.itTipo);	
 		this.append(this.itTpGeracao);
-		this.append(this.ittipoTemplate);
+		//this.append(this.ittipoTemplate);
 		this.append(this.mainList);	
 		this.addAssociation({"mod":"br.net.underdesk.codigogerador.view.TabelaCampo","act":"getCampos","puid":this.getVarModule()});
 	}
 	,"onStart":function(){
 		this.mainTb.activate(true);
 		
+
+		
+		/*
 		this.ittipoTemplate.setDataProvider([
 		                                     {"idTipoTemplate":"JAVA@java","dsTipoTemplate":"arquivo java"}
 		                                     ,{"idTipoTemplate":"DAO@java","dsTipoTemplate":"arquivo DAO"}
 		                                     ,{"idTipoTemplate":"BLL@java","dsTipoTemplate":"arquivo BLL"}
-		                                     ,{"idTipoTemplate":"JS@js","dsTipoTemplate":"arquivo java script"}
+		                                     //,{"idTipoTemplate":"JS@js","dsTipoTemplate":"arquivo java script"}
 		                 					 ,{"idTipoTemplate":"JSMOOLTOOLS@js","dsTipoTemplate":"arquivo java script mooltools"}
-		                                     ,{"idTipoTemplate":"SQL@sql","dsTipoTemplate":"arquivo SQL"}
+		                                     //,{"idTipoTemplate":"SQL@sql","dsTipoTemplate":"arquivo SQL"}
 		                                     ,{"idTipoTemplate":"NODE_SCHEMA@js","dsTipoTemplate":"arquivo de schema NODE"}
 		                 					 ,{"idTipoTemplate":"NODE_BLL@js","dsTipoTemplate":"arquivo de controller NODE"}
 		                                     ,{"idTipoTemplate":"NODE_ROUTES@js","dsTipoTemplate":"arquivo de rota NODE"}
 		                                     ]);
-		
+		*/
 		this.itTpGeracao.setDataProvider([
 		                                  {"idTpGeracao":"increment","dsTpGeracao":"incrementavel"}
 		                                  ,{"idTpGeracao":"unsigned","dsTpGeracao":"fornecida"}
@@ -157,6 +218,46 @@ var Tabela = new Class({
 	}
 	,"gerarCodigo":function(){
 		
+		
+		var selecteds = [];
+		
+		if(this.itSnModelJava.getValue()!=""){
+			var tms = selecteds.length;
+			selecteds[tms] = this.itSnModelJava.getValue();
+		};
+		if(this.itSnDaoJava.getValue()!=""){
+			var tms = selecteds.length;
+			selecteds[tms] = this.itSnDaoJava.getValue();
+		};
+		if(this.itSnBLLJava.getValue()!=""){
+			var tms = selecteds.length;
+			selecteds[tms] = this.itSnBLLJava.getValue();
+		};
+		if(this.itSnJsMoolTools.getValue()!=""){
+			var tms = selecteds.length;
+			selecteds[tms] = this.itSnJsMoolTools.getValue();
+		};
+		if(this.itSnNodeSchemaJs.getValue()!=""){
+			var tms = selecteds.length;
+			selecteds[tms] = this.itSnNodeSchemaJs.getValue();
+		};
+		if(this.itSnNodeBLLJs.getValue()!=""){
+			var tms = selecteds.length;
+			selecteds[tms] = this.itSnNodeBLLJs.getValue();
+		};
+		if(this.itSnNodeRouteJs.getValue()!=""){
+			var tms = selecteds.length;
+			selecteds[tms] = this.itSnNodeRouteJs.getValue();
+		};
+		
+		var itensList = this.getMainList().getDataProvider();
+		
+		var tmLst = itensList.size();
+		
+		for(var x =0;x<tmLst;x++){
+			itensList.get(x)["exportsto"] = selecteds;
+		}
+		/*
 		var tabSelection = Object.merge({			 	
 			"idTabela":tabela.itidTabela.getValue()			     
 		    ,"tpTemplate":tabela.ittipoTemplate.getValue()
@@ -170,9 +271,9 @@ var Tabela = new Class({
 		    ,"caminho":arquivo.itCaminho.getValue()
 		    ,"exportsto":[tabela.ittipoTemplate.getValue(),"JSMOOLTOOLS@js","NODE_BLL@js"]
 			},this.getMainList().getSelectedItem());
-		
+		*/
 		js.underas.net.RequestManager.addRequest({	
-				"data":[tabSelection,tabSelection2]
+				"data":itensList.getAll()
 				,"puid":this.getVarModule()
 				,"method":"post"
 				,"url":"ws/codigogerador/tabela/gerarcodigo"

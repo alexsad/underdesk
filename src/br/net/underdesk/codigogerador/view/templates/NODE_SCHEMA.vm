@@ -1,16 +1,17 @@
+#set( $count = 0 )
 var mongoose = require("mongoose");
 module.exports = function(){
-${tab}var schema = mongoose.Schema({	
-
+${tab}var schema = mongoose.Schema({
 #foreach ($campo in $classe.getAllCampos())
-${tab}${tab},"${campo.getColuna()}":{
+${tab}${tab}#if($count>0), #end"${campo.getColuna()}":{
 ${tab}${tab}${tab}type:#if($campo.getTipo()=="int")
 Number
 #else
 $campo.getTipo()
 #end
 ${tab}${tab}${tab},required:true
-${tab}${tab}}	 
+${tab}${tab}}
+#set( $count = $count + 1 )	 
 #end
 ${tab}});
 ${tab}return mongoose.model("${classe.getNome()}",schema);

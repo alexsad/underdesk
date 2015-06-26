@@ -1,6 +1,6 @@
 module.exports = function(app) {
 ${tab}app.get("/${classe.getNome().toLowerCase()}",function(req, res){
-${tab}${tab}app.controllers.${classe.getNome().toLowerCase()}.get({},
+${tab}${tab}app.controllers.${classe.getNome().toLowerCase()}.get(
 ${tab}${tab}${tab}function(dta){
 ${tab}${tab}${tab}${tab}res.json(dta);
 ${tab}${tab}${tab}}
