@@ -2,10 +2,10 @@
 var ${classe.getNome()}ItemRender = new Class({
 ${tab}"Extends":js.underas.controller.ListViewItemRender
 ${tab},"initialize":function(p_obj){						
-${tab}${tab}var htmlTmp = '<h4>'+p_obj.${classe.getPrimaryKey().getColuna()}+'-';
+${tab}${tab}var htmlTmp = '';
 #foreach ($campo in $classe.getAllCampos())
 #if($count==1&&!$campo.isFk())
-${tab}${tab}htmlTmp += p_obj.${campo.getColuna()}+'</h4>';
+${tab}${tab}htmlTmp += '<h4>'+p_obj.${campo.getColuna()}+'</h4>';
 #elseif(!($campo.isFk()))
 ${tab}${tab}htmlTmp += '<p class="list-group-item-text">${campo.getDsCampo()}:'+p_obj.${campo.getColuna()}+'</p>'; 
 #end
@@ -30,7 +30,7 @@ ${tab}${tab}this.setRevision("$Revision: 1 $");
 #if($campo.getTipo()=="Date")
 #set( $campotuput = 'DatePicker()' )		#elseif($campo.getTipo()=="int"&&$campo.getColuna()!=$classe.getPrimaryKey().getColuna()&&!$campo.isFk())
 #set( $campotuput = 'NumericStepper(0)' )
-#elseif($campo.getLimite()>150)
+#elseif($campo.getLimite()>250)
 #set( $campotuput = 'TextArea("")' )
 #elseif($campo.isFk()&&$campo.getColuna()!=$classe.getPrimaryKey().getColuna())
 #set( $campotuput = 'Select("'+${campo.getFkService()}+'")' )
@@ -77,6 +77,7 @@ ${tab}${tab}this.it${campo.getColunaCapitalize()}.fromService(".business.BLL.get
 #end
 #end
 ${tab}${tab}this.mainTb.activate(true);
+${tab}${tab}//this.mainTb.reloadItens();
 ${tab}}
 });
 

@@ -16,8 +16,5 @@ ${tab}${tab}}
 #end
 #end
 ${tab}});
-${tab}schema.virtual("${classe.getPrimaryKey().getColuna()}").get(function() {
-${tab}${tab}return this._id;
-${tab}});
 ${tab}return mongoose.model("${classe.getNome()}",schema);
 };
