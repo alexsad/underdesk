@@ -76,7 +76,7 @@ var Tabela = new Class({
 		this.itSnModelJava = new js.underas.controller.CheckBox("Valido?", "Sim");
 		this.itSnModelJava.setEnable(true);
 		this.itSnModelJava.setSize(4);
-		this.itSnModelJava.setLabel("arquivo de modelo java:");
+		this.itSnModelJava.setLabel("Model java:");
 		this.itSnModelJava.setCheckedValue("JAVA@java");
 		this.itSnModelJava.setUnCheckedValue("");		
 		this.append(this.itSnModelJava);
@@ -84,7 +84,7 @@ var Tabela = new Class({
 		this.itSnDaoJava = new js.underas.controller.CheckBox("Valido?", "Sim");
 		this.itSnDaoJava.setEnable(true);
 		this.itSnDaoJava.setSize(4);
-		this.itSnDaoJava.setLabel("arquivo de DAO java:");
+		this.itSnDaoJava.setLabel("DAO java:");
 		this.itSnDaoJava.setCheckedValue("DAO@java");
 		this.itSnDaoJava.setUnCheckedValue("");		
 		this.append(this.itSnDaoJava);
@@ -92,7 +92,7 @@ var Tabela = new Class({
 		this.itSnBLLJava = new js.underas.controller.CheckBox("Valido?", "Sim");
 		this.itSnBLLJava.setEnable(true);
 		this.itSnBLLJava.setSize(4);
-		this.itSnBLLJava.setLabel("arquivo de negocio java:");
+		this.itSnBLLJava.setLabel("BLL java:");
 		this.itSnBLLJava.setCheckedValue("BLL@java");
 		this.itSnBLLJava.setUnCheckedValue("");		
 		this.append(this.itSnBLLJava);
@@ -100,7 +100,7 @@ var Tabela = new Class({
 		this.itSnJsMoolTools = new js.underas.controller.CheckBox("Valido?", "Sim");
 		this.itSnJsMoolTools.setEnable(true);
 		this.itSnJsMoolTools.setSize(12);
-		this.itSnJsMoolTools.setLabel("arquivo visual javascript mootools:");
+		this.itSnJsMoolTools.setLabel("Visual javascript com mootools:");
 		this.itSnJsMoolTools.setCheckedValue("JSMOOLTOOLS@js");
 		this.itSnJsMoolTools.setUnCheckedValue("");		
 		this.append(this.itSnJsMoolTools);
@@ -108,7 +108,7 @@ var Tabela = new Class({
 		this.itSnNodeSchemaJs = new js.underas.controller.CheckBox("Valido?", "Sim");
 		this.itSnNodeSchemaJs.setEnable(true);
 		this.itSnNodeSchemaJs.setSize(4);
-		this.itSnNodeSchemaJs.setLabel("arquivo Schema NODEJS:");
+		this.itSnNodeSchemaJs.setLabel("Schema NODEJS:");
 		this.itSnNodeSchemaJs.setCheckedValue("NODE_SCHEMA@js");
 		this.itSnNodeSchemaJs.setUnCheckedValue("");		
 		this.append(this.itSnNodeSchemaJs);
@@ -116,7 +116,7 @@ var Tabela = new Class({
 		this.itSnNodeBLLJs = new js.underas.controller.CheckBox("Valido?", "Sim");
 		this.itSnNodeBLLJs.setEnable(true);
 		this.itSnNodeBLLJs.setSize(4);
-		this.itSnNodeBLLJs.setLabel("arquivo negocio NODEJS:");
+		this.itSnNodeBLLJs.setLabel("BLL NODEJS:");
 		this.itSnNodeBLLJs.setCheckedValue("NODE_BLL@js");
 		this.itSnNodeBLLJs.setUnCheckedValue("");		
 		this.append(this.itSnNodeBLLJs);
@@ -124,7 +124,7 @@ var Tabela = new Class({
 		this.itSnNodeRouteJs = new js.underas.controller.CheckBox("Valido?", "Sim");
 		this.itSnNodeRouteJs.setEnable(true);
 		this.itSnNodeRouteJs.setSize(4);
-		this.itSnNodeRouteJs.setLabel("arquivo rota NODEJS:");
+		this.itSnNodeRouteJs.setLabel("Route NODEJS:");
 		this.itSnNodeRouteJs.setCheckedValue("NODE_ROUTES@js");
 		this.itSnNodeRouteJs.setUnCheckedValue("");		
 		this.append(this.itSnNodeRouteJs);

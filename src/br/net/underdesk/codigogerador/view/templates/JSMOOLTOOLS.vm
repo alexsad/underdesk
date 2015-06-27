@@ -53,7 +53,7 @@ ${tab}${tab}this.it${campo.getColunaCapitalize()}.setColumn("$${campo.getColuna(
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabel("cod.");
 ${tab}${tab}this.it${classe.getPrimaryKey().getColunaCapitalize()}.setEnable(false);	
 #else
-${tab}${tab}this.it${campo.getColunaCapitalize()}.setColumn("${campo.getColuna()}@it${campo.getColunaCapitalize()}");
+${tab}${tab}this.it${campo.getColunaCapitalize()}.setColumn("@${campo.getColuna()}");
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabel("${campo.getDsCampo().toLowerCase()}");
 #end
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setSize(2);	

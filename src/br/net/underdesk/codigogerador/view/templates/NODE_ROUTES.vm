@@ -8,8 +8,8 @@ ${tab}${tab}${tab},function(erro){
 ${tab}${tab}${tab}${tab}res.json(dta);
 ${tab}${tab}${tab}}
 ${tab}${tab});		
-${tab}}).delete("/${classe.getNome().toLowerCase()}/:p_id",function(req, res){	
-${tab}${tab}app.controllers.${classe.getNome().toLowerCase()}.delete(req.params.p_id,
+${tab}}).delete("/${classe.getNome().toLowerCase()}/:${classe.getPrimaryKey().getColuna()}",function(req, res){	
+${tab}${tab}app.controllers.${classe.getNome().toLowerCase()}.delete(req.params.${classe.getPrimaryKey().getColuna()},
 ${tab}${tab}${tab}function(dta){
 ${tab}${tab}${tab}${tab}res.json(dta);
 ${tab}${tab}${tab}}

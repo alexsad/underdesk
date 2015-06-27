@@ -6,21 +6,21 @@ ${tab}${tab}}
 ${tab}${tab},"insert":function(p_${classe.getNome().toLowerCase()},p_fnsuccess,p_fnerror) {		
 ${tab}${tab}${tab}app.models.${classe.getNome().toLowerCase()}.create(p_${classe.getNome().toLowerCase()}).then(
 ${tab}${tab}${tab}${tab}function(dta){				
-${tab}${tab}${tab}${tab}${tab}p_fnsuccess(dta._id);
+${tab}${tab}${tab}${tab}${tab}p_fnsuccess(dta.${classe.getPrimaryKey().getColuna()});
 ${tab}${tab}${tab}${tab}}
 ${tab}${tab}${tab}${tab},p_fnerror
 ${tab}${tab}${tab});
 ${tab}${tab}}
 ${tab}${tab},"update":function(p_${classe.getNome().toLowerCase()},p_fnsuccess,p_fnerror){
-${tab}${tab}${tab}app.models.${classe.getNome().toLowerCase()}.findByIdAndUpdate(p_${classe.getNome().toLowerCase()}._id,p_${classe.getNome().toLowerCase()}).exec().then(
+${tab}${tab}${tab}app.models.${classe.getNome().toLowerCase()}.findByIdAndUpdate(p_${classe.getNome().toLowerCase()}.${classe.getPrimaryKey().getColuna()},p_${classe.getNome().toLowerCase()}).exec().then(
 ${tab}${tab}${tab}${tab}function(dta){
 ${tab}${tab}${tab}${tab}${tab}p_fnsuccess(true);
 ${tab}${tab}${tab}${tab}}
 ${tab}${tab}${tab}${tab},p_fnerror
 ${tab}${tab}${tab});
 ${tab}${tab}}
-${tab}${tab},"delete":function(p_id,p_fnsuccess,p_fnerror) {
-${tab}${tab}${tab}app.models.${classe.getNome().toLowerCase()}.remove({"_id":p_id}).exec().then(
+${tab}${tab},"delete":function(${classe.getPrimaryKey().getColuna()},p_fnsuccess,p_fnerror) {
+${tab}${tab}${tab}app.models.${classe.getNome().toLowerCase()}.remove({"${classe.getPrimaryKey().getColuna()}":${classe.getPrimaryKey().getColuna()}}).exec().then(
 ${tab}${tab}${tab}${tab}function(){
 ${tab}${tab}${tab}${tab}${tab}p_fnsuccess(true);
 ${tab}${tab}${tab}${tab}}

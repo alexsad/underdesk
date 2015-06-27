@@ -57,10 +57,11 @@ public class TabelaBLL {
 		return rs;
 	}	
     @RequestMapping(value="/gerarcodigo",method=RequestMethod.POST)
-	public String gerarCodigo(@RequestBody List<Tabela> lsttab){    	
+	public String[] gerarCodigo(@RequestBody List<Tabela> lsttab){   
+    	
 		int tmT = lsttab.size();
-		//String dirBase = "/mnt/arquivos/tmp/gen"; 
-		String dirBase = "C:/temp/gen"; 
+		String dirBase = "/mnt/arquivos/tmp/gen"; 
+		//String dirBase = "C:/temp/gen"; 
 		for(int x =0 ;x < tmT;x++){			
 			if(lsttab.get(x).getAllCampos().size()>0){				
 				int tmtoexport = lsttab.get(x).getExportsto().length;				
@@ -69,14 +70,25 @@ public class TabelaBLL {
 					String tmpPath = dirBase+"/"+this.dao.getTipo(tmpExport);
 					CompactadorBLL.criaDiretorio(tmpPath);
 					lsttab.get(x).setTpTemplate(this.dao.getTipo(tmpExport));
-					CompactadorBLL.criaArquivo(tmpPath+"/"+lsttab.get(x).getNome()+"."+this.dao.getExtencao(tmpExport), this.dao.gerarCodigo(lsttab.get(x),tmpExport));
+					String tmpNameFile = lsttab.get(x).getNome();
+					
+					if(tmpExport.equals(TabelaDAO.TP_NODEBLL)||tmpExport.equals(TabelaDAO.TP_NODESCHEMA)||tmpExport.equals(TabelaDAO.TP_NODEROUTES)){
+						tmpNameFile = tmpNameFile.toLowerCase();
+					}else if(tmpExport.equals(TabelaDAO.TP_JSMOOLTOOLS)){
+						tmpPath +="/"+lsttab.get(x).getDominio();
+						CompactadorBLL.criaDiretorio(tmpPath);
+						tmpPath +="/view";
+						CompactadorBLL.criaDiretorio(tmpPath);
+					};					
+					CompactadorBLL.criaArquivo(tmpPath+"/"+tmpNameFile+"."+this.dao.getExtencao(tmpExport), this.dao.gerarCodigo(lsttab.get(x),tmpExport));
 				}				
 				//CompactadorBLL.criaDiretorio(lsttab.get(x).getExportsto()[1]);				
 			};
 		};
 		//return "";
-		//System.out.println(stbS);		
-		return "url";
+		//System.out.println(stbS);	
+		String[] rs = {"url",tmT+""};
+		return rs;
 	}
     @RequestMapping(value="/getbyidtabela/{idTabela}",method=RequestMethod.GET)
     public Tabela getByIdTabela(@RequestParam(value = "urlc") String urlc,@PathVariable("idTabela") int idTabela){
