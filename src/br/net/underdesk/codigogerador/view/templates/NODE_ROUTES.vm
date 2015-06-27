@@ -1,5 +1,5 @@
 module.exports = function(app) {
-${tab}app.get("/${classe.getNome().toLowerCase()}",function(req, res){
+${tab}app.get("/${classe.getDominio().toLowerCase()}/${classe.getNome().toLowerCase()}",function(req, res){
 ${tab}${tab}app.controllers.${classe.getNome().toLowerCase()}.get(
 ${tab}${tab}${tab}function(dta){
 ${tab}${tab}${tab}${tab}res.json(dta);
@@ -8,7 +8,7 @@ ${tab}${tab}${tab},function(erro){
 ${tab}${tab}${tab}${tab}res.status(500).json(dta);
 ${tab}${tab}${tab}}
 ${tab}${tab});		
-${tab}}).delete("/${classe.getNome().toLowerCase()}/:_id",function(req, res){	
+${tab}}).delete("/${classe.getDominio().toLowerCase()}/${classe.getNome().toLowerCase()}/:_id",function(req, res){	
 ${tab}${tab}app.controllers.${classe.getNome().toLowerCase()}.delete(req.params._id,
 ${tab}${tab}${tab}function(dta){
 ${tab}${tab}${tab}${tab}res.send(dta);
@@ -17,7 +17,7 @@ ${tab}${tab}${tab},function(erro){
 ${tab}${tab}${tab}${tab}res.status(500).json(dta);
 ${tab}${tab}${tab}}
 ${tab}${tab});		
-${tab}}).post("/${classe.getNome().toLowerCase()}",function(req, res){	
+${tab}}).post("/${classe.getDominio().toLowerCase()}/${classe.getNome().toLowerCase()}",function(req, res){	
 ${tab}${tab}app.controllers.${classe.getNome().toLowerCase()}.insert(req.body,
 ${tab}${tab}${tab}function(dta){
 ${tab}${tab}${tab}${tab}res.send(dta);
@@ -26,7 +26,7 @@ ${tab}${tab}${tab},function(erro){
 ${tab}${tab}${tab}${tab}res.status(500).json(dta);
 ${tab}${tab}${tab}}
 ${tab}${tab});		
-${tab}}).put("/${classe.getNome().toLowerCase()}",function(req, res){	
+${tab}}).put("/${classe.getDominio().toLowerCase()}/${classe.getNome().toLowerCase()}",function(req, res){	
 ${tab}${tab}app.controllers.${classe.getNome().toLowerCase()}.update(req.body,
 ${tab}${tab}${tab}function(dta){
 ${tab}${tab}${tab}${tab}res.send(dta);
