@@ -3,6 +3,7 @@ var mongoose = require("mongoose");
 module.exports = function(){
 ${tab}var schema = mongoose.Schema({
 #foreach ($campo in $classe.getAllCampos())
+#if($classe.getPrimaryKey().getColuna()!=$campo.getColuna())
 ${tab}${tab}#if($count>0), #end"${campo.getColuna()}":{
 ${tab}${tab}${tab}type:#if($campo.getTipo()=="int")
 Number
@@ -13,7 +14,10 @@ ${tab}${tab}${tab},required:true
 ${tab}${tab}}
 #set( $count = $count + 1 )	 
 #end
+#end
 ${tab}});
-schema.virtual("${classe.getPrimaryKey().getColuna()}").get(function() {return this._id; });
+${tab}schema.virtual("${classe.getPrimaryKey().getColuna()}").get(function() {
+${tab}${tab}return this._id;
+${tab}});
 ${tab}return mongoose.model("${classe.getNome()}",schema);
 };
