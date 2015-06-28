@@ -1,7 +1,8 @@
 #set( $count = 0 )
 var mongoose = require("mongoose");
 module.exports = function(){
-${tab}var schema = mongoose.Schema({
+${tab}var Schema = mongoose.Schema;
+${tab}var schema = new Schema({
 #foreach ($campo in $classe.getAllCampos())
 #if($classe.getPrimaryKey().getColuna()!=$campo.getColuna())
 ${tab}${tab}#if($count>0), #end"${campo.getColuna()}":{

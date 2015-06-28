@@ -5,7 +5,7 @@ ${tab}${tab}${tab}function(dta){
 ${tab}${tab}${tab}${tab}res.json(dta);
 ${tab}${tab}${tab}}
 ${tab}${tab}${tab},function(erro){
-${tab}${tab}${tab}${tab}res.status(500).json(dta);
+${tab}${tab}${tab}${tab}res.status(500).json(erro);
 ${tab}${tab}${tab}}
 ${tab}${tab});		
 ${tab}}).delete("/${classe.getDominio().toLowerCase()}/${classe.getNome().toLowerCase()}/:_id",function(req, res){	
@@ -14,7 +14,7 @@ ${tab}${tab}${tab}function(dta){
 ${tab}${tab}${tab}${tab}res.send(dta);
 ${tab}${tab}${tab}}
 ${tab}${tab}${tab},function(erro){
-${tab}${tab}${tab}${tab}res.status(500).json(dta);
+${tab}${tab}${tab}${tab}res.status(500).json(erro);
 ${tab}${tab}${tab}}
 ${tab}${tab});		
 ${tab}}).post("/${classe.getDominio().toLowerCase()}/${classe.getNome().toLowerCase()}",function(req, res){	
@@ -23,7 +23,7 @@ ${tab}${tab}${tab}function(dta){
 ${tab}${tab}${tab}${tab}res.send(dta);
 ${tab}${tab}${tab}}
 ${tab}${tab}${tab},function(erro){
-${tab}${tab}${tab}${tab}res.status(500).json(dta);
+${tab}${tab}${tab}${tab}res.status(500).json(erro);
 ${tab}${tab}${tab}}
 ${tab}${tab});		
 ${tab}}).put("/${classe.getDominio().toLowerCase()}/${classe.getNome().toLowerCase()}",function(req, res){	
@@ -32,7 +32,7 @@ ${tab}${tab}${tab}function(dta){
 ${tab}${tab}${tab}${tab}res.send(dta);
 ${tab}${tab}${tab}}
 ${tab}${tab}${tab},function(erro){
-${tab}${tab}${tab}${tab}res.status(500).json(dta);
+${tab}${tab}${tab}${tab}res.status(500).json(erro);
 ${tab}${tab}${tab}}
 ${tab}${tab});		
 ${tab}});
