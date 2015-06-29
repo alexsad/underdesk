@@ -56,18 +56,15 @@ ${tab}${tab}this.it${classe.getPrimaryKey().getColunaCapitalize()}.setEnable(fal
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setColumn("@${campo.getColuna()}");
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabel("${campo.getDsCampo().toLowerCase()}");
 #end
-${tab}${tab}this.it${campo.getColunaCapitalize()}.setSize(2);	
+${tab}${tab}this.it${campo.getColunaCapitalize()}.setSize(2);
+${tab}${tab}this.append(this.it${campo.getColunaCapitalize()});		
 #end		
 		
 ${tab}${tab}this.mainList = new js.underas.controller.ListView("$classe.getNome()");
 ${tab}${tab}this.mainList.setItemRender("${classe.getNome()}ItemRender");
 ${tab}${tab}this.setMainList("mainList");
 ${tab}${tab}this.mainTb = new js.underas.net.ToolBar({"domain":"${classe.getDominio().toLowerCase()}/${classe.getNome().toLowerCase()}"});
-
 ${tab}${tab}this.append(this.mainTb);
-#foreach ($campo in $classe.getAllCampos())	
-${tab}${tab}this.append(this.it${campo.getColunaCapitalize()});	
-#end
 ${tab}${tab}this.append(this.mainList);
 ${tab}}
 ${tab},"onStart":function(){
