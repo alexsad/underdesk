@@ -62,7 +62,6 @@ ${tab}${tab}this.append(this.it${campo.getColunaCapitalize()});
 		
 ${tab}${tab}this.mainList = new js.underas.controller.ListView("$classe.getNome()");
 ${tab}${tab}this.mainList.setItemRender("${classe.getNome()}ItemRender");
-${tab}${tab}this.setMainList("mainList");
 ${tab}${tab}this.mainTb = new js.underas.net.ToolBar({"domain":"${classe.getDominio().toLowerCase()}/${classe.getNome().toLowerCase()}"});
 ${tab}${tab}this.append(this.mainTb);
 ${tab}${tab}this.append(this.mainList);
@@ -73,7 +72,6 @@ ${tab},"onStart":function(){
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.fromService(".business.BLL.get");
 #end
 #end
-${tab}${tab}this.mainTb.activate(true);
 ${tab}${tab}//this.mainTb.reloadItens();
 ${tab}}
 });
