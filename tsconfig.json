@@ -1,0 +1,31 @@
+{
+    "version": "1.5.0",
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "declaration": false,
+        "noImplicitAny": true,
+        "removeComments": true,
+        "noLib": false,
+        "emitDecoratorMetadata": true,
+        "sourceMap": false,
+        "outDir": "deploy/app",
+        "experimentalDecorators": true,
+        "isolatedModules": false,
+        "noEmitHelpers": false,
+        "noResolve": true
+    },
+    "compileOnSave": true,
+    "filesGlob": [
+        "./src/br/**/*.ts",
+        "./src/lib/**/*.ts"
+    ],
+    "files": [
+        "./src/lib/jquery2.d.ts",
+        "./src/lib/container.d.ts",
+        "./src/lib/controller.d.ts",
+        "./src/lib/core.d.ts",
+        "./src/lib/net.d.ts",
+        "./src/lib/util.d.ts"
+    ]
+}
