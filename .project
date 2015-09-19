@@ -35,6 +35,11 @@
 				</dictionary>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>com.palantir.typescript.typeScriptBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jem.workbench.JavaEMFNature</nature>
@@ -42,13 +47,9 @@
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
+		<nature>com.palantir.typescript.typeScriptNature</nature>
 	</natures>
 	<linkedResources>
-		<link>
-			<name>web/lib</name>
-			<type>2</type>
-			<location>C:/Users/alexandre.araujo/Documents/config/works/undermool/lib</location>
-		</link>
 		<link>
 			<name>web/WEB-INF/lib</name>
 			<type>2</type>
