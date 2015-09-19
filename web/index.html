@@ -1,72 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>...</title>		
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+		<title>Projeto Exemplo</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">	
-        <!--  
-		<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min_c_3_.css" />
-		-->
-		<link rel="stylesheet" href="lib/bootstrap/css/bootstrap_simplex.min.css" />
-		<link rel="stylesheet" href="lib/org/underas/assets/css/underas.css"/>
-		
-		<script type="text/javascript" src="lib/mootools/mootools-custom-core-1.5.1-compressed.js"></script>
-		<script type="text/javascript" src="lib/mootools/mootools-more-1.5.1.min.js"></script>
-		<script type="text/javascript" src="lib/org/underas/core/underas.js"></script>
-		<script type="text/javascript" src="lib/org/underas/util/Array.js"></script>
-		<script type="text/javascript" src="lib/org/underas/util/ValidationType.js"></script>		
-		<script type="text/javascript" src="lib/org/underas/core/Component.js"></script>
-		<script type="text/javascript" src="lib/org/underas/controller/Controller.js"></script>
-		<script type="text/javascript" src="lib/org/underas/controller/Input.js"></script>
-		<script type="text/javascript" src="lib/org/underas/controller/Label.js"></script>
-		<script type="text/javascript" src="lib/org/underas/controller/Text.js"></script>
-		<script type="text/javascript" src="lib/org/underas/controller/InputText.js"></script>
-		<script type="text/javascript" src="lib/org/underas/controller/NumericStepper.js"></script>
-		<script type="text/javascript" src="lib/org/underas/controller/TextArea.js"></script>
-		<script type="text/javascript" src="lib/org/underas/controller/ListView.js"></script>
-		<script type="text/javascript" src="lib/org/underas/controller/ListViewAdv.js"></script>
-		<script type="text/javascript" src="lib/org/underas/controller/AlertMsg.js"></script>
-		<script type="text/javascript" src="lib/org/underas/controller/ProgressBar.js"></script>
-		<script type="text/javascript" src="lib/org/underas/controller/Notify.js"></script>
-		<script type="text/javascript" src="lib/org/underas/controller/Button.js"></script>
-		<script type="text/javascript" src="lib/org/underas/controller/Select.js"></script>
-		<script type="text/javascript" src="lib/org/underas/controller/InputPassWord.js"></script>
-		<script type="text/javascript" src="lib/org/underas/controller/DatePicker.js"></script>
-		<script type="text/javascript" src="lib/org/underas/controller/CheckBox.js"></script>
-		<script type="text/javascript" src="lib/org/underas/container/MenuTab.js"></script>
-		<script type="text/javascript" src="lib/org/underas/container/ModWindow.js"></script>
-		<script type="text/javascript" src="lib/org/underas/net/Task.js"></script>
-		<script type="text/javascript" src="lib/org/underas/net/RequestManager.js"></script>
-		<script type="text/javascript" src="lib/org/underas/net/ToolBar.js"></script>
-		
-	    <script type="text/javascript" src="br/net/underdesk/main/view/main.js"></script>
-	        
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="js/lib/bootstrap/css/bootstrap.min_c_3_.css" />
+		<link rel="stylesheet" href="js/lib/underas/assets/css/underas.css"/>
+		<script type="text/javascript" src="js/lib/jquery/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript">
+			var __extends = (this && this.__extends) || function (d, b) {
+			for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+			function __() { this.constructor = d; }
+			d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+			};
+			var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+				if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+				switch (arguments.length) {
+					case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+					case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+					case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+				}
+			};
+			var __metadata = (this && this.__metadata) || function (k, v) {
+				if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+			};
+		</script>
+		<script type="text/javascript" data-main="js/app.js" src="js/lib/requirejs/require.js"></script>
 	</head>
-	<body>	
-	
-	<div class="container col-xs-12">	
-			<div class="row clearfix" style="padding-top:3px;background-color:#E5E5E5;">
-				<div class="col-xs-2 column" id="logo_menu" style="padding-top:8px">					
-						<span class="glyphicon glyphicon-leaf" style="color:#539756"></span>
-				</div>
-				<div class="col-xs-8 column menu_main" style="">	
-					<ul class="nav nav-pills" id="sidebar" style=""></ul>
-					<div class="tab-content col-xs-12 column tab_content_menu" style="padding-top:5px"></div>
-				</div>
-			</div>
-			
-			<div class="row clearfix">
-				<div id="conteudo">
-					<ul id="navbarlist" class="nav nav-tabs"></ul>
-				</div>
-			</div>
+<body>
+	<div class="container col-xs-12">
+	<!-- background-color:#E5E5E5;background-repeat:repeat-x;background-position:top;background-image:url(lib/underas/assets/tema1/img/fundoProTra.png);
+	 -->
+	<div class="row clearfix" style="padding-top:3px;">
+		<div class="col-xs-12 col-sm-2 column" id="logo_menu">
+				<div class="hidden-xs" style="height:60px;width:100%;background-repeat:no-repeat;background-position:center center;background-image:url('assets/img/test2.png')"></div>
+
+				<div class="visible-xs" style="height:100px;width:100%;background-repeat:no-repeat;background-position:center center;background-image:url('assets/img/test1.png')"></div>
+				<!--
+				<span class="glyphicon glyphicon-leaf" style="color:#539756"></span>
+				-->
 		</div>
-		<!--fim-->
+		<div class="col-xs-12 col-sm-10 column menu_main" style="">
+			<ul class="nav nav-pills" id="sidebar"></ul>
+			<div class="tab-content col-xs-12 column tab_content_menu" style="padding-top:5px"></div>
+		</div>
+	</div>
+	<!--
+	<div class="row clearfix">
+		<div class="col-sm-4 col-sm-offset-4 col-xs-12 column">
+			<div style="height:100px;width:100%;background-repeat:no-repeat;background-position:center center;background-image:url('assets/img/test1.png')"></div>
+		</div>
+	</div>
+	-->
+	<div class="row clearfix">
+		<div id="conteudo">
+			<ul id="navbarlist" class="nav nav-tabs"></ul>
+			<div id="div_teste"></div>
+		</div>
+	</div>
+	</div>
+<!--fim-->
 		<div id="hiddenThings" style="display:none">
-			<img style="display:none" id="logReports" src="assets/logo_title.jpg"/>
+
 		</div>
-	</body>
+</body>
 </html>
