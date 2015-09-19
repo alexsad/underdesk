@@ -1,0 +1,9 @@
+diff a/src/br/net/underdesk/codigogerador/view/templates/JSMOOLTOOLS.vm b/src/br/net/underdesk/codigogerador/view/templates/JSMOOLTOOLS.vm	(rejected hunks)
+@@ -72,7 +72,6 @@
+ ${tab}${tab}this.it${campo.getColunaCapitalize()}.fromService(".business.BLL.get");
+ #end
+ #end
+-${tab}${tab}this.mainTb.activate(true);
+ ${tab}${tab}//this.mainTb.reloadItens();
+ ${tab}}
+ });
