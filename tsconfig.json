@@ -2,20 +2,20 @@
     "version": "1.5.0",
     "compilerOptions": {
         "target": "es5",
-        "module": "commonjs",
+        "module": "amd",
         "declaration": false,
         "noImplicitAny": true,
         "removeComments": true,
         "noLib": false,
         "emitDecoratorMetadata": true,
         "sourceMap": false,
-        "outDir": "deploy/app",
+        "outDir": "./web/js/br/net/underdesk",
         "experimentalDecorators": true,
         "isolatedModules": false,
-        "noEmitHelpers": false,
-        "noResolve": true
+        "noEmitHelpers": true,
+        "noResolve": false
     },
-    "compileOnSave": true,
+    "compileOnSave": false,
     "filesGlob": [
         "./src/br/**/*.ts",
         "./src/lib/**/*.ts"
@@ -26,6 +26,8 @@
         "./src/lib/controller.d.ts",
         "./src/lib/core.d.ts",
         "./src/lib/net.d.ts",
-        "./src/lib/util.d.ts"
+        "./src/lib/util.d.ts",
+        "./src/br/net/underdesk/arquivo/view/Arquivo.ts",
+        "./src/br/net/underdesk/codigogerador/view/Tabela.ts"
     ]
 }
