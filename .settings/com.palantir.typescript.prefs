@@ -1,0 +1,16 @@
+build.path.exportedFolder=.externalToolBuilders
+build.path.sourceFolder=src
+compiler.codeGenTarget=ECMASCRIPT5
+compiler.compileOnSave=true
+compiler.experimentalDecorators=true
+compiler.generateDeclarationFiles=false
+compiler.jsx=NONE
+compiler.mapSourceFiles=true
+compiler.moduleGenTarget=AMD
+compiler.noImplicitAny=false
+compiler.noLib=false
+compiler.outputDirOption=web/js/br
+compiler.outputFileOption=
+compiler.removeComments=true
+compiler.suppressImplicitAnyIndexErrors=false
+eclipse.preferences.version=1
