@@ -9,6 +9,83 @@
 		        </fileset>
 		</copy>
   </target>
+  
+
+    <macrodef name="echo-fileset">
+        <attribute name="filesetref"/>
+        <sequential>
+            <for param="file">
+                <path>
+                    <fileset refid="@{filesetref}"/>
+                </path>
+                <sequential>
+                    <echo>@{file}</echo>
+                </sequential>
+            </for>
+        </sequential>
+    </macrodef>
+  
+  <target name="typescript to javascrip" description="build typescript">
+    <!--  
+	<property name="before" value="This is a value"/>
+	<script language="javascript">
+	    <![CDATA[
+	    var before = new String(project.getProperty("before"));
+	    project.setProperty("after", before.replace(" ", "_"));
+	    ]]> 	
+	</script>
+	<echo>after=${after}</echo>
+  
+    
+    <fileset  id="dist.contents" dir="../../${aproject.webfolder}/js/br/" includes="**/*.js" />
+	 <property name="prop.dist.contents" refid="dist.contents"/>   
+	 <echo>${prop.dist.contents}</echo>
+	 <replaceproperty src="${dist.contents}" replace="../../../../../lib/" with=""/>
+    -->
+    	<fileset  id="dist.contents" dir="../../${aproject.webfolder}/js/br/" includes="**/*.js" />
+    	<echo-fileset filesetref="${dist.contents}"/>
+		<!-- 
+		<pathconvert pathsep="${line.separator}" property="sounds" refid="dist.contents">
+		    <mapper>
+		        <flattenmapper />		        
+		    </mapper>
+		</pathconvert>
+		<echo>${sounds}</echo>
+		 -->
+    
+   <!-- 
+   <replaceproperty replace="../../../../../lib/" with="">
+   		 <fileset  id="dist.contents" dir="../../${aproject.webfolder}/js/br/" includes="**/*.js" />
+   		 <src>${dist.contents}</src>
+   </replaceproperty>
+  -->  
+	<replaceproperty src="../../${aproject.webfolder}/js/br/net/underdesk/arquivo/view/Arquivo.js" replace="../../../../../lib/" with=""/>
+   
+  </target>
+<macrodef name="replaceproperty" taskname="@{taskname}">
+    <attribute name="src" />
+    <attribute name="replace" default="" />
+    <attribute name="with" default="" />    
+     <attribute name="tmpContent" default="" />
+    <!--<property name="propA" value="This is a value" />-->
+    <sequential>
+     	<echo message="@{src} , @{replace} - @{with} "  />
+        <loadfile property="tmpContent" srcFile="@{src}">
+             <filterchain>
+                <tokenfilter>
+                 <filetokenizer/>
+                    <replacestring from="@{replace}" to="@{with}"/>                 
+                    <!--
+                     <replacestring from="@{replace}" to="@{with}"/>
+                     <replaceregex pattern="@{replace}" replace="@{with}" flags="g"/>                   
+                    -->
+                </tokenfilter>
+            </filterchain>
+        </loadfile>        
+        <echo message="${tmpContent}" />    
+        <!--<echo message="$${propB} = &quot;${propB}&quot;" />-->    
+    </sequential>
+</macrodef>
   <target name="build.war">
   	<delete file="${aproject.name}.war"/>
 	<war destfile="${aproject.name}.war" webxml="../../${aproject.webfolder}/WEB-INF/web.xml">
