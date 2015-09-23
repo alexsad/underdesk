@@ -26,14 +26,10 @@ public class ArquivoDAO {
 			String isdir = (arquivo.isDirectory())?"S":"N";
 			String caminho = urlpath+arquivo.getName();
 			caminho += (isdir.equals("S"))?"/":"";
-			
-			lsarquivos.add(new Arquivo(i+1,100, arquivo.getName(),isdir,caminho));
-		}
-		if(urlpath.lastIndexOf("/") > 1){
-			lsarquivos.add(new Arquivo(j+2,0,"/","S","/"));
-			lsarquivos.add(new Arquivo(j+1,0,"...","S",urlpath.substring(0,urlpath.length()-2).replaceAll("\\/\\w*$","")+"/"));
-		}
-		
+			Arquivo tmpArq = new Arquivo(i+1,100, arquivo.getName(),isdir,caminho);
+			tmpArq.setIcone((isdir.equals("S"))?"folder-close":"file");
+			lsarquivos.add(tmpArq);
+		}		
 		return lsarquivos;
 	}
 }

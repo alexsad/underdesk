@@ -24,12 +24,12 @@ module.exports = function(grunt) {
 			}		
 			,viewAssets:{
 				expand: true,
-				cwd: '../src/br',
+				cwd: 'src/br',
 				src: [
 					"**/view/assets/**"
 				//,"**/model/I[A-Z]*.js"
 				],
-				dest: 'public/js/br'
+				dest: 'web/js/br'
 			}		
 		}
 		,clean: {

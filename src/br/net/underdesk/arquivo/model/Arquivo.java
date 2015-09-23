@@ -6,6 +6,7 @@ public class Arquivo {
 	private String dsArquivo;
 	private String snPasta;
 	private String caminho;
+	private String icone;
 	
 	public Arquivo(int idArquivo, int tmArquivo, String dsArquivo, String snPasta,String caminho) {
 		super();
@@ -48,4 +49,10 @@ public class Arquivo {
 	public void setCaminho(String caminho){
 		this.caminho = caminho;
 	}
+	public String getIcone() {
+		return icone;
+	}
+	public void setIcone(String icone) {
+		this.icone = icone;
+	}	
 }
