@@ -1,6 +1,5 @@
 import {ModWindow} from "../../../../../lib/container";
 import {InputText,CheckBox,NumericStepper,ListView,ItemView,Button} from "../../../../../lib/controller";
-import {ArrayList} from "../../../../../lib/util";
 import {Tabela} from "../../codigogerador/view/Tabela";
 import {IArquivo} from "./IArquivo";
 import {SimpleToolBar,RequestManager,IDefaultRequest} from "../../../../../lib/net";
@@ -16,6 +15,7 @@ export class Arquivo extends ModWindow{
     mainTb:SimpleToolBar;
     btExplorar:Button;
     btBaixar:Button;    
+    _modTabela:Tabela;
     constructor(){
         super("*lista de arquivos no servidor","br.net.underdesk.arquivo.view.Arquivo");
         this.setRevision("$Revision$");   
@@ -85,8 +85,10 @@ export class Arquivo extends ModWindow{
         this.append(this.mainList);  
         
     }
-    onStart():void{
-        this.getByCaminho("");
+    onStart():void{        
+        this._modTabela = new Tabela();
+        this.getModView().append(this._modTabela);        
+        this.getByCaminho("");        
     }
     onChangeItem(p_obj:IArquivo):IArquivo{
         var toOpen:string = "#";       
@@ -94,14 +96,13 @@ export class Arquivo extends ModWindow{
             toOpen = "/underdesk/"+this.itCaminho.getValue();             
         }
         this.btBaixar.getEle().attr("href",toOpen);
-        
-        
+          
         this.itIdArquivo.setValue(p_obj.idArquivo+"");
         this.itDsArquivo.setValue(p_obj.dsArquivo);
         this.itSnPasta.setValue(p_obj.snPasta);
         this.itTmArquivo.setValue(p_obj.tmArquivo+"");
-        this.itCaminho.setValue(p_obj.caminho);
-        
+        this.itCaminho.setValue(p_obj.caminho);        
+        this._modTabela.setCaminho(p_obj.caminho);        
         return p_obj;
     }
     getByCaminho(p_caminho:string):void{        

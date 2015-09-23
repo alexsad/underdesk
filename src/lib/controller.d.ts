@@ -1,4 +1,4 @@
-import { ArrayList, IPaginationParam } from "util";
+import { IPaginationParam } from "util";
 import { Component } from "core";
 import { ModWindow } from "container";
 import { IRequestConf } from "net";
@@ -48,6 +48,7 @@ export interface IListView {
     updateItem(p_item: Object): void;
     getPaginationParam(): IPaginationParam;
     setDataProvider(p_data: any[]): void;
+    getDataProvider(): any[];
     changeToIndex(p_index: number): void;
     itemChange?: Function;
     pageRequest?: Function;
@@ -183,7 +184,7 @@ export declare class Select extends InputDouble {
     fromService(p_req_service: IRequestConf): void;
 }
 export declare class ListView extends Component implements IListView {
-    dataProvider: ArrayList;
+    dataProvider: any[];
     _urlTemplate: string;
     _itemTemplateHtml: string;
     _ind: number;
@@ -195,7 +196,7 @@ export declare class ListView extends Component implements IListView {
     constructor(p_title: string);
     getPaginationParam(): IPaginationParam;
     setDataProvider(p_dta: any[]): ListView;
-    getDataProvider(): ArrayList;
+    getDataProvider(): any[];
     setHeight(p_height: number): void;
     setRow(p_html: string): void;
     addRow(p_pg: number, p_html?: string): void;
