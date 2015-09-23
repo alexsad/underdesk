@@ -1,9 +1,7 @@
 import {ModWindow} from "../../../../../lib/container";
 import {InputText,Select,CheckBox,NumericStepper,ListView,ItemView,Button} from "../../../../../lib/controller";
-import {ArrayList} from "../../../../../lib/util";
-//import {Tabela} from "../../codigogerador/view/Tabela";
-import {IArquivo} from "./IArquivo";
-import {SimpleToolBar,RequestManager,IDefaultRequest} from "../../../../../lib/net";
+import {ITabela} from "./ITabela";
+import {ToolBar,RequestManager,IDefaultRequest} from "../../../../../lib/net";
 
 @ItemView({url:"js/br/net/underdesk/codigogerador/view/assets/html/tabela.html",list:"mainList"})
 export class Tabela extends ModWindow{   
@@ -14,10 +12,18 @@ export class Tabela extends ModWindow{
     itTipo:CheckBox;
     itTpGeracao:Select;
     itChavePrimaria:InputText;
+    itSnModelJava:CheckBox;       
+    itSnDaoJava:CheckBox;
+    itSnBLLJava:CheckBox;
+    itSnJsMoolTools:CheckBox;
+    itSnNodeSchemaJs:CheckBox;
+    itSnNodeBLLJs:CheckBox;
+    itSnNodeRouteJs:CheckBox;
     //itrs:null;
     btGerarCodigo:Button;
     mainList:ListView;
-    mainTb:SimpleToolBar;
+    mainTb:ToolBar;
+    _urlPath:string;
     constructor(){
         super("*Geracao de Codigo","br.net.underdesk.codigogerador.view.Tabela");
         this.setRevision("$Revision$"); 
@@ -142,19 +148,10 @@ export class Tabela extends ModWindow{
         this.btGerarCodigo = new Button("Gerar");
         this.btGerarCodigo.setIcon("check");
         this.btGerarCodigo.addEvent('click',function(){
-            tabela.gerarCodigo();
-        });
-        this.mainTb.addButton(this.btGerarCodigo,false);
-  
-        
-        this.append(this.itdsTabela);
-        this.append(this.itdominio);
-        this.append(this.itPacote);
-        this.append(this.itChavePrimaria);
-        this.append(this.itTipo);   
-        this.append(this.itTpGeracao);
-        //this.append(this.ittipoTemplate);
-        
+            this.gerarCodigo();
+        }.bind(this));
+        this.mainTb.addButton(this.btGerarCodigo);
+          
         //this.addAssociation({"mod":"br.net.underdesk.codigogerador.view.TabelaCampo","act":"getCampos","puid":this.getVarModule()});
     }
     onStart():void{
@@ -177,6 +174,12 @@ export class Tabela extends ModWindow{
                                           ]);
         
     }
+    setCaminho(p_caminho:string):void{
+        this._urlPath = p_caminho;
+    }
+    getCaminho():string{
+        return this._urlPath;
+    }
     getTabelas(urlcaminho:string):void{
          urlcaminho = urlcaminho.substring(1,urlcaminho.length);
           //itemmenu.setSize(12);
@@ -184,57 +187,57 @@ export class Tabela extends ModWindow{
          RequestManager.addRequest({ 
             "module":this,
             "url":urlcaminho,
-            "onLoad":function(dta){
+            "onLoad":function(dta:ITabela[]){
               this.getMainList().setDataProvider(dta);
             }.bind(this)
           });  
     }
-    ,"beforeQuery":function(p_obj_req){
-         var urlcaminho = arquivo.itCaminho.getValue().substring(1,arquivo.itCaminho.getValue().length);
-         p_obj_req["url"]=urlcaminho; 
+    beforeQuery(p_obj_req:IDefaultRequest):IDefaultRequest{
+         var urlcaminho:string = this.getCaminho().substring(1,this.getCaminho().length);
+         p_obj_req.url = urlcaminho; 
          return p_obj_req;
     }
-    ,"gerarCodigoSingle":function(){
-        js.underas.net.RequestManager.addRequest({                          
-                "idTabela":tabela.itidTabela.getValue()              
-                ,"tpTemplate":tabela.ittipoTemplate.getValue()
-                ,"caminho":arquivo.itCaminho.getValue()
-                //,"caminho":"/assets/uml/ata3_uml.json"
-                ,"puid":this.getVarModule()
+    gerarCodigoSingle():void{
+        RequestManager.addRequest({
+                "module":this
                 ,"method":"post"
                 ,"url":"ws/codigogerador/tabela/gerarcodigo"
-                ,"onLoad":function(dta){
+                ,"data":{
+                    "idTabela":this.itidTabela.getValue()              
+                    //,"tpTemplate":this.ittipoTemplate.getValue()
+                    ,"caminho":this.getCaminho()
+                }
+                //,"caminho":"/assets/uml/ata3_uml.json"
+                ,"onLoad":function(dta:ITabela[]){
                         this.itrs.setValue(dta);
                 }.bind(this)
         }); 
     }
-    ,"gerarCodigo":function(){
-        
-        
-        var selecteds = [];
+    gerarCodigo():void{        
+        var selecteds:string[] = [];
         
         if(this.itSnModelJava.getValue()!=""){
-            var tms = selecteds.length;
+            var tms:number = selecteds.length;
             selecteds[tms] = this.itSnModelJava.getValue();
         };
         if(this.itSnDaoJava.getValue()!=""){
-            var tms = selecteds.length;
+            var tms:number = selecteds.length;
             selecteds[tms] = this.itSnDaoJava.getValue();
         };
         if(this.itSnBLLJava.getValue()!=""){
-            var tms = selecteds.length;
+            var tms:number = selecteds.length;
             selecteds[tms] = this.itSnBLLJava.getValue();
         };
         if(this.itSnJsMoolTools.getValue()!=""){
-            var tms = selecteds.length;
+            var tms:number = selecteds.length;
             selecteds[tms] = this.itSnJsMoolTools.getValue();
         };
         if(this.itSnNodeSchemaJs.getValue()!=""){
-            var tms = selecteds.length;
+            var tms:number = selecteds.length;
             selecteds[tms] = this.itSnNodeSchemaJs.getValue();
         };
         if(this.itSnNodeBLLJs.getValue()!=""){
-            var tms = selecteds.length;
+            var tms:number = selecteds.length;
             selecteds[tms] = this.itSnNodeBLLJs.getValue();
         };
         if(this.itSnNodeRouteJs.getValue()!=""){
@@ -242,12 +245,12 @@ export class Tabela extends ModWindow{
             selecteds[tms] = this.itSnNodeRouteJs.getValue();
         };
         
-        var itensList = this.getMainList().getDataProvider();
+        var itensList:ITabela[] = this.getMainList().getDataProvider();
         
-        var tmLst = itensList.size();
+        var tmLst = itensList.length;
         
         for(var x =0;x<tmLst;x++){
-            itensList.get(x)["exportsto"] = selecteds;
+            itensList[x].exportsto = selecteds;
         }
         /*
         var tabSelection = Object.merge({               
@@ -264,22 +267,31 @@ export class Tabela extends ModWindow{
             ,"exportsto":[tabela.ittipoTemplate.getValue(),"JSMOOLTOOLS@js","NODE_BLL@js"]
             },this.getMainList().getSelectedItem());
         */
-        js.underas.net.RequestManager.addRequest({  
-                "data":itensList.getAll()
-                ,"puid":this.getVarModule()
+        RequestManager.addRequest({  
+                "data":itensList
+                ,"module":this
                 ,"method":"post"
                 ,"url":"ws/codigogerador/tabela/gerarcodigo"
-                ,"onLoad":function(dta){
+                ,"onLoad":function(dta:ITabela[]){
                         //this.itrs.setValue(dta);
                 }.bind(this)
         }); 
+        
     }
-    ,"beforeSave":function(p_obj){
-        p_obj["caminho"] = arquivo.itCaminho.getValue();
+    beforeInsert(p_req_obj: IDefaultRequest): IDefaultRequest{
+        p_req_obj.data["caminho"] = this.getCaminho();
+        return p_req_obj;    
+    }   
+    beforeUpdate(p_req_new_obj: IDefaultRequest, p_old_obj: Object): IDefaultRequest{
+        p_req_new_obj.data["caminho"] = this.getCaminho();
+        return p_req_new_obj;
+    }    
+    beforeSave(p_obj:ITabela):ITabela{
+        //p_obj.data["caminho"] = this._urlPath;
         return p_obj;
     }
-    ,"beforeDelete":function(p_new_obj,p_old_obj){
-        p_new_obj["caminho"] = arquivo.itCaminho.getValue();
+    beforeDelete(p_new_obj:IDefaultRequest,p_old_obj:ITabela):IDefaultRequest{
+        p_new_obj.data["caminho"] = this.getCaminho();
         return p_new_obj;
     }
-});
+}

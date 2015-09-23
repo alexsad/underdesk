@@ -575,10 +575,9 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
             $(p_idFather).append(this.getEle());
         };
         MenuTab.prototype.setDataProvider = function (p_dta) {
-            var dta = new util_1.ArrayList(p_dta);
-            var tml = dta.size();
+            var tml = p_dta.length;
             for (var z = 0; z < tml; z++) {
-                var menuItemTmp = dta.get(z);
+                var menuItemTmp = p_dta[z];
                 this.criarTabNova(menuItemTmp.label, menuItemTmp.icone, menuItemTmp.children, z);
             }
             ;
@@ -681,18 +680,17 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
             return this._labelfield;
         };
         Select.prototype.setDataProvider = function (p_dta) {
-            var dta_t = new util_1.ArrayList(p_dta);
-            var tm = dta_t.size();
+            var tm = p_dta.length;
             var t_html = "";
             for (var x = 0; x < tm; x++) {
-                var itemS = dta_t.get(x);
+                var itemS = p_dta[x];
                 t_html += '<li role="presentation" data-vl="' + itemS[this.getValueField()] + '" data-text="' + itemS[this.getLabelField()] + '" class="select_option_value"><a role="menuitem" tabindex="-1" data-vl="' + itemS[this.getValueField()] + '" href="#">' + itemS[this.getLabelField()] + '</a></li>';
             }
             ;
             $('#uid_' + this._uid + '_2').html(t_html);
             t_html = null;
-            dta_t.removeAll();
-            dta_t = null;
+            p_dta = [];
+            p_dta = null;
         };
         Select.prototype.getValue = function () {
             return this.getEle().attr("data-vl");
@@ -746,7 +744,7 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
             this._islistview = true;
             this._rowhtml = '<div><div class="col-sm-12 col-sx-12"></div></div>';
             this._islistview = true;
-            this.dataProvider = new util_1.ArrayList([]);
+            this.dataProvider = [];
             this.getEle()
                 .addClass("boxTileLine ListView")
                 .append('<div class="col-xs-12"><ul id="pagination_' + this._uid + '" class="pagination pagination-sm"></ul></div>');
@@ -771,8 +769,8 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
         };
         ListView.prototype.setDataProvider = function (p_dta) {
             if (p_dta) {
-                this.dataProvider.addAll(p_dta);
-                if (this.dataProvider.size() > 0) {
+                this.dataProvider = p_dta;
+                if (this.dataProvider.length > 0) {
                     var tmpColumns = this.getModule().getColumns();
                     var dtaOrder = [];
                     $.each(tmpColumns, function (index, cfield) {
@@ -784,7 +782,7 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
                 ;
             }
             else {
-                this.dataProvider.removeAll();
+                this.dataProvider = [];
             }
             ;
             return this.refresh();
@@ -823,14 +821,14 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
         };
         ListView.prototype.refresh = function () {
             var tmpOnWithTemplate = function () {
-                var dpt = this.dataProvider.size();
+                var dpt = this.dataProvider.length;
                 this.clear();
                 if (dpt > 0) {
                     var qt_pg = 1;
                     var qt_row = 0;
                     var qt_cells = 0;
                     var pgvisible = "block";
-                    var tmpItemRender = new ListViewItemRender(this.dataProvider.get(0), this._itemTemplateHtml);
+                    var tmpItemRender = new ListViewItemRender(this.dataProvider[0], this._itemTemplateHtml);
                     var max_cells = tmpItemRender.getMaxCells();
                     var max_rows = tmpItemRender.getMaxRows();
                     tmpItemRender = null;
@@ -854,7 +852,7 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
                         ;
                         qt_cells++;
                         this.getRow().attr("data-citens", qt_cells);
-                        var item = this.dataProvider.get(z);
+                        var item = this.dataProvider[z];
                         item["_ind"] = z;
                         var itemRender = new ListViewItemRender(item, this._itemTemplateHtml);
                         itemRender.getEle().attr("data-ind", z).addClass("tilecell list-group-item");
@@ -925,31 +923,50 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
             this.orderAsc(this._itOrderBy.getValue());
         };
         ListView.prototype.orderDesc = function (p_campo) {
-            this.dataProvider.orderDesc(p_campo);
+            this.dataProvider.sort(function () {
+                return function (a, b) {
+                    var objectIDA = a[p_campo];
+                    var objectIDB = b[p_campo];
+                    if (objectIDA === objectIDB) {
+                        return 0;
+                    }
+                    return objectIDA > objectIDB ? 1 : -1;
+                };
+            }());
             this.refresh();
         };
         ListView.prototype.orderAsc = function (p_campo) {
-            this.dataProvider.orderAsc(p_campo);
+            this.dataProvider.sort(function () {
+                return function (a, b) {
+                    var objectIDA = a[p_campo];
+                    var objectIDB = b[p_campo];
+                    if (objectIDA === objectIDB) {
+                        return 0;
+                    }
+                    ;
+                    return objectIDA > objectIDB ? 1 : -1;
+                };
+            }());
             this.refresh();
         };
         ListView.prototype.getSelectedIndex = function () {
             return this._ind;
         };
         ListView.prototype.getSelectedItem = function () {
-            if (this.dataProvider.size() < this._ind) {
+            if (this.dataProvider.length < this._ind) {
                 this._ind = 0;
             }
             ;
-            return this.dataProvider.get(this._ind);
+            return this.dataProvider[this._ind];
         };
         ListView.prototype.setSelectedItem = function (p_item) {
-            this.dataProvider.set(p_item, this._ind);
+            this.dataProvider[this._ind] = p_item;
         };
         ListView.prototype.setSelectedIndex = function (p_index) {
             this._ind = p_index;
         };
         ListView.prototype.changeToIndex = function (p_index) {
-            if (this.getDataProvider().size() > p_index) {
+            if (this.getDataProvider().length > p_index) {
                 this.setSelectedIndex(p_index);
                 this.getEle(".tilecellgrid .row_cells .selectedLine").removeClass("active");
                 if (this.getSelectedItem()) {
@@ -994,8 +1011,8 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
         ListView.prototype.insertItem = function (p_item, p_where) {
             if (p_where === void 0) { p_where = "top"; }
             var tmpOnWithTemplate = function () {
-                var nind = this.dataProvider.size();
-                this.dataProvider.add(p_item);
+                var nind = this.dataProvider.length;
+                this.dataProvider[nind] = p_item;
                 this._ind = nind;
                 p_item["_ind"] = nind;
                 var itemRender = new ListViewItemRender(p_item, this._itemTemplateHtml);
