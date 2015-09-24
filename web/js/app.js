@@ -26,13 +26,13 @@ requirejs.config({
 $(function(){
 	
 	requirejs(
-		['container','br/net/underdesk/arquivo/view/Arquivo']
+		['container','br/net/underdesk/arquivo/view/ArquivoView']
 		,function(_container,_modtmp){
 			//console.log(m);
 			//var t = new sub.SubB(45);
 			//t.doAnyThing("nova instancia!!!!");
 			//$("body").append("<div>!teste</div>");
-			var teste = new _modtmp.Arquivo();
+			var teste = new _modtmp.ArquivoView();
 			var mdw = new _container.ModView("teste com amd");
 			mdw.setIcon("key");
 			mdw.show(true);
