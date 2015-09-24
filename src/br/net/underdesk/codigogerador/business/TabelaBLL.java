@@ -62,10 +62,12 @@ public class TabelaBLL {
         // System.out.println(path.substring(0,path.indexOf("underdesk/WEB-INF/")));    	
 		int tmT = lsttab.size();
 		//String dirBase = path.substring(0,path.indexOf("underdesk/WEB-INF/")); 
-		String dirTmp = "";		
+		String dirTmp = "";	
+		String nameOfDir = "";
 		if(tmT>0){
+			nameOfDir = "uml_tmp_"+lsttab.get(0).getPacote().replaceAll(".", "_");
 			dirTmp = "underdesk/"+lsttab.get(0).getCaminho();
-			dirTmp = dirTmp.substring(0,dirTmp.lastIndexOf("/"))+"/uml_tmp_"+lsttab.get(0).getPacote();
+			dirTmp = dirTmp.substring(0,dirTmp.lastIndexOf("/"))+"/"+nameOfDir;
 			String dirBase = path.substring(0,path.indexOf("underdesk/WEB-INF/"))+dirTmp;
 			//System.out.println(dirBase);
 			
@@ -97,10 +99,14 @@ public class TabelaBLL {
 					//CompactadorBLL.criaDiretorio(lsttab.get(x).getExportsto()[1]);				
 				};
 			};
+			
+			
+			CompactadorBLL.compactarPasta(dirBase+nameOfDir+".zip",dirBase);
+			
 		};		
 		//return "";
 		//System.out.println(stbS);	
-		String[] rs = {"url",dirTmp};
+		String[] rs = {nameOfDir,dirTmp};
 		return rs;
 	}
     @RequestMapping(value="/getbyidtabela/{idTabela}",method=RequestMethod.GET)

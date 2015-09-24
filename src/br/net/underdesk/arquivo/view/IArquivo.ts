@@ -1,7 +1,8 @@
 export interface IArquivo{
-    idArquivo:number;
+    idArquivo?:number;
     tmArquivo:number;
     dsArquivo:string;
     snPasta:string;
     caminho:string;
+    icone:string;
 }

@@ -2,6 +2,8 @@ import {ModWindow} from "../../../../../lib/container";
 import {InputText,Select,CheckBox,NumericStepper,ListView,ItemView,Button} from "../../../../../lib/controller";
 import {ITabela} from "./ITabela";
 import {TabelaCampo} from "./TabelaCampo";
+import {ArquivoView} from "../../arquivo/view/ArquivoView";
+import {IArquivo} from "../../arquivo/view/IArquivo";
 import {ToolBar,RequestManager,IDefaultRequest} from "../../../../../lib/net";
 
 @ItemView({url:"js/br/net/underdesk/codigogerador/view/assets/html/tabela.html",list:"mainList"})
@@ -26,7 +28,8 @@ export class Tabela extends ModWindow{
     mainTb:ToolBar;
     _urlPath:string;
     _modTabelaCampo:TabelaCampo;
-    constructor(){
+    _modArquivoView:ArquivoView;
+    constructor(p_arquivoview:ArquivoView){
         super("*Geracao de Codigo","br.net.underdesk.codigogerador.view.Tabela");
         this.setRevision("$Revision$"); 
         this.setSize(5);        
@@ -155,6 +158,8 @@ export class Tabela extends ModWindow{
         this.mainTb.addButton(this.btGerarCodigo);
           
         //this.addAssociation({"mod":"br.net.underdesk.codigogerador.view.TabelaCampo","act":"getCampos","puid":this.getVarModule()});
+    
+        this._modArquivoView = p_arquivoview;
     }
     onStart():void{
        /*
@@ -223,8 +228,25 @@ export class Tabela extends ModWindow{
                     ,"caminho":this.getCaminho()
                 }
                 //,"caminho":"/assets/uml/ata3_uml.json"
-                ,"onLoad":function(dta:ITabela[]){
-                        this.itrs.setValue(dta);
+                ,"onLoad":function(dta:string[]){
+                    //this.itrs.setValue(dta);
+                    this._modArquivoView.addArquivo({
+                        tmArquivo:100
+                        ,dsArquivo:dta[0]
+                        ,snPasta:'S'
+                        ,caminho:dta[1]
+                        ,icone:'folder-close'
+                    });  
+                    
+                     this._modArquivoView.addArquivo({
+                        tmArquivo:100
+                        ,dsArquivo:dta[0]+".zip"
+                        ,snPasta:'N'
+                        ,caminho:dta[1]
+                        ,icone:'compressed'
+                    });
+                    
+                    
                 }.bind(this)
         }); 
     }
