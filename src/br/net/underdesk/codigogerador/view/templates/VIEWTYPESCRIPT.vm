@@ -1,0 +1,92 @@
+import {ModWindow} from "../../../../../lib/container";
+import {InputText,CheckBox,NumericStepper,ListView,ItemView} from "../../../../../lib/controller";
+import {I${classe.getNome()}} from "./I${classe.getNome()}";
+import {ToolBar,RequestManager,IDefaultRequest} from "../../../../../lib/net";
+
+#set( $count = 0 )
+/*
+<div class="col-xs-6 col-sm-4 col-md-4">
+#foreach ($campo in $classe.getAllCampos())
+#if($count==1&&!$campo.isFk())
+<h4>{${campo.getColuna()}}</h4>
+#elseif(!($campo.isFk()))
+<p class="list-group-item-text">${campo.getDsCampo()}:${campo.getColuna()}</p> 
+#end
+#set( $count = $count+1 )
+#end
+</div>
+*/
+
+@ItemView({url:"js/${classe.getPacote().toLowerCase()}/${classe.getDominio().toLowerCase()}/${classe.getNome().toLowerCase()}/view/assets/html/${classe.getNome().toLowerCase()}.html",list:"mainList"})
+export class ${classe.getNome()} extends ModWindow{
+#foreach ($campo in $classe.getAllCampos())
+#set( $campotuput = 'InputText' )
+#if($campo.getTipo()=="Date")
+#set( $campotuput = 'DatePicker' )		#elseif($campo.getTipo()=="int"&&$campo.getColuna()!=$classe.getPrimaryKey().getColuna()&&!$campo.isFk())
+#set( $campotuput = 'NumericStepper' )
+#elseif($campo.getLimite()>250)
+#set( $campotuput = 'TextArea' )
+#elseif($campo.isFk()&&$campo.getColuna()!=$classe.getPrimaryKey().getColuna())
+#set( $campotuput = 'Select' )
+#elseif($campo.getTipo()=="BigDecimal"||$campo.getTipo()=="float")
+#set( $campotuput = 'InputMoney' )
+#end
+${tab}it${campo.getColunaCapitalize()}:$campotuput;	 
+#end
+
+${tab}constructor(){
+${tab}${tab}super("${classe.getNome()}","${classe.getPacote()}.${classe.getDominio().toLowerCase()}.${classe.getNome()}");
+${tab}${tab}this.setRevision("$Revision: 1 $");	
+${tab}${tab}this.setSize(12);	
+
+${tab}${tab}this.mainTb = new ToolBar({"domain":"${classe.getDominio().toLowerCase()}/${classe.getNome().toLowerCase()}"});
+${tab}${tab}this.append(this.mainTb);
+	
+#foreach ($campo in $classe.getAllCampos())		
+#set( $campotuput = 'InputText("")' )
+#if($campo.getTipo()=="Date")
+#set( $campotuput = 'DatePicker()' )		#elseif($campo.getTipo()=="int"&&$campo.getColuna()!=$classe.getPrimaryKey().getColuna()&&!$campo.isFk())
+#set( $campotuput = 'NumericStepper(0)' )
+#elseif($campo.getLimite()>250)
+#set( $campotuput = 'TextArea("")' )
+#elseif($campo.isFk()&&$campo.getColuna()!=$classe.getPrimaryKey().getColuna())
+#set( $campotuput = 'Select("'+${campo.getFkService()}+'")' )
+#elseif($campo.getTipo()=="BigDecimal"||$campo.getTipo()=="float")
+#set( $campotuput = 'InputMoney(0)' )
+#end
+
+${tab}${tab}this.it$campo.getColunaCapitalize() = new ${campotuput};
+#if($campo.isFk()&&$campo.getColuna()!=$classe.getPrimaryKey().getColuna())
+${tab}${tab}this.it${campo.getColunaCapitalize()}.setColumn("@${campo.getColuna()}");
+${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabel("${campo.getDsCampo().toLowerCase()}");
+${tab}${tab}this.it${campo.getColunaCapitalize()}.setValueField("${campo.getFkService()}");
+${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabelField("${campo.getFkService()}");
+#elseif($campo.getColuna()==$classe.getPrimaryKey().getColuna())
+#if($classe.getTpTemplate()=="NODE_SCHEMA")
+${tab}${tab}this.it${campo.getColunaCapitalize()}.setColumn("$_id");
+#else
+${tab}${tab}this.it${campo.getColunaCapitalize()}.setColumn("$${campo.getColuna()}");
+#end
+${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabel("cod.");
+${tab}${tab}this.it${classe.getPrimaryKey().getColunaCapitalize()}.setEnable(false);	
+#else
+${tab}${tab}this.it${campo.getColunaCapitalize()}.setColumn("@${campo.getColuna()}");
+${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabel("${campo.getDsCampo().toLowerCase()}");
+#end
+${tab}${tab}this.it${campo.getColunaCapitalize()}.setSize(2);
+${tab}${tab}this.append(this.it${campo.getColunaCapitalize()});		
+#end		
+		
+${tab}${tab}this.mainList = new ListView("$classe.getNome()");
+${tab}${tab}this.append(this.mainList);
+${tab}}
+${tab}onStart():void{
+#foreach ($campo in $classe.getAllCampos())
+#if($campo.getColuna()!=$classe.getPrimaryKey().getColuna()&&$campo.isFk())
+${tab}${tab}this.it${campo.getColunaCapitalize()}.fromService({});
+#end
+#end
+${tab}${tab}//this.mainTb.reloadItens();
+${tab}}
+}
+

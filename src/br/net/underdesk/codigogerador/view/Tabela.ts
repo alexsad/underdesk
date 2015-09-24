@@ -1,6 +1,7 @@
 import {ModWindow} from "../../../../../lib/container";
 import {InputText,Select,CheckBox,NumericStepper,ListView,ItemView,Button} from "../../../../../lib/controller";
 import {ITabela} from "./ITabela";
+import {TabelaCampo} from "./TabelaCampo";
 import {ToolBar,RequestManager,IDefaultRequest} from "../../../../../lib/net";
 
 @ItemView({url:"js/br/net/underdesk/codigogerador/view/assets/html/tabela.html",list:"mainList"})
@@ -15,7 +16,7 @@ export class Tabela extends ModWindow{
     itSnModelJava:CheckBox;       
     itSnDaoJava:CheckBox;
     itSnBLLJava:CheckBox;
-    itSnJsMoolTools:CheckBox;
+    itSnViewTypeScript:CheckBox;
     itSnNodeSchemaJs:CheckBox;
     itSnNodeBLLJs:CheckBox;
     itSnNodeRouteJs:CheckBox;
@@ -24,6 +25,7 @@ export class Tabela extends ModWindow{
     mainList:ListView;
     mainTb:ToolBar;
     _urlPath:string;
+    _modTabelaCampo:TabelaCampo;
     constructor(){
         super("*Geracao de Codigo","br.net.underdesk.codigogerador.view.Tabela");
         this.setRevision("$Revision$"); 
@@ -103,13 +105,13 @@ export class Tabela extends ModWindow{
         this.itSnBLLJava.setUnCheckedValue("");     
         this.append(this.itSnBLLJava);
         
-        this.itSnJsMoolTools = new CheckBox("Valido?", "Sim");
-        this.itSnJsMoolTools.setEnable(true);
-        this.itSnJsMoolTools.setSize(12);
-        this.itSnJsMoolTools.setLabel("Visual javascript com mootools:");
-        this.itSnJsMoolTools.setCheckedValue("JSMOOLTOOLS@js");
-        this.itSnJsMoolTools.setUnCheckedValue("");     
-        this.append(this.itSnJsMoolTools);
+        this.itSnViewTypeScript = new CheckBox("Valido?", "Sim");
+        this.itSnViewTypeScript.setEnable(true);
+        this.itSnViewTypeScript.setSize(12);
+        this.itSnViewTypeScript.setLabel("Visual com TypeScript:");
+        this.itSnViewTypeScript.setCheckedValue("VIEWTYPESCRIPT@ts");
+        this.itSnViewTypeScript.setUnCheckedValue("");     
+        this.append(this.itSnViewTypeScript);
         
         this.itSnNodeSchemaJs = new CheckBox("Valido?", "Sim");
         this.itSnNodeSchemaJs.setEnable(true);
@@ -173,6 +175,19 @@ export class Tabela extends ModWindow{
                                           ,{"idTpGeracao":"unsigned","dsTpGeracao":"fornecida"}
                                           ]);
         
+        this._modTabelaCampo = new TabelaCampo();
+        this.getModView().append(this._modTabelaCampo);  
+        
+    }
+    onChangeItem(p_obj:ITabela):ITabela{        
+        //this._modTabelaCampo.getMainList().setDataProvider(p_obj.campo);
+        if(p_obj.campo){
+            this._modTabelaCampo.getMainList().setDataProvider(p_obj.campo);
+            this._modTabelaCampo.itIdTabela.setValue(p_obj.idTabela+"");
+        }else{
+            this._modTabelaCampo.getMainList().setDataProvider([]);
+        };        
+        return p_obj;        
     }
     setCaminho(p_caminho:string):void{
         this._urlPath = p_caminho;
@@ -180,13 +195,13 @@ export class Tabela extends ModWindow{
     getCaminho():string{
         return this._urlPath;
     }
-    getTabelas(urlcaminho:string):void{
-         urlcaminho = urlcaminho.substring(1,urlcaminho.length);
+    getTabelas(p_urlcaminho:string):void{
+         //var urlcaminho:string = p_urlcaminho.substring(1,p_urlcaminho.length);
           //itemmenu.setSize(12);
           //tabela.tbMain.setActAttrConfig(["add","del","edit","reload"],"params",[urlcaminho]);  
          RequestManager.addRequest({ 
             "module":this,
-            "url":urlcaminho,
+            "url":p_urlcaminho,
             "onLoad":function(dta:ITabela[]){
               this.getMainList().setDataProvider(dta);
             }.bind(this)
@@ -228,9 +243,9 @@ export class Tabela extends ModWindow{
             var tms:number = selecteds.length;
             selecteds[tms] = this.itSnBLLJava.getValue();
         };
-        if(this.itSnJsMoolTools.getValue()!=""){
+        if(this.itSnViewTypeScript.getValue()!=""){
             var tms:number = selecteds.length;
-            selecteds[tms] = this.itSnJsMoolTools.getValue();
+            selecteds[tms] = this.itSnViewTypeScript.getValue();
         };
         if(this.itSnNodeSchemaJs.getValue()!=""){
             var tms:number = selecteds.length;
@@ -241,16 +256,21 @@ export class Tabela extends ModWindow{
             selecteds[tms] = this.itSnNodeBLLJs.getValue();
         };
         if(this.itSnNodeRouteJs.getValue()!=""){
-            var tms = selecteds.length;
+            var tms:number = selecteds.length;
             selecteds[tms] = this.itSnNodeRouteJs.getValue();
         };
         
-        var itensList:ITabela[] = this.getMainList().getDataProvider();
+        //var itensList:ITabela[] = this.getMainList().getDataProvider();
+        var itensList:ITabela[] = [];
         
-        var tmLst = itensList.length;
+        itensList[0] = <ITabela>this.mainList.getSelectedItem();
         
-        for(var x =0;x<tmLst;x++){
+        
+        var tmLst:number = itensList.length;
+        
+        for(var x:number =0;x<tmLst;x++){
             itensList[x].exportsto = selecteds;
+            itensList[x].caminho = this.getCaminho();
         }
         /*
         var tabSelection = Object.merge({               

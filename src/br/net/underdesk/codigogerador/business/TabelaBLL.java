@@ -57,37 +57,50 @@ public class TabelaBLL {
 		return rs;
 	}	
     @RequestMapping(value="/gerarcodigo",method=RequestMethod.POST)
-	public String[] gerarCodigo(@RequestBody List<Tabela> lsttab){   
-    	
+	public String[] gerarCodigo(@RequestBody List<Tabela> lsttab){    	
+    	String path = TabelaBLL.class.getResource("").getPath();        
+        // System.out.println(path.substring(0,path.indexOf("underdesk/WEB-INF/")));    	
 		int tmT = lsttab.size();
-		String dirBase = "/mnt/arquivos/tmp/gen"; 
-		//String dirBase = "C:/temp/gen"; 
-		for(int x =0 ;x < tmT;x++){			
-			if(lsttab.get(x).getAllCampos().size()>0){				
-				int tmtoexport = lsttab.get(x).getExportsto().length;				
-				for(int y=0;y<tmtoexport;y++){	
-					String tmpExport = lsttab.get(x).getExportsto()[y];
-					String tmpPath = dirBase+"/"+this.dao.getTipo(tmpExport);
-					CompactadorBLL.criaDiretorio(tmpPath);
-					lsttab.get(x).setTpTemplate(this.dao.getTipo(tmpExport));
-					String tmpNameFile = lsttab.get(x).getNome();
-					
-					if(tmpExport.equals(TabelaDAO.TP_NODEBLL)||tmpExport.equals(TabelaDAO.TP_NODESCHEMA)||tmpExport.equals(TabelaDAO.TP_NODEROUTES)){
-						tmpNameFile = tmpNameFile.toLowerCase();
-					}else if(tmpExport.equals(TabelaDAO.TP_JSMOOLTOOLS)){
-						tmpPath +="/"+lsttab.get(x).getDominio();
+		//String dirBase = path.substring(0,path.indexOf("underdesk/WEB-INF/")); 
+		String dirTmp = "";		
+		if(tmT>0){
+			dirTmp = "underdesk/"+lsttab.get(0).getCaminho();
+			dirTmp = dirTmp.substring(0,dirTmp.lastIndexOf("/"))+"/uml_tmp_"+lsttab.get(0).getPacote();
+			String dirBase = path.substring(0,path.indexOf("underdesk/WEB-INF/"))+dirTmp;
+			//System.out.println(dirBase);
+			
+			//String dirBase = "/mnt/arquivos/tmp/gen";		
+			//String dirBase = "C:/temp/gen"; 
+			
+			CompactadorBLL.criaDiretorio(dirBase);
+			
+			for(int x =0 ;x < tmT;x++){			
+				if(lsttab.get(x).getAllCampos().size()>0){				
+					int tmtoexport = lsttab.get(x).getExportsto().length;				
+					for(int y=0;y<tmtoexport;y++){	
+						String tmpExport = lsttab.get(x).getExportsto()[y];
+						String tmpPath = dirBase+"/"+this.dao.getTipo(tmpExport);
 						CompactadorBLL.criaDiretorio(tmpPath);
-						tmpPath +="/view";
-						CompactadorBLL.criaDiretorio(tmpPath);
-					};					
-					CompactadorBLL.criaArquivo(tmpPath+"/"+tmpNameFile+"."+this.dao.getExtencao(tmpExport), this.dao.gerarCodigo(lsttab.get(x),tmpExport));
-				}				
-				//CompactadorBLL.criaDiretorio(lsttab.get(x).getExportsto()[1]);				
+						lsttab.get(x).setTpTemplate(this.dao.getTipo(tmpExport));
+						String tmpNameFile = lsttab.get(x).getNome();
+						
+						if(tmpExport.equals(TabelaDAO.TP_NODEBLL)||tmpExport.equals(TabelaDAO.TP_NODESCHEMA)||tmpExport.equals(TabelaDAO.TP_NODEROUTES)){
+							tmpNameFile = tmpNameFile.toLowerCase();
+						}else if(tmpExport.equals(TabelaDAO.TP_JSMOOLTOOLS)){
+							tmpPath +="/"+lsttab.get(x).getDominio();
+							CompactadorBLL.criaDiretorio(tmpPath);
+							tmpPath +="/view";
+							CompactadorBLL.criaDiretorio(tmpPath);
+						};					
+						CompactadorBLL.criaArquivo(tmpPath+"/"+tmpNameFile+"."+this.dao.getExtencao(tmpExport), this.dao.gerarCodigo(lsttab.get(x),tmpExport));
+					}				
+					//CompactadorBLL.criaDiretorio(lsttab.get(x).getExportsto()[1]);				
+				};
 			};
-		};
+		};		
 		//return "";
 		//System.out.println(stbS);	
-		String[] rs = {"url",tmT+""};
+		String[] rs = {"url",dirTmp};
 		return rs;
 	}
     @RequestMapping(value="/getbyidtabela/{idTabela}",method=RequestMethod.GET)

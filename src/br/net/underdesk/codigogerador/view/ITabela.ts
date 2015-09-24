@@ -1,3 +1,5 @@
+import {ITabelaCampo} from "./ITabelaCampo";
+
 export interface ITabela{
     idTabela:number;
     tpTemplate:string;
@@ -10,4 +12,5 @@ export interface ITabela{
     tpGeracao:string;   
     imports:string[];
     exportsto:string[];
+    campo:ITabelaCampo[];
 }

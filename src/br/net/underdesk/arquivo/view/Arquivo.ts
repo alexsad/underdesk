@@ -94,7 +94,12 @@ export class Arquivo extends ModWindow{
         var toOpen:string = "#";       
         if(p_obj.snPasta=="N"){
             toOpen = "/underdesk/"+this.itCaminho.getValue();             
-        }
+        };
+        if(p_obj.snPasta=="N" && p_obj.caminho.indexOf("_uml.json") > 0){
+            this._modTabela.setCaminho(p_obj.caminho);
+             //this._modTabela.getMainList().setDataProvider();
+            this._modTabela.getTabelas(p_obj.caminho);
+        };
         this.btBaixar.getEle().attr("href",toOpen);
           
         this.itIdArquivo.setValue(p_obj.idArquivo+"");
