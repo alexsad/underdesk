@@ -4,7 +4,7 @@ import {I${classe.getNome()}} from "./I${classe.getNome()}";
 import {ToolBar,RequestManager,IDefaultRequest} from "../../../../../lib/net";
 
 #set( $count = 0 )
-/*
+/* to put in separete .html file
 <div class="col-xs-6 col-sm-4 col-md-4">
 #foreach ($campo in $classe.getAllCampos())
 #if($count==1&&!$campo.isFk())
