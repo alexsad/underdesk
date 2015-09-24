@@ -14,8 +14,7 @@ export class Arquivo extends ModWindow{
     mainList:ListView;
     mainTb:SimpleToolBar;
     btExplorar:Button;
-    btBaixar:Button;    
-    _modTabela:Tabela;
+    btBaixar:Button;
     constructor(){
         super("*lista de arquivos no servidor","br.net.underdesk.arquivo.view.Arquivo");
         this.setRevision("$Revision$");   
@@ -86,8 +85,6 @@ export class Arquivo extends ModWindow{
         
     }
     onStart():void{        
-        this._modTabela = new Tabela();
-        this.getModView().append(this._modTabela);        
         this.getByCaminho("");        
     }
     onChangeItem(p_obj:IArquivo):IArquivo{
@@ -95,19 +92,13 @@ export class Arquivo extends ModWindow{
         if(p_obj.snPasta=="N"){
             toOpen = "/underdesk/"+this.itCaminho.getValue();             
         };
-        if(p_obj.snPasta=="N" && p_obj.caminho.indexOf("_uml.json") > 0){
-            this._modTabela.setCaminho(p_obj.caminho);
-             //this._modTabela.getMainList().setDataProvider();
-            this._modTabela.getTabelas(p_obj.caminho);
-        };
         this.btBaixar.getEle().attr("href",toOpen);
           
         this.itIdArquivo.setValue(p_obj.idArquivo+"");
         this.itDsArquivo.setValue(p_obj.dsArquivo);
         this.itSnPasta.setValue(p_obj.snPasta);
         this.itTmArquivo.setValue(p_obj.tmArquivo+"");
-        this.itCaminho.setValue(p_obj.caminho);        
-        this._modTabela.setCaminho(p_obj.caminho);        
+        this.itCaminho.setValue(p_obj.caminho);     
         return p_obj;
     }
     getByCaminho(p_caminho:string):void{        

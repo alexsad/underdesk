@@ -27,7 +27,14 @@ public class ArquivoDAO {
 			String caminho = urlpath+arquivo.getName();
 			caminho += (isdir.equals("S"))?"/":"";
 			Arquivo tmpArq = new Arquivo(i+1,100, arquivo.getName(),isdir,caminho);
-			tmpArq.setIcone((isdir.equals("S"))?"folder-close":"file");
+			tmpArq.setIcone((isdir.equals("S"))?"folder-close":"file");	
+			if(!isdir.equals("S")){
+				if(arquivo.getName().indexOf("_uml.json")>-1){
+					tmpArq.setIcone("tags");
+				}else if(arquivo.getName().lastIndexOf(".zip") == (arquivo.getName().length()-3)){
+					tmpArq.setIcone("compressed");
+				};			
+			}
 			lsarquivos.add(tmpArq);
 		}		
 		return lsarquivos;

@@ -7,14 +7,14 @@ import {RequestManager,IDefaultRequest} from "../../../../../lib/net";
 @ItemView({url:"js/br/net/underdesk/arquivo/view/assets/html/arquivo.html",list:"mainList"})
 export class ArquivoView extends ModWindow{    
     mainList:ListView;
-    btExplorar:Button;
+    //btExplorar:Button;
     btBaixar:Button;    
     _modTabela:Tabela;
     constructor(){
         super("*lista de arquivos no servidor","br.net.underdesk.arquivo.view.Arquivo");
         this.setRevision("$Revision$");   
         this.setSize(4);     
-        
+        /*
         this.btExplorar = new Button("Abrir");
         this.btExplorar.setIcon("folder-open");
         
@@ -26,6 +26,7 @@ export class ArquivoView extends ModWindow{
             }
         }.bind(this));        
         this.append(this.btExplorar);       
+        */
         
         this.btBaixar = new Button("Baixar");
         this.btBaixar.setIcon("download-alt");
@@ -38,9 +39,17 @@ export class ArquivoView extends ModWindow{
         
     }
     onStart():void{        
-        this._modTabela = new Tabela();
+        this._modTabela = new Tabela(this);
         this.getModView().append(this._modTabela);        
-        this.getByCaminho("");        
+        this.getByCaminho("");     
+    
+        this.mainList.getEle(".tilecellgrid").on("dblclick", ".tilecell", function (){
+            var selecteDArquivo:IArquivo = <IArquivo>this.getMainList().getSelectedItem();
+            if(selecteDArquivo.snPasta=="S"){
+                this.getByCaminho(selecteDArquivo.caminho);
+            }
+        }.bind(this));
+        
     }
     onChangeItem(p_obj:IArquivo):IArquivo{
         var toOpen:string = "#";       
@@ -55,6 +64,12 @@ export class ArquivoView extends ModWindow{
         this.btBaixar.getEle().attr("href",toOpen);      
         this._modTabela.setCaminho(p_obj.caminho);        
         return p_obj;
+    }
+    addArquivo(p_arq:IArquivo):void{        
+        if(!p_arq.idArquivo){
+            p_arq.idArquivo =  this.mainList.getDataProvider().length+1;
+        };        
+        this.mainList.insertItem(p_arq, 'bottom'); 
     }
     getByCaminho(p_caminho:string):void{
             RequestManager.addRequest({
