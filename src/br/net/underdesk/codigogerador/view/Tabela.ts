@@ -19,9 +19,11 @@ export class Tabela extends ModWindow{
     itSnDaoJava:CheckBox;
     itSnBLLJava:CheckBox;
     itSnViewTypeScript:CheckBox;
+    itSnItemViewHtml:CheckBox;
     itSnNodeSchemaJs:CheckBox;
     itSnNodeBLLJs:CheckBox;
-    itSnNodeRouteJs:CheckBox;
+    itSnGerarApenasSelecionada:CheckBox;
+    //itSnNodeRouteJs:CheckBox;
     //itrs:null;
     btGerarCodigo:Button;
     mainList:ListView;
@@ -84,6 +86,16 @@ export class Tabela extends ModWindow{
         this.itChavePrimaria.setSize(12);   
         this.append(this.itChavePrimaria);
         
+        
+        
+        this.itSnGerarApenasSelecionada = new CheckBox("Gerar Apenas da Tabelas Selecionada?", "Sim");
+        this.itSnGerarApenasSelecionada.setEnable(true);
+        this.itSnGerarApenasSelecionada.setSize(4);
+        this.itSnGerarApenasSelecionada.setCheckedValue("S");
+        this.itSnGerarApenasSelecionada.setUnCheckedValue("N");       
+        this.append(this.itSnGerarApenasSelecionada);
+        
+        
         this.itSnModelJava = new CheckBox("Valido?", "Sim");
         this.itSnModelJava.setEnable(true);
         this.itSnModelJava.setSize(4);
@@ -110,15 +122,23 @@ export class Tabela extends ModWindow{
         
         this.itSnViewTypeScript = new CheckBox("Valido?", "Sim");
         this.itSnViewTypeScript.setEnable(true);
-        this.itSnViewTypeScript.setSize(12);
+        this.itSnViewTypeScript.setSize(7);
         this.itSnViewTypeScript.setLabel("Visual com TypeScript:");
-        this.itSnViewTypeScript.setCheckedValue("VIEWTYPESCRIPT@ts");
+        this.itSnViewTypeScript.setCheckedValue("TYPESCRIPT_VIEW@ts");
         this.itSnViewTypeScript.setUnCheckedValue("");     
         this.append(this.itSnViewTypeScript);
         
+        this.itSnItemViewHtml = new CheckBox("Valido?", "Sim");
+        this.itSnItemViewHtml.setEnable(true);
+        this.itSnItemViewHtml.setSize(5);
+        this.itSnItemViewHtml.setLabel("Item View HTML:");
+        this.itSnItemViewHtml.setCheckedValue("HTML_ITEMVIEW@html");
+        this.itSnItemViewHtml.setUnCheckedValue("");     
+        this.append(this.itSnItemViewHtml);
+        
         this.itSnNodeSchemaJs = new CheckBox("Valido?", "Sim");
         this.itSnNodeSchemaJs.setEnable(true);
-        this.itSnNodeSchemaJs.setSize(4);
+        this.itSnNodeSchemaJs.setSize(6);
         this.itSnNodeSchemaJs.setLabel("Schema NODEJS:");
         this.itSnNodeSchemaJs.setCheckedValue("NODE_SCHEMA@js");
         this.itSnNodeSchemaJs.setUnCheckedValue("");        
@@ -126,19 +146,13 @@ export class Tabela extends ModWindow{
         
         this.itSnNodeBLLJs = new CheckBox("Valido?", "Sim");
         this.itSnNodeBLLJs.setEnable(true);
-        this.itSnNodeBLLJs.setSize(4);
+        this.itSnNodeBLLJs.setSize(6);
         this.itSnNodeBLLJs.setLabel("BLL NODEJS:");
         this.itSnNodeBLLJs.setCheckedValue("NODE_BLL@js");
         this.itSnNodeBLLJs.setUnCheckedValue("");       
         this.append(this.itSnNodeBLLJs);
         
-        this.itSnNodeRouteJs = new CheckBox("Valido?", "Sim");
-        this.itSnNodeRouteJs.setEnable(true);
-        this.itSnNodeRouteJs.setSize(4);
-        this.itSnNodeRouteJs.setLabel("Route NODEJS:");
-        this.itSnNodeRouteJs.setCheckedValue("NODE_ROUTES@js");
-        this.itSnNodeRouteJs.setUnCheckedValue("");     
-        this.append(this.itSnNodeRouteJs);
+
 
         /*
         this.itrs = new TextArea("");
@@ -277,20 +291,20 @@ export class Tabela extends ModWindow{
             var tms:number = selecteds.length;
             selecteds[tms] = this.itSnNodeBLLJs.getValue();
         };
-        if(this.itSnNodeRouteJs.getValue()!=""){
+        if(this.itSnItemViewHtml.getValue()!=""){
             var tms:number = selecteds.length;
-            selecteds[tms] = this.itSnNodeRouteJs.getValue();
+            selecteds[tms] = this.itSnItemViewHtml.getValue();
         };
         
         //var itensList:ITabela[] = this.getMainList().getDataProvider();
         var itensList:ITabela[] = [];
-        
-        //itensList[0] = <ITabela>this.mainList.getSelectedItem();
-        itensList = this.getMainList().getDataProvider();
-        
-        
-        var tmLst:number = itensList.length;
-        
+        if(this.itSnGerarApenasSelecionada.getValue()=="S"){
+           itensList[0] = <ITabela>this.mainList.getSelectedItem();
+        }else{
+           itensList = this.mainList.getDataProvider();
+        };
+        //itensList[0] = <ITabela>this.mainList.getSelectedItem();        
+        var tmLst:number = itensList.length;        
         for(var x:number =0;x<tmLst;x++){
             itensList[x].exportsto = selecteds;
             itensList[x].caminho = this.getCaminho();

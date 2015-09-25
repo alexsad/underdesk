@@ -1,0 +1,11 @@
+#set( $count = 0 )
+<div class="col-xs-6 col-sm-4 col-md-4">
+#foreach ($campo in $classe.getAllCampos())
+#if($count==1&&$campo.isFk())
+<h4>{${campo.getColuna()}}</h4>
+#else
+<p class="list-group-item-text">${campo.getDsCampo()}:${campo.getColuna()}</p> 
+#end
+#set( $count = $count+1 )
+#end
+</div>
