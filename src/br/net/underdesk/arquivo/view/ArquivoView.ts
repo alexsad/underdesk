@@ -28,15 +28,14 @@ export class ArquivoView extends ModWindow{
         this.append(this.btExplorar);       
         */
         
-        this.btBaixar = new Button("Baixar");
-        this.btBaixar.setIcon("download-alt");
-        this.btBaixar.getEle().attr("target","_blank");
-        this.append(this.btBaixar);       
-        
-       
         this.mainList = new ListView("arquivos"); 
         this.append(this.mainList);  
         
+        this.btBaixar = new Button("Baixar");
+        this.btBaixar.setIcon("download-alt");
+        this.btBaixar.getEle().attr("target","_blank");
+        this.append(this.btBaixar);
+               
     }
     onStart():void{        
         this._modTabela = new Tabela(this);

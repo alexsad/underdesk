@@ -285,7 +285,8 @@ export class Tabela extends ModWindow{
         //var itensList:ITabela[] = this.getMainList().getDataProvider();
         var itensList:ITabela[] = [];
         
-        itensList[0] = <ITabela>this.mainList.getSelectedItem();
+        //itensList[0] = <ITabela>this.mainList.getSelectedItem();
+        itensList = this.getMainList().getDataProvider();
         
         
         var tmLst:number = itensList.length;
@@ -293,7 +294,7 @@ export class Tabela extends ModWindow{
         for(var x:number =0;x<tmLst;x++){
             itensList[x].exportsto = selecteds;
             itensList[x].caminho = this.getCaminho();
-        }
+        };
         /*
         var tabSelection = Object.merge({               
             "idTabela":tabela.itidTabela.getValue()              

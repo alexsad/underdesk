@@ -1,14 +1,4 @@
-{
-	"idRequest":123456
-	,"t":10
-	,"tk":0
-	,"format":"json"
-	,"callback":"callback"
-	,"erro":[]
-	,"s":""
-	,"cache":"true"
-	,"tipo":"list"
-	,"rs":[
+[
 		{
 			"idTabela":1
 			,"dsTabela":"arquivo"
@@ -179,4 +169,3 @@
 			]
 		}		
 	]
-}
