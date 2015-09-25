@@ -33,19 +33,17 @@ public class TabelaDAO {
 	@PersistenceContext()
 	private EntityManager manager;
 	
-	public final static String TP_HBM = "HBM@java";
 	public final static String TP_JAVA = "JAVA@java";
 	public final static String TP_DAO = "DAO@java";
 	public final static String TP_BLL = "BLL@java";
-	public final static String TP_JS = "JS@js";
-	public final static String TP_JSMOOLTOOLS = "JSMOOLTOOLS@js";
+	public final static String TP_TYPESCRIPT_VIEW = "TYPESCRIPT_VIEW@ts";
 	public final static String TP_INDEX = "HTML@html";
+	public final static String TP_HTML_ITEMVIEW = "HTML_ITEMVIEW@html";
 	public final static String TP_HBC = "HBC@xml";
 	public final static String TP_UML = "UML@html";
 	public final static String TP_STB = "STBJSON@json";
 	public final static String TP_NODESCHEMA = "NODE_SCHEMA@js";
-	public final static String TP_NODEBLL = "NODE_BLL@js";
-	public final static String TP_NODEROUTES = "NODE_ROUTES@js";
+	public final static String TP_NODEBLL = "NODE_BLL@js";	
 	
 	Gson gson = null;	
 	private String urlTemplates =  "br/net/underdesk/codigogerador/view/templates/";	

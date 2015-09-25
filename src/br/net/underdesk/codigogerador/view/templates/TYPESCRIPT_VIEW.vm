@@ -3,20 +3,6 @@ import {InputText,CheckBox,NumericStepper,ListView,ItemView} from "../../../../.
 import {I${classe.getNome()}} from "./I${classe.getNome()}";
 import {ToolBar,RequestManager,IDefaultRequest} from "../../../../../lib/net";
 
-#set( $count = 0 )
-/* to put in separete .html file
-<div class="col-xs-6 col-sm-4 col-md-4">
-#foreach ($campo in $classe.getAllCampos())
-#if($count==1&&!$campo.isFk())
-<h4>{${campo.getColuna()}}</h4>
-#elseif(!($campo.isFk()))
-<p class="list-group-item-text">${campo.getDsCampo()}:${campo.getColuna()}</p> 
-#end
-#set( $count = $count+1 )
-#end
-</div>
-*/
-
 @ItemView({url:"js/${classe.getPacote().toLowerCase()}/${classe.getDominio().toLowerCase()}/${classe.getNome().toLowerCase()}/view/assets/html/${classe.getNome().toLowerCase()}.html",list:"mainList"})
 export class ${classe.getNome()} extends ModWindow{
 #foreach ($campo in $classe.getAllCampos())

@@ -74,33 +74,29 @@ public class TabelaBLL {
 			//String dirBase = "/mnt/arquivos/tmp/gen";		
 			//String dirBase = "C:/temp/gen"; 
 			
-			CompactadorBLL.criaDiretorio(dirBase);
-			
-			for(int x =0 ;x < tmT;x++){			
-				if(lsttab.get(x).getAllCampos().size()>0){				
-					int tmtoexport = lsttab.get(x).getExportsto().length;				
-					for(int y=0;y<tmtoexport;y++){	
-						String tmpExport = lsttab.get(x).getExportsto()[y];
-						String tmpPath = dirBase+"/"+this.dao.getTipo(tmpExport);
-						CompactadorBLL.criaDiretorio(tmpPath);
+			CompactadorBLL.criaDiretorio(dirBase);			
+			int tmtoexport = lsttab.get(0).getExportsto().length;				
+			for(int y=0;y<tmtoexport;y++){	
+				String tmpExport = lsttab.get(0).getExportsto()[y];
+				String tmpPath = dirBase+"/"+this.dao.getTipo(tmpExport);
+				CompactadorBLL.criaDiretorio(tmpPath);						
+				for(int x =0 ;x < tmT;x++){	
+					if(lsttab.get(x).getAllCampos().size()>0){
 						lsttab.get(x).setTpTemplate(this.dao.getTipo(tmpExport));
-						String tmpNameFile = lsttab.get(x).getNome();
-						
-						if(tmpExport.equals(TabelaDAO.TP_NODEBLL)||tmpExport.equals(TabelaDAO.TP_NODESCHEMA)||tmpExport.equals(TabelaDAO.TP_NODEROUTES)){
+						String tmpNameFile = lsttab.get(x).getNome();						
+						if(tmpExport.equals(TabelaDAO.TP_NODEBLL)||tmpExport.equals(TabelaDAO.TP_NODESCHEMA)||tmpExport.equals(TabelaDAO.TP_HTML_ITEMVIEW)){
 							tmpNameFile = tmpNameFile.toLowerCase();
-						}else if(tmpExport.equals(TabelaDAO.TP_JSMOOLTOOLS)){
+						}else if(tmpExport.equals(TabelaDAO.TP_TYPESCRIPT_VIEW)){
 							tmpPath +="/"+lsttab.get(x).getDominio();
 							CompactadorBLL.criaDiretorio(tmpPath);
 							tmpPath +="/view";
 							CompactadorBLL.criaDiretorio(tmpPath);
 						};					
 						CompactadorBLL.criaArquivo(tmpPath+"/"+tmpNameFile+"."+this.dao.getExtencao(tmpExport), this.dao.gerarCodigo(lsttab.get(x),tmpExport));
-					}				
-					//CompactadorBLL.criaDiretorio(lsttab.get(x).getExportsto()[1]);				
+					};
 				};
-			};
-			
-			
+				CompactadorBLL.compactarPasta(tmpPath+".zip",tmpPath);
+			};			
 			CompactadorBLL.compactarPasta(dirBase+nameOfDir+".zip",dirBase);
 			
 		};		
