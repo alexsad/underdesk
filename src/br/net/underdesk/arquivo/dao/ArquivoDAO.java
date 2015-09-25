@@ -31,7 +31,7 @@ public class ArquivoDAO {
 			if(!isdir.equals("S")){
 				if(arquivo.getName().indexOf("_uml.json")>-1){
 					tmpArq.setIcone("tags");
-				}else if(arquivo.getName().lastIndexOf(".zip") == (arquivo.getName().length()-3)){
+				}else if(arquivo.getName().lastIndexOf(".zip") == (arquivo.getName().length()-4)){
 					tmpArq.setIcone("compressed");
 				};			
 			}
