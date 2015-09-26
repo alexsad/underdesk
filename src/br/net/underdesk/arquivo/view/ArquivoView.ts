@@ -92,6 +92,9 @@ export class ArquivoView extends ModWindow{
         };        
         this.mainList.insertItem(p_arq, 'bottom'); 
     }
+    reload():void{
+        this.getByCaminho(this._caminho);
+    }
     getByCaminho(p_caminho:string):void{
             this._caminho = p_caminho;
             if(this._caminho==""||this._caminho=="/"){

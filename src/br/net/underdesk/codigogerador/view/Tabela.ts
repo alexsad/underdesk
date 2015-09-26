@@ -3,7 +3,6 @@ import {InputText,Select,CheckBox,NumericStepper,ListView,ItemView,Button} from 
 import {ITabela} from "./ITabela";
 import {TabelaCampo} from "./TabelaCampo";
 import {ArquivoView} from "../../arquivo/view/ArquivoView";
-import {IArquivo} from "../../arquivo/view/IArquivo";
 import {ToolBar,RequestManager,IDefaultRequest} from "../../../../../lib/net";
 
 @ItemView({url:"js/br/net/underdesk/codigogerador/view/assets/html/tabela.html",list:"mainList"})
@@ -249,23 +248,23 @@ export class Tabela extends ModWindow{
                 //,"caminho":"/assets/uml/ata3_uml.json"
                 ,"onLoad":function(dta:string[]){
                     //this.itrs.setValue(dta);
+                    /*
                     this._modArquivoView.addArquivo({
                         tmArquivo:100
                         ,dsArquivo:dta[0]
                         ,snPasta:'S'
                         ,caminho:dta[1]
                         ,icone:'folder-close'
-                    });  
-                    
-                     this._modArquivoView.addArquivo({
+                    });                   
+                    this._modArquivoView.addArquivo({
                         tmArquivo:100
                         ,dsArquivo:dta[0]+".zip"
                         ,snPasta:'N'
                         ,caminho:dta[1]
                         ,icone:'compressed'
                     });
-                    
-                    
+                    */
+                    this._modArquivoView.reload();
                 }.bind(this)
         }); 
     }
@@ -318,7 +317,7 @@ export class Tabela extends ModWindow{
         for(var x:number =0;x<tmLst;x++){
             itensList[x].exportsto = selecteds;
             itensList[x].caminho = this.getCaminho();
-        };
+        };        
         /*
         var tabSelection = Object.merge({               
             "idTabela":tabela.itidTabela.getValue()              
