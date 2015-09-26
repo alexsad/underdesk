@@ -39,11 +39,11 @@ public class TabelaDAO {
 	public final static String TP_TYPESCRIPT_VIEW = "TYPESCRIPT_VIEW@ts";
 	public final static String TP_INDEX = "HTML@html";
 	public final static String TP_HTML_ITEMVIEW = "HTML_ITEMVIEW@html";
-	public final static String TP_HBC = "HBC@xml";
+	public final static String TP_TYPESCRIPT_NODE_INTERFACE = "TYPESCRIPT_NODE_INTERFACE@ts";
 	public final static String TP_UML = "UML@html";
 	public final static String TP_STB = "STBJSON@json";
-	public final static String TP_NODESCHEMA = "NODE_SCHEMA@js";
-	public final static String TP_NODEBLL = "NODE_BLL@js";	
+	public final static String TP_TYPESCRIPT_NODE_SCHEMA = "TYPESCRIPT_NODE_SCHEMA@ts";
+	public final static String TP_TYPESCRIPT_BLL = "TYPESCRIPT_NODE_BLL@ts";	
 	
 	Gson gson = null;	
 	private String urlTemplates =  "br/net/underdesk/codigogerador/view/templates/";	

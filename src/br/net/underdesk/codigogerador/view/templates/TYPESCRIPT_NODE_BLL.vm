@@ -1,0 +1,56 @@
+import express = require('express');
+import {Route,Controller} from "../../../../lib/decorator";
+import {${classe.getNome()}DAO,I${classe.getNome()}Model} from "../model/${classe.getNome().toLowerCase()}";
+
+@Controller("/${classe.getNome().toLowerCase()}")
+class ${classe.getNome()}{
+	@Route({url:"/",verb:"get"})
+	get(req:express.Request,res:express.Response):void{
+		${classe.getNome()}DAO.find({}).exec().then(
+			function(dta:I${classe.getNome()}Model[]){
+				res.json(dta);
+			}
+			,function(err){
+				res.status(400).json(err);
+			}
+		);
+	}
+	@Route({url:"/",verb:"post"})
+	add(req:express.Request,res:express.Response):void{
+		var n${classe.getNome().toLowerCase()}:I${classe.getNome()}Model = <I${classe.getNome()}Model>req.body;
+		${classe.getNome()}DAO.create(n${classe.getNome().toLowerCase()}).then(
+			function(p_n${classe.getNome().toLowerCase()}:I${classe.getNome()}Model){
+				res.json(p_n${classe.getNome().toLowerCase()}._id);
+			}
+			,function(error:any){
+				if(error){
+					res.status(400).json(error);
+				}
+			}
+		);
+	}
+	@Route({url:"/",verb:"put"})
+	atualizar(req:express.Request,res:express.Response):void{
+		var p_${classe.getNome().toLowerCase()}:I${classe.getNome()}Model = <I${classe.getNome()}Model>req.body;
+		var tmpId:string = p_${classe.getNome().toLowerCase()}._id;
+		delete p_${classe.getNome().toLowerCase()}._id;
+		${classe.getNome()}DAO.findByIdAndUpdate(tmpId,{$set:p_${classe.getNome().toLowerCase()}},function(err){
+			if(err){
+				res.status(400).json(err);
+			}else{
+				res.send(true);
+			}
+		});
+	}
+	@Route({url:"/:_id",verb:"delete"})
+	delete(req:express.Request,res:express.Response):void{
+		${classe.getNome()}DAO.findByIdAndRemove(req.params._id).exec().then(
+			function(){
+				res.send(true);
+			}
+			,function(err:any) {
+				res.status(400).json(err);
+			}
+ 		);
+	}
+}

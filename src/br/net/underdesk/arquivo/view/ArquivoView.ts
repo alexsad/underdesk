@@ -8,8 +8,10 @@ import {RequestManager,IDefaultRequest} from "../../../../../lib/net";
 export class ArquivoView extends ModWindow{    
     mainList:ListView;
     //btExplorar:Button;
-    btBaixar:Button;    
+    btBaixar:Button;   
+    btSubir:Button; 
     _modTabela:Tabela;
+    _caminho:string;
     constructor(){
         super("*lista de arquivos no servidor","br.net.underdesk.arquivo.view.Arquivo");
         this.setRevision("$Revision$");   
@@ -33,8 +35,15 @@ export class ArquivoView extends ModWindow{
         
         this.btBaixar = new Button("Baixar");
         this.btBaixar.setIcon("download-alt");
-        this.btBaixar.getEle().attr("target","_blank");
+        this.btBaixar.getEle().attr("target","_blank").removeClass("btn-default").addClass("btn-info");
+        this.btBaixar.setEnable(false);
         this.append(this.btBaixar);
+        
+        this.btSubir = new Button("Voltar");
+        this.btSubir.setIcon("arrow-left");
+        this.btSubir.addEvent('click',this.voltar.bind(this));
+        this.btSubir.setEnable(false);
+        this.append(this.btSubir);
                
     }
     onStart():void{        
@@ -47,20 +56,33 @@ export class ArquivoView extends ModWindow{
             if(selecteDArquivo.snPasta=="S"){
                 this.getByCaminho(selecteDArquivo.caminho);
             }
-        }.bind(this));
-        
+        }.bind(this));        
+    }
+    voltar(evt:Event):void{
+        //evt.defaultPrevented();
+        if(this._caminho==""||this._caminho=="/"){
+            this._caminho="";
+            this.btSubir.setEnable(false);
+        }else{
+            var tmpPath:string = this._caminho.substring(0,this._caminho.length-1);
+            //console.log(tmpPath.substring(0,tmpPath.lastIndexOf("/"))+"/");
+            this.getByCaminho(tmpPath.substring(0,tmpPath.lastIndexOf("/"))+"/"); 
+        };        
     }
     onChangeItem(p_obj:IArquivo):IArquivo{
         var toOpen:string = "#";       
         if(p_obj.snPasta=="N"){
-            toOpen = "/underdesk/"+p_obj.caminho;             
+            toOpen = "/underdesk/"+p_obj.caminho;
+            this.btBaixar.setEnable(true);             
+        }else{
+            this.btBaixar.setEnable(false); 
         };
         if(p_obj.snPasta=="N" && p_obj.caminho.indexOf("_uml.json") > 0){
             this._modTabela.setCaminho(p_obj.caminho);
              //this._modTabela.getMainList().setDataProvider();
             this._modTabela.getTabelas(p_obj.caminho);
         };
-        this.btBaixar.getEle().attr("href",toOpen);      
+        this.btBaixar.getEle().attr("href",toOpen);            
         this._modTabela.setCaminho(p_obj.caminho);        
         return p_obj;
     }
@@ -71,6 +93,13 @@ export class ArquivoView extends ModWindow{
         this.mainList.insertItem(p_arq, 'bottom'); 
     }
     getByCaminho(p_caminho:string):void{
+            this._caminho = p_caminho;
+            if(this._caminho==""||this._caminho=="/"){
+                this.btSubir.setEnable(false);
+            }else{
+                this.btSubir.setEnable(true);
+            };
+            //console.log(this._caminho);
             RequestManager.addRequest({
                 "data":{"urlpath":p_caminho}
                 ,"module":this
