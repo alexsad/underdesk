@@ -74,12 +74,13 @@ public class Tabela {
 	}
 	public void setDominio(String dominio) {
 		this.dominio = dominio;
-	}
-	
+	}	
 	public String getPacote() {
 		return this.pacote;
 	}
-	
+	public String getPacoteAsUrl() {
+		return pacote.replaceAll("\\.","/");
+	}
 	public void setPacote(String pacote) {
 		this.pacote=pacote;
 	}

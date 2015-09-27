@@ -1,0 +1,6 @@
+#set( $count = 0 )
+export interface I${classe.getNome()}{
+#foreach ($campo in $classe.getAllCampos())
+	${campo.getColuna()}:${campo.getTipo().toLowerCase()};
+#end
+}

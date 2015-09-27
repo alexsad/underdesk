@@ -4,7 +4,7 @@
 #if($count==1&&$campo.isFk())
 <h4>{${campo.getColuna()}}</h4>
 #else
-<p class="list-group-item-text">${campo.getDsCampo()}:${campo.getColuna()}</p> 
+<p class="list-group-item-text">${campo.getDsCampo()}:{${campo.getColuna()}}</p> 
 #end
 #set( $count = $count+1 )
 #end

@@ -1,0 +1,13 @@
+import {I${classe.getNome()}} from "./I${classe.getNome()}";
+import mongoose = require("mongoose");
+
+var schema = new mongoose.Schema({
+#foreach ($campo in $classe.getAllCampos())
+		"${campo.getColuna()}":{
+			type:#if($campo.getTipo()=="int") Number#else ${campo.getTipo()}#end
+			,required:true
+		}
+#end
+});
+export interface I${classe.getNome()}Model extends I${classe.getNome()}, mongoose.Document { };
+export var ${classe.getNome()}DAO = mongoose.model<I${classe.getNome()}Model>("${classe.getNome()}", schema);

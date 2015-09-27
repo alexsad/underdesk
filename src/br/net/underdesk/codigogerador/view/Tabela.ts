@@ -3,7 +3,6 @@ import {InputText,Select,CheckBox,NumericStepper,ListView,ItemView,Button} from 
 import {ITabela} from "./ITabela";
 import {TabelaCampo} from "./TabelaCampo";
 import {ArquivoView} from "../../arquivo/view/ArquivoView";
-import {IArquivo} from "../../arquivo/view/IArquivo";
 import {ToolBar,RequestManager,IDefaultRequest} from "../../../../../lib/net";
 
 @ItemView({url:"js/br/net/underdesk/codigogerador/view/assets/html/tabela.html",list:"mainList"})
@@ -20,8 +19,9 @@ export class Tabela extends ModWindow{
     itSnBLLJava:CheckBox;
     itSnViewTypeScript:CheckBox;
     itSnItemViewHtml:CheckBox;
-    itSnNodeSchemaJs:CheckBox;
-    itSnNodeBLLJs:CheckBox;
+    itSnTypeScriptNodeSchema:CheckBox;
+    itSnTypeScriptNodeBLL:CheckBox;
+    itSnTypeScriptNodeInterface:CheckBox;
     itSnGerarApenasSelecionada:CheckBox;
     //itSnNodeRouteJs:CheckBox;
     //itrs:null;
@@ -61,8 +61,14 @@ export class Tabela extends ModWindow{
         this.itPacote = new InputText("");
         this.itPacote.setLabel("pacote");   
         this.itPacote.setColumn("@pacote");
-        this.itPacote.setSize(12); 
+        this.itPacote.setSize(7); 
         this.append(this.itPacote); 
+        
+        this.itChavePrimaria = new InputText("");
+        this.itChavePrimaria.setLabel("chave primaria");
+        this.itChavePrimaria.setColumn("@chavePrimaria");       
+        this.itChavePrimaria.setSize(5);   
+        this.append(this.itChavePrimaria);
 
         this.itTipo = new CheckBox("view?", "sim");
         this.itTipo.setLabel("view?");  
@@ -78,23 +84,14 @@ export class Tabela extends ModWindow{
         this.itTpGeracao.setSize(6);
         this.itTpGeracao.setValueField("idTpGeracao");
         this.itTpGeracao.setLabelField("dsTpGeracao");
-        this.append(this.itTpGeracao);
-        
-        this.itChavePrimaria = new InputText("");
-        this.itChavePrimaria.setLabel("chave primaria");
-        this.itChavePrimaria.setColumn("@chavePrimaria");       
-        this.itChavePrimaria.setSize(12);   
-        this.append(this.itChavePrimaria);
-        
-        
+        this.append(this.itTpGeracao);        
         
         this.itSnGerarApenasSelecionada = new CheckBox("Gerar Apenas da Tabelas Selecionada?", "Sim");
         this.itSnGerarApenasSelecionada.setEnable(true);
-        this.itSnGerarApenasSelecionada.setSize(4);
+        this.itSnGerarApenasSelecionada.setSize(12);
         this.itSnGerarApenasSelecionada.setCheckedValue("S");
         this.itSnGerarApenasSelecionada.setUnCheckedValue("N");       
-        this.append(this.itSnGerarApenasSelecionada);
-        
+        this.append(this.itSnGerarApenasSelecionada);        
         
         this.itSnModelJava = new CheckBox("Valido?", "Sim");
         this.itSnModelJava.setEnable(true);
@@ -123,7 +120,7 @@ export class Tabela extends ModWindow{
         this.itSnViewTypeScript = new CheckBox("Valido?", "Sim");
         this.itSnViewTypeScript.setEnable(true);
         this.itSnViewTypeScript.setSize(7);
-        this.itSnViewTypeScript.setLabel("Visual com TypeScript:");
+        this.itSnViewTypeScript.setLabel("Visual com TScript:");
         this.itSnViewTypeScript.setCheckedValue("TYPESCRIPT_VIEW@ts");
         this.itSnViewTypeScript.setUnCheckedValue("");     
         this.append(this.itSnViewTypeScript);
@@ -136,21 +133,28 @@ export class Tabela extends ModWindow{
         this.itSnItemViewHtml.setUnCheckedValue("");     
         this.append(this.itSnItemViewHtml);
         
-        this.itSnNodeSchemaJs = new CheckBox("Valido?", "Sim");
-        this.itSnNodeSchemaJs.setEnable(true);
-        this.itSnNodeSchemaJs.setSize(6);
-        this.itSnNodeSchemaJs.setLabel("Schema NODEJS:");
-        this.itSnNodeSchemaJs.setCheckedValue("NODE_SCHEMA@js");
-        this.itSnNodeSchemaJs.setUnCheckedValue("");        
-        this.append(this.itSnNodeSchemaJs);
         
-        this.itSnNodeBLLJs = new CheckBox("Valido?", "Sim");
-        this.itSnNodeBLLJs.setEnable(true);
-        this.itSnNodeBLLJs.setSize(6);
-        this.itSnNodeBLLJs.setLabel("BLL NODEJS:");
-        this.itSnNodeBLLJs.setCheckedValue("NODE_BLL@js");
-        this.itSnNodeBLLJs.setUnCheckedValue("");       
-        this.append(this.itSnNodeBLLJs);
+        this.itSnTypeScriptNodeInterface = new CheckBox("TScript Interface:", "Sim");
+        this.itSnTypeScriptNodeInterface.setEnable(true);
+        this.itSnTypeScriptNodeInterface.setSize(4);
+        this.itSnTypeScriptNodeInterface.setCheckedValue("TYPESCRIPT_NODE_INTERFACE@ts");
+        this.itSnTypeScriptNodeInterface.setUnCheckedValue("");        
+        this.append(this.itSnTypeScriptNodeInterface);
+        
+        
+        this.itSnTypeScriptNodeSchema = new CheckBox("TScript Schema:", "Sim");
+        this.itSnTypeScriptNodeSchema.setEnable(true);
+        this.itSnTypeScriptNodeSchema.setSize(4);
+        this.itSnTypeScriptNodeSchema.setCheckedValue("TYPESCRIPT_NODE_SCHEMA@ts");
+        this.itSnTypeScriptNodeSchema.setUnCheckedValue("");        
+        this.append(this.itSnTypeScriptNodeSchema);
+        
+        this.itSnTypeScriptNodeBLL = new CheckBox("TScript BLL:", "Sim");
+        this.itSnTypeScriptNodeBLL.setEnable(true);
+        this.itSnTypeScriptNodeBLL.setSize(4);
+        this.itSnTypeScriptNodeBLL.setCheckedValue("TYPESCRIPT_NODE_BLL@ts");
+        this.itSnTypeScriptNodeBLL.setUnCheckedValue("");       
+        this.append(this.itSnTypeScriptNodeBLL);
         
 
 
@@ -244,23 +248,23 @@ export class Tabela extends ModWindow{
                 //,"caminho":"/assets/uml/ata3_uml.json"
                 ,"onLoad":function(dta:string[]){
                     //this.itrs.setValue(dta);
+                    /*
                     this._modArquivoView.addArquivo({
                         tmArquivo:100
                         ,dsArquivo:dta[0]
                         ,snPasta:'S'
                         ,caminho:dta[1]
                         ,icone:'folder-close'
-                    });  
-                    
-                     this._modArquivoView.addArquivo({
+                    });                   
+                    this._modArquivoView.addArquivo({
                         tmArquivo:100
                         ,dsArquivo:dta[0]+".zip"
                         ,snPasta:'N'
                         ,caminho:dta[1]
                         ,icone:'compressed'
                     });
-                    
-                    
+                    */
+                    this._modArquivoView.reload();
                 }.bind(this)
         }); 
     }
@@ -283,18 +287,23 @@ export class Tabela extends ModWindow{
             var tms:number = selecteds.length;
             selecteds[tms] = this.itSnViewTypeScript.getValue();
         };
-        if(this.itSnNodeSchemaJs.getValue()!=""){
+        if(this.itSnTypeScriptNodeSchema.getValue()!=""){
             var tms:number = selecteds.length;
-            selecteds[tms] = this.itSnNodeSchemaJs.getValue();
+            selecteds[tms] = this.itSnTypeScriptNodeSchema.getValue();
         };
-        if(this.itSnNodeBLLJs.getValue()!=""){
+        if(this.itSnTypeScriptNodeBLL.getValue()!=""){
             var tms:number = selecteds.length;
-            selecteds[tms] = this.itSnNodeBLLJs.getValue();
+            selecteds[tms] = this.itSnTypeScriptNodeBLL.getValue();
         };
         if(this.itSnItemViewHtml.getValue()!=""){
             var tms:number = selecteds.length;
             selecteds[tms] = this.itSnItemViewHtml.getValue();
         };
+        if(this.itSnTypeScriptNodeInterface.getValue()!=""){
+            var tms:number = selecteds.length;
+            selecteds[tms] = this.itSnTypeScriptNodeInterface.getValue();
+        };
+        
         
         //var itensList:ITabela[] = this.getMainList().getDataProvider();
         var itensList:ITabela[] = [];
@@ -308,7 +317,7 @@ export class Tabela extends ModWindow{
         for(var x:number =0;x<tmLst;x++){
             itensList[x].exportsto = selecteds;
             itensList[x].caminho = this.getCaminho();
-        };
+        };        
         /*
         var tabSelection = Object.merge({               
             "idTabela":tabela.itidTabela.getValue()              

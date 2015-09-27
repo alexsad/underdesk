@@ -53,7 +53,7 @@ public class TabelaBLL {
 	public String gerarCodigoByTabela(@RequestBody Tabela t){
 		Tabela tabelaC = this.getByIdTabela(t.getCaminho(),t.getIdTabela());
 		String rs = this.dao.gerarCodigo(tabelaC,t.getTpTemplate());
-		System.out.println(rs);
+		//System.out.println(rs);
 		return rs;
 	}	
     @RequestMapping(value="/gerarcodigo",method=RequestMethod.POST)
@@ -74,30 +74,62 @@ public class TabelaBLL {
 			//String dirBase = "/mnt/arquivos/tmp/gen";		
 			//String dirBase = "C:/temp/gen"; 
 			
-			CompactadorBLL.criaDiretorio(dirBase);			
+			CompactadorBLL.criaDiretorio(dirBase);	
+			/*
+			CompactadorBLL.criaDiretorio(dirBase+"/model");
+			CompactadorBLL.criaDiretorio(dirBase+"/view");
+			CompactadorBLL.criaDiretorio(dirBase+"/dao");
+			CompactadorBLL.criaDiretorio(dirBase+"/view/assets");
+			CompactadorBLL.criaDiretorio(dirBase+"/view/assets/html");
+			CompactadorBLL.criaDiretorio(dirBase+"/controller");
+			*/
+			
 			int tmtoexport = lsttab.get(0).getExportsto().length;				
 			for(int y=0;y<tmtoexport;y++){	
 				String tmpExport = lsttab.get(0).getExportsto()[y];
-				String tmpPath = dirBase+"/"+this.dao.getTipo(tmpExport);
-				CompactadorBLL.criaDiretorio(tmpPath);						
+				//String tmpPath = dirBase+"/"+this.dao.getTipo(tmpExport);
+								
+				//CompactadorBLL.criaDiretorio(tmpPath);				
 				for(int x =0 ;x < tmT;x++){	
 					if(lsttab.get(x).getAllCampos().size()>0){
-						lsttab.get(x).setTpTemplate(this.dao.getTipo(tmpExport));
+						String tmpPath = dirBase;
 						String tmpNameFile = lsttab.get(x).getNome();						
-						if(tmpExport.equals(TabelaDAO.TP_NODEBLL)||tmpExport.equals(TabelaDAO.TP_NODESCHEMA)||tmpExport.equals(TabelaDAO.TP_HTML_ITEMVIEW)){
-							tmpNameFile = tmpNameFile.toLowerCase();
+						tmpPath=tmpPath+"/"+tmpNameFile.toLowerCase();	
+						CompactadorBLL.criaDiretorio(tmpPath);
+						CompactadorBLL.criaDiretorio(tmpPath+"/view");						
+						lsttab.get(x).setTpTemplate(this.dao.getTipo(tmpExport));												
+						if(tmpExport.equals(TabelaDAO.TP_JAVA)||tmpExport.equals(TabelaDAO.TP_TYPESCRIPT_NODE_SCHEMA)||tmpExport.equals(TabelaDAO.TP_TYPESCRIPT_NODE_INTERFACE)){
+							if(tmpExport.equals(TabelaDAO.TP_TYPESCRIPT_NODE_INTERFACE)){
+								tmpNameFile = "I"+tmpNameFile;
+							}else if(tmpExport.equals(TabelaDAO.TP_TYPESCRIPT_NODE_SCHEMA)){
+								tmpNameFile = tmpNameFile.toLowerCase();
+							};	
+							CompactadorBLL.criaDiretorio(tmpPath+"/model");
+							CompactadorBLL.criaArquivo(tmpPath+"/model/"+tmpNameFile+"."+this.dao.getExtencao(tmpExport), this.dao.gerarCodigo(lsttab.get(x),tmpExport));
 						}else if(tmpExport.equals(TabelaDAO.TP_TYPESCRIPT_VIEW)){
-							tmpPath +="/"+lsttab.get(x).getDominio();
-							CompactadorBLL.criaDiretorio(tmpPath);
-							tmpPath +="/view";
-							CompactadorBLL.criaDiretorio(tmpPath);
-						};					
-						CompactadorBLL.criaArquivo(tmpPath+"/"+tmpNameFile+"."+this.dao.getExtencao(tmpExport), this.dao.gerarCodigo(lsttab.get(x),tmpExport));
+							CompactadorBLL.criaArquivo(tmpPath+"/view/"+tmpNameFile+"."+this.dao.getExtencao(tmpExport), this.dao.gerarCodigo(lsttab.get(x),tmpExport));
+						}else if(tmpExport.equals(TabelaDAO.TP_HTML_ITEMVIEW)){
+							tmpNameFile = tmpNameFile.toLowerCase();							
+							CompactadorBLL.criaDiretorio(tmpPath+"/view/assets");
+							CompactadorBLL.criaDiretorio(tmpPath+"/view/assets/html");							
+							CompactadorBLL.criaArquivo(tmpPath+"/view/assets/html/"+tmpNameFile+"."+this.dao.getExtencao(tmpExport), this.dao.gerarCodigo(lsttab.get(x),tmpExport));
+						}else if(tmpExport.equals(TabelaDAO.TP_TYPESCRIPT_BLL)||tmpExport.equals(TabelaDAO.TP_BLL)){
+							CompactadorBLL.criaDiretorio(tmpPath+"/controller");							
+							CompactadorBLL.criaArquivo(tmpPath+"/controller/"+tmpNameFile+"."+this.dao.getExtencao(tmpExport), this.dao.gerarCodigo(lsttab.get(x),tmpExport));							
+						}else if(tmpExport.equals(TabelaDAO.TP_DAO)){
+							CompactadorBLL.criaDiretorio(tmpPath+"/dao");
+							CompactadorBLL.criaArquivo(tmpPath+"/dao/"+tmpNameFile+"."+this.dao.getExtencao(tmpExport), this.dao.gerarCodigo(lsttab.get(x),tmpExport));
+						}else{
+							CompactadorBLL.criaDiretorio(tmpPath+"/others");							
+							CompactadorBLL.criaArquivo(tmpPath+"/others/"+tmpNameFile+"."+this.dao.getExtencao(tmpExport), this.dao.gerarCodigo(lsttab.get(x),tmpExport));
+						};			
 					};
 				};
-				CompactadorBLL.compactarPasta(tmpPath+".zip",tmpPath);
-			};			
-			CompactadorBLL.compactarPasta(dirBase+nameOfDir+".zip",dirBase);
+				//System.out.println(tmpPath+".zip");
+				//CompactadorBLL.compactarPasta(tmpPath+".zip",tmpPath);
+			};	
+			//System.out.println(dirBase+nameOfDir+".zip");
+			//CompactadorBLL.compactarPasta(dirBase+".zip",dirBase);
 			
 		};		
 		//return "";
