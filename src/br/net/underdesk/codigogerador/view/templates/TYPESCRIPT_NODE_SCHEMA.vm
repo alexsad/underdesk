@@ -1,12 +1,12 @@
 import {I${classe.getNome()}} from "./I${classe.getNome()}";
 import mongoose = require("mongoose");
-
+#set( $count = 0 )
 var schema = new mongoose.Schema({
 #foreach ($campo in $classe.getAllCampos())
-		"${campo.getColuna()}":{
-			type:#if($campo.getTipo()=="int") Number#else ${campo.getTipo()}#end
-			,required:true
+		#if($count > 0),#end"${campo.getColuna()}":{
+			type:#if($campo.getTipo()=="int"||$campo.getTipo()=="float")Number#else${campo.getTipo()}#end ,required:true
 		}
+#set( $count = $count+1 )		
 #end
 });
 export interface I${classe.getNome()}Model extends I${classe.getNome()}, mongoose.Document { };
