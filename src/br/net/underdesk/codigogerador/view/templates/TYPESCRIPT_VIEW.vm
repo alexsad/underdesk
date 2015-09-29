@@ -1,7 +1,7 @@
-import {ModWindow} from "../../../../../lib/container";
-import {InputText,CheckBox,NumericStepper,ListView,ItemView} from "../../../../../lib/controller";
-import {I${classe.getNome()}} from "./I${classe.getNome()}";
-import {ToolBar,RequestManager,IDefaultRequest} from "../../../../../lib/net";
+import {ModWindow} from "../../../../lib/container";
+import {InputText,InputMoney,DatePicker,Select,CheckBox,NumericStepper,ListView,ItemView} from "../../../../lib/controller";
+import {I${classe.getNome()}} from "../model/I${classe.getNome()}";
+import {ToolBar,RequestManager,IDefaultRequest} from "../../../../lib/net";
 
 @ItemView({url:"js/${classe.getPacoteAsUrl().toLowerCase()}/${classe.getDominio().toLowerCase()}/view/assets/html/${classe.getNome().toLowerCase()}.html",list:"mainList"})
 export class ${classe.getNome()} extends ModWindow{
@@ -19,7 +19,8 @@ export class ${classe.getNome()} extends ModWindow{
 #end
 ${tab}it${campo.getColunaCapitalize()}:$campotuput;	 
 #end
-
+${tab}mainTb:ToolBar;
+${tab}mainList:ListView;
 ${tab}constructor(){
 ${tab}${tab}super("${classe.getNome()}","${classe.getPacote()}.${classe.getDominio().toLowerCase()}.${classe.getNome()}");
 ${tab}${tab}this.setRevision("$Revision: 1 $");	
@@ -38,7 +39,7 @@ ${tab}${tab}this.append(this.mainTb);
 #elseif($campo.isFk()&&$campo.getColuna()!=$classe.getPrimaryKey().getColuna())
 #set( $campotuput = 'Select("'+${campo.getFkService()}+'")' )
 #elseif($campo.getTipo()=="BigDecimal"||$campo.getTipo()=="float")
-#set( $campotuput = 'InputMoney(0)' )
+#set( $campotuput = 'InputMoney("0")' )
 #end
 
 ${tab}${tab}this.it$campo.getColunaCapitalize() = new ${campotuput};
@@ -69,7 +70,10 @@ ${tab}}
 ${tab}onStart():void{
 #foreach ($campo in $classe.getAllCampos())
 #if($campo.getColuna()!=$classe.getPrimaryKey().getColuna()&&$campo.isFk())
-${tab}${tab}this.it${campo.getColunaCapitalize()}.fromService({});
+${tab}${tab}this.it${campo.getColunaCapitalize()}.fromService({
+${tab}${tab}${tab}"module":this
+${tab}${tab}${tab},"url":"${campo.getDsCampo().toLowerCase()}/"
+${tab}${tab}});
 #end
 #end
 ${tab}${tab}//this.mainTb.reloadItens();
