@@ -68,7 +68,13 @@ public class TabelaBLL {
 			nameOfDir = "uml_tmp_"+lsttab.get(0).getPacote().replaceAll("\\.", "_");
 			dirTmp = "underdesk/"+lsttab.get(0).getCaminho();
 			dirTmp = dirTmp.substring(0,dirTmp.lastIndexOf("/"))+"/"+nameOfDir;
+			
+			
 			String dirBase = path.substring(0,path.indexOf("underdesk/WEB-INF/"))+dirTmp;
+			
+			//dirBase = "C:\\temp\\gen\\underdesk";
+			dirBase = "/mnt/arquivos/tmp/gen/underdesk";
+			
 			//System.out.println(dirBase);
 			
 			//String dirBase = "/mnt/arquivos/tmp/gen";		

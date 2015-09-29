@@ -32,8 +32,8 @@ class ${classe.getNome()}{
 	@Route({url:"/",verb:"put"})
 	atualizar(req:express.Request,res:express.Response):void{
 		var p_${classe.getNome().toLowerCase()}:I${classe.getNome()}Model = <I${classe.getNome()}Model>req.body;
-		var tmpId:string = p_${classe.getNome().toLowerCase()}._id;
-		delete p_${classe.getNome().toLowerCase()}._id;
+		var tmpId = p_${classe.getNome().toLowerCase()}._id;
+		delete p_${classe.getNome().toLowerCase()}._id;		
 		${classe.getNome()}DAO.findByIdAndUpdate(tmpId,{$set:p_${classe.getNome().toLowerCase()}},function(err){
 			if(err){
 				res.status(400).json(err);
