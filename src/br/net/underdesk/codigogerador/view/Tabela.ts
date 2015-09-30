@@ -93,42 +93,37 @@ export class Tabela extends ModWindow{
         this.itSnGerarApenasSelecionada.setUnCheckedValue("N");       
         this.append(this.itSnGerarApenasSelecionada);        
         
-        this.itSnModelJava = new CheckBox("Valido?", "Sim");
+        this.itSnModelJava = new CheckBox("Model java:", "Sim");
         this.itSnModelJava.setEnable(true);
         this.itSnModelJava.setSize(4);
-        this.itSnModelJava.setLabel("Model java:");
         this.itSnModelJava.setCheckedValue("JAVA@java");
         this.itSnModelJava.setUnCheckedValue("");       
         this.append(this.itSnModelJava);
         
-        this.itSnDaoJava = new CheckBox("Valido?", "Sim");
+        this.itSnDaoJava = new CheckBox("DAO java:", "Sim");
         this.itSnDaoJava.setEnable(true);
         this.itSnDaoJava.setSize(4);
-        this.itSnDaoJava.setLabel("DAO java:");
         this.itSnDaoJava.setCheckedValue("DAO@java");
         this.itSnDaoJava.setUnCheckedValue("");     
         this.append(this.itSnDaoJava);
         
-        this.itSnBLLJava = new CheckBox("Valido?", "Sim");
+        this.itSnBLLJava = new CheckBox("BLL java:", "Sim");
         this.itSnBLLJava.setEnable(true);
         this.itSnBLLJava.setSize(4);
-        this.itSnBLLJava.setLabel("BLL java:");
         this.itSnBLLJava.setCheckedValue("BLL@java");
         this.itSnBLLJava.setUnCheckedValue("");     
         this.append(this.itSnBLLJava);
         
-        this.itSnViewTypeScript = new CheckBox("Valido?", "Sim");
+        this.itSnViewTypeScript = new CheckBox("Visual com TScript:", "Sim");
         this.itSnViewTypeScript.setEnable(true);
         this.itSnViewTypeScript.setSize(7);
-        this.itSnViewTypeScript.setLabel("Visual com TScript:");
         this.itSnViewTypeScript.setCheckedValue("TYPESCRIPT_VIEW@ts");
         this.itSnViewTypeScript.setUnCheckedValue("");     
         this.append(this.itSnViewTypeScript);
         
-        this.itSnItemViewHtml = new CheckBox("Valido?", "Sim");
+        this.itSnItemViewHtml = new CheckBox("Item View HTML:", "Sim");
         this.itSnItemViewHtml.setEnable(true);
         this.itSnItemViewHtml.setSize(5);
-        this.itSnItemViewHtml.setLabel("Item View HTML:");
         this.itSnItemViewHtml.setCheckedValue("HTML_ITEMVIEW@html");
         this.itSnItemViewHtml.setUnCheckedValue("");     
         this.append(this.itSnItemViewHtml);
@@ -198,7 +193,7 @@ export class Tabela extends ModWindow{
                                           ,{"idTpGeracao":"unsigned","dsTpGeracao":"fornecida"}
                                           ]);
         
-        this._modTabelaCampo = new TabelaCampo();
+        this._modTabelaCampo = new TabelaCampo(this);
         this.getModView().append(this._modTabelaCampo);  
         
     }
@@ -226,7 +221,8 @@ export class Tabela extends ModWindow{
             "module":this,
             "url":p_urlcaminho,
             "onLoad":function(dta:ITabela[]){
-              this.getMainList().setDataProvider(dta);
+              this._modTabelaCampo.getMainList().setDataProvider([]);
+              this.getMainList().setDataProvider(dta);              
             }.bind(this)
           });  
     }
@@ -354,6 +350,8 @@ export class Tabela extends ModWindow{
     }    
     beforeSave(p_obj:ITabela):ITabela{
         //p_obj.data["caminho"] = this._urlPath;
+        var TmpList:ITabela = <ITabela>  this.mainList.getSelectedItem();
+        p_obj.campo = TmpList.campo; 
         return p_obj;
     }
     beforeDelete(p_new_obj:IDefaultRequest,p_old_obj:ITabela):IDefaultRequest{
