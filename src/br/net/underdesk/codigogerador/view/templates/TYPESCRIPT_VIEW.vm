@@ -26,7 +26,7 @@ ${tab}${tab}super("${classe.getNome()}","${classe.getPacote()}.${classe.getDomin
 ${tab}${tab}this.setRevision("$Revision: 1 $");	
 ${tab}${tab}this.setSize(12);	
 
-${tab}${tab}this.mainTb = new ToolBar({"domain":"${classe.getDominio().toLowerCase()}/${classe.getNome().toLowerCase()}"});
+${tab}${tab}this.mainTb = new ToolBar({"domain":"${classe.getNome().toLowerCase()}"});
 ${tab}${tab}this.append(this.mainTb);
 	
 #foreach ($campo in $classe.getAllCampos())		
@@ -49,7 +49,7 @@ ${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabel("${campo.getDsCampo()
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setValueField("${campo.getFkService()}");
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setLabelField("${campo.getFkService()}");
 #elseif($campo.getColuna()==$classe.getPrimaryKey().getColuna())
-#if($classe.getTpTemplate()=="NODE_SCHEMA")
+#if($classe.getTpTemplate()=="TYPESCRIPT_VIEW")
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setColumn("$_id");
 #else
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.setColumn("$${campo.getColuna()}");

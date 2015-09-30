@@ -72,8 +72,8 @@ public class TabelaBLL {
 			
 			String dirBase = path.substring(0,path.indexOf("underdesk/WEB-INF/"))+dirTmp;
 			
-			dirBase = "C:\\temp\\gen\\underdesk";
-			//dirBase = "/mnt/arquivos/tmp/gen/underdesk";
+			//dirBase = "C:\\temp\\gen\\underdesk";
+			dirBase = "/mnt/arquivos/tmp/gen/underdesk";
 			
 			//System.out.println(dirBase);
 			

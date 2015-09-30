@@ -3,9 +3,11 @@ import mongoose = require("mongoose");
 #set( $count = 0 )
 var schema = new mongoose.Schema({
 #foreach ($campo in $classe.getAllCampos())
-		#if($count > 0),#end"${campo.getColuna()}":{
+#if($count > 0)
+		#if($count > 1),#end"${campo.getColuna()}":{
 			type:#if($campo.getTipo()=="int"||$campo.getTipo()=="float")Number#else${campo.getTipo()}#end ,required:true
 		}
+#end
 #set( $count = $count+1 )		
 #end
 });
