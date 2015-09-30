@@ -430,6 +430,18 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
         return InputPercent;
     })(InputText);
     exports.InputPercent = InputPercent;
+    var InputMoney = (function (_super) {
+        __extends(InputMoney, _super);
+        function InputMoney(p_text) {
+            if (p_text === void 0) { p_text = ""; }
+            _super.call(this, p_text);
+            this.setAddonText("$");
+            this.setSize(3);
+            this.getEle().addClass("InputMoney");
+        }
+        return InputMoney;
+    })(InputText);
+    exports.InputMoney = InputMoney;
     var InputTime = (function (_super) {
         __extends(InputTime, _super);
         function InputTime(p_text) {
@@ -698,10 +710,20 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
         Select.prototype.getText = function () {
             return this.getValue();
         };
+        Select.prototype.isValid = function () {
+            var vl = this.getValue();
+            return vl.length > 0 == true;
+        };
         Select.prototype.setValue = function (p_vl) {
-            this.getEle().attr({ "data-prevalue": p_vl, "data-vl": p_vl });
-            var tmpDesc = this.getDescFromServiceByValue(p_vl);
-            this.getInput().val(tmpDesc);
+            if (p_vl.length > 0) {
+                this.getEle().attr({ "data-prevalue": p_vl, "data-vl": p_vl });
+                var tmpDesc = this.getDescFromServiceByValue(p_vl);
+                this.getInput().val(tmpDesc);
+            }
+            else {
+                this.getInput().val("");
+            }
+            ;
         };
         Select.prototype.getDescFromServiceByValue = function (p_vl) {
             var tmpDesc = "";

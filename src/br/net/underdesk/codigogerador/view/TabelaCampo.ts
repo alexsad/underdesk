@@ -1,6 +1,8 @@
 import {ModWindow} from "../../../../../lib/container";
 import {InputText,Select,CheckBox,NumericStepper,ListView,ItemView,Button} from "../../../../../lib/controller";
 import {ITabelaCampo} from "./ITabelaCampo";
+import {ITabela} from "./ITabela";
+import {Tabela} from "./Tabela";
 import {ToolBar,RequestManager,IDefaultRequest} from "../../../../../lib/net";
 
 
@@ -16,7 +18,8 @@ export class TabelaCampo extends ModWindow{
     mainList:ListView;
     mainTb:ToolBar;
     _urlPath:string;
-    constructor(){
+    _modTabela:Tabela;
+    constructor(p_modTabela:Tabela){
         super("campos da tabela","br.net.underdesk.codigogerador.view.TabelaCampo");
         this.setRevision("$Revision$");
         this.setSize(3);
@@ -73,7 +76,9 @@ export class TabelaCampo extends ModWindow{
         this.append(this.itSnNull); 
                 
         this.mainList = new ListView("campos");
-        this.append(this.mainList);       
+        this.append(this.mainList);    
+        
+        this._modTabela = p_modTabela;
     }
     onStart():void{ 
         this.itTipo.setDataProvider([
@@ -92,13 +97,26 @@ export class TabelaCampo extends ModWindow{
         return this._urlPath;
     }
     beforeSave(p_obj:ITabelaCampo):ITabelaCampo{
+        /*
         p_obj.caminho = this.getCaminho();
         p_obj.idTabela = parseInt(this.itIdTabela.getValue());
         return p_obj;
+        */
+        
+        //var indTmp:string = this.mainList.getSelectedItem()["_ind"];
+        console.log(p_obj.idTabelaCampo);
+        var tmpTabela:ITabela = <ITabela>this._modTabela.mainList.getSelectedItem();
+        
+        tmpTabela.campo[p_obj.idTabelaCampo-1] = p_obj;
+       
+        return null;        
     }
     beforeDelete(p_req_delete: IDefaultRequest, p_old_obj: ITabelaCampo):IDefaultRequest{
+        /*
         p_old_obj.caminho = this.getCaminho();
         p_old_obj.idTabela = parseInt(this.itIdTabela.getValue());
         return p_req_delete;
+        */
+        return null;
     }
 }
