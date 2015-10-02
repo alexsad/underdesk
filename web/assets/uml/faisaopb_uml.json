@@ -12,8 +12,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":1
-				,"campo":"ID_AVE"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_AVE"
 				,"limite":10
 				,"snNull":"N"
@@ -97,8 +97,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":10
-				,"campo":"ID_AVE_AQUISICAO"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_AVE_AQUISICAO"
 				,"limite":10
 				,"snNull":"N"
@@ -174,8 +174,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":18
-				,"campo":"ID_AVE_DESPESA"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_AVE_DESPESA"
 				,"limite":10
 				,"snNull":"N"
@@ -267,8 +267,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":28
-				,"campo":"ID_AVE_ECLOSAO"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_AVE_ECLOSAO"
 				,"limite":10
 				,"snNull":"N"
@@ -320,8 +320,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":33
-				,"campo":"ID_AVE_INCUBACAO"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_AVE_INCUBACAO"
 				,"limite":10
 				,"snNull":"N"
@@ -373,8 +373,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":38
-				,"campo":"ID_AVE_MORTE"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_AVE_MORTE"
 				,"limite":10
 				,"snNull":"N"
@@ -426,8 +426,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":43
-				,"campo":"ID_CERTIFICADO"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_CERTIFICADO"
 				,"limite":10
 				,"snNull":"N"
@@ -463,8 +463,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":46
-				,"campo":"ID_COMPRA"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_COMPRA"
 				,"limite":10
 				,"snNull":"N"
@@ -500,8 +500,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":49
-				,"campo":"ID_COMPRA_PARCELA"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_COMPRA_PARCELA"
 				,"limite":10
 				,"snNull":"N"
@@ -553,8 +553,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":54
-				,"campo":"ID_COMPRA_PARCELA_PAGAMENTO"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_COMPRA_PARCELA_PAGAMENTO"
 				,"limite":10
 				,"snNull":"N"
@@ -614,8 +614,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":60
-				,"campo":"ID_COMPRA_PRODUTO"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_COMPRA_PRODUTO"
 				,"limite":10
 				,"snNull":"N"
@@ -675,8 +675,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":66
-				,"campo":"ID_CONFIG_NOTIFICACAO"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_CONFIG_NOTIFICACAO"
 				,"limite":10
 				,"snNull":"N"
@@ -768,8 +768,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":76
-				,"campo":"ID_CONFIG_NOTIFICACAO_GRUPO"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_CONFIG_NOTIFICACAO_GRUPO"
 				,"limite":10
 				,"snNull":"N"
@@ -805,8 +805,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":79
-				,"campo":"ID_CONTATO"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_CONTATO"
 				,"limite":10
 				,"snNull":"N"
@@ -858,8 +858,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":84
-				,"campo":"ID_CRIA"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_CRIA"
 				,"limite":10
 				,"snNull":"N"
@@ -927,8 +927,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":91
-				,"campo":"ID_DESPESA_FUNCIONARIO"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_DESPESA_FUNCIONARIO"
 				,"limite":10
 				,"snNull":"N"
@@ -980,8 +980,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":96
-				,"campo":"ID_ENDERECO"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_ENDERECO"
 				,"limite":10
 				,"snNull":"N"
@@ -1025,8 +1025,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":100
-				,"campo":"ID_FERIADO"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_FERIADO"
 				,"limite":10
 				,"snNull":"N"
@@ -1078,8 +1078,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":56
-				,"campo":"ID_FORMA_PAGAMENTO"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_FORMA_PAGAMENTO"
 				,"limite":10
 				,"snNull":"N"
@@ -1131,8 +1131,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":16
-				,"campo":"ID_FORNECEDOR"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_FORNECEDOR"
 				,"limite":10
 				,"snNull":"N"
@@ -1160,8 +1160,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":15
-				,"campo":"ID_FUNCIONARIO"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_FUNCIONARIO"
 				,"limite":10
 				,"snNull":"N"
@@ -1197,8 +1197,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":78
-				,"campo":"ID_GRUPO"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_GRUPO"
 				,"limite":10
 				,"snNull":"S"
@@ -1234,8 +1234,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":118
-				,"campo":"ID_GRUPO_ITEM_MENU"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_GRUPO_ITEM_MENU"
 				,"limite":10
 				,"snNull":"N"
@@ -1271,8 +1271,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":119
-				,"campo":"ID_ITEM_MENU"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_ITEM_MENU"
 				,"limite":10
 				,"snNull":"N"
@@ -1340,8 +1340,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":128
-				,"campo":"ID_LOG"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_LOG"
 				,"limite":10
 				,"snNull":"N"
@@ -1393,8 +1393,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":126
-				,"campo":"ID_MENU"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_MENU"
 				,"limite":10
 				,"snNull":"S"
@@ -1438,8 +1438,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":137
-				,"campo":"ID_PESSOA"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_PESSOA"
 				,"limite":10
 				,"snNull":"N"
@@ -1475,8 +1475,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":140
-				,"campo":"ID_PESSOA_FISICA"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_PESSOA_FISICA"
 				,"limite":10
 				,"snNull":"N"
@@ -1560,8 +1560,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":149
-				,"campo":"ID_PESSOA_JURIDICA"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_PESSOA_JURIDICA"
 				,"limite":10
 				,"snNull":"N"
@@ -1605,8 +1605,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":26
-				,"campo":"ID_PRODUTO"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_PRODUTO"
 				,"limite":10
 				,"snNull":"N"
@@ -1666,8 +1666,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":159
-				,"campo":"ID_PRODUTO_VENDA"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_PRODUTO_VENDA"
 				,"limite":10
 				,"snNull":"N"
@@ -1751,8 +1751,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":7
-				,"campo":"ID_RACA"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_RACA"
 				,"limite":10
 				,"snNull":"N"
@@ -1796,8 +1796,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":169
-				,"campo":"ID_TP_AVE"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_TP_AVE"
 				,"limite":10
 				,"snNull":"N"
@@ -1833,8 +1833,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":24
-				,"campo":"ID_TP_AVE_DESPESA"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_TP_AVE_DESPESA"
 				,"limite":10
 				,"snNull":"N"
@@ -1870,8 +1870,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":95
-				,"campo":"ID_TP_DESPESA_FUNCIONARIO"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_TP_DESPESA_FUNCIONARIO"
 				,"limite":10
 				,"snNull":"N"
@@ -1907,8 +1907,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":130
-				,"campo":"ID_USUARIO"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_USUARIO"
 				,"limite":10
 				,"snNull":"N"
@@ -1952,8 +1952,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":185
-				,"campo":"ID_VENDA"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_VENDA"
 				,"limite":10
 				,"snNull":"N"
@@ -1989,8 +1989,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":188
-				,"campo":"ID_VENDA_ITEM"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_VENDA_ITEM"
 				,"limite":10
 				,"snNull":"N"
@@ -2042,8 +2042,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":193
-				,"campo":"ID_VENDA_PARCELA"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_VENDA_PARCELA"
 				,"limite":10
 				,"snNull":"N"
@@ -2095,8 +2095,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":198
-				,"campo":"ID_VENDA_PARCELA_PAGAMENTO"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_VENDA_PARCELA_PAGAMENTO"
 				,"limite":10
 				,"snNull":"N"
@@ -2156,8 +2156,8 @@
 		,"campo":[
 			{
 				"idTabelaCampo":9
-				,"campo":"ID_VIVEIRO"
-				,"tipo":"int"
+				,"campo":"_ID"
+				,"tipo":"varchar"
 				,"dsCampo":"ID_VIVEIRO"
 				,"limite":10
 				,"snNull":"N"

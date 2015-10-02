@@ -1,7 +1,11 @@
 #set( $count = 0 )
 export interface I${classe.getNome()}{
 #foreach ($campo in $classe.getAllCampos())
+#if($campo.getColuna()=="Id")
+	_id?:string;
+#else
 	${campo.getColuna()}:#if($campo.getTipo()=="int"||$campo.getTipo()=="float")number;#elseif($campo.getTipo()=="Date")Date;#else${campo.getTipo().toLowerCase()};#end
 
+#end
 #end
 }
