@@ -1,12 +1,12 @@
 import express = require('express');
-import {Route,Controller} from "../../../../lib/decorator";
+import {Get,Post,Put,Delete,Controller} from "../../../../lib/router";
 import {${classe.getNome()}DAO} from "../model/${classe.getNome().toLowerCase()}";
 import {I${classe.getNome()}} from "../model/I${classe.getNome()}";
 
 
 @Controller("/${classe.getNome().toLowerCase()}")
 class ${classe.getNome()}{
-	@Route({url:"/",verb:"get"})
+	@Get("/")
 	get(req:express.Request,res:express.Response):void{
 		${classe.getNome()}DAO.find({}).exec().then(
 			function(dta:I${classe.getNome()}[]){
@@ -17,7 +17,7 @@ class ${classe.getNome()}{
 			}
 		);
 	}
-	@Route({url:"/",verb:"post"})
+	@Post("/")
 	add(req:express.Request,res:express.Response):void{
 		var n${classe.getNome().toLowerCase()}:I${classe.getNome()} = <I${classe.getNome()}>req.body;
 		${classe.getNome()}DAO.create(n${classe.getNome().toLowerCase()}).then(
@@ -31,7 +31,7 @@ class ${classe.getNome()}{
 			}
 		);
 	}
-	@Route({url:"/",verb:"put"})
+	@Put("/")
 	atualizar(req:express.Request,res:express.Response):void{
 		var p_${classe.getNome().toLowerCase()}:I${classe.getNome()} = <I${classe.getNome()}>req.body;
 		var tmpId:string = p_${classe.getNome().toLowerCase()}._id;
@@ -44,7 +44,7 @@ class ${classe.getNome()}{
 			}
 		});
 	}
-	@Route({url:"/:_id",verb:"delete"})
+	@Delete("/:_id")
 	delete(req:express.Request,res:express.Response):void{
 		${classe.getNome()}DAO.findByIdAndRemove(req.params._id).exec().then(
 			function(){
