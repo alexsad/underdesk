@@ -35,23 +35,24 @@ define(["require", "exports", "core", "net"], function (require, exports, core_1
     exports.AlertWindow = AlertWindow;
     var ModWindow = (function (_super) {
         __extends(ModWindow, _super);
-        function ModWindow(p_subtitle, p_fullmod) {
-            _super.call(this, 'div', '<h3 class="col-sm-12 col-xs-12">' + p_subtitle + '</h3>' +
+        function ModWindow(p_subtitle, p_modpath) {
+            _super.call(this, 'div', '<h3 class="col-sm-12 col-xs-12 subtitlemodwindow">' + p_subtitle + '</h3>' +
                 '<div class="conteudo_form">' +
-                '<div class="form-group fbody">' +
-                '</div>' +
+                '<div class="form-group fbody"></div>' +
                 '<div style="" class="col-sm-12 col-xs-12 form-actions"></div>' +
                 '</div>' +
                 '<div class="blockrequest normal_load"><div class="BoxTasks" style="display:none"></div></div>' +
                 '<h5 class="col-xs-12 col-sm-12 column block_module_details"><span></span></h5>');
-            this._configModWindow = {
-                _urlmodule: "",
-                _revision: "",
-                _assoc: [],
-                _dmap: [],
-                _dmaplenth: 0,
-                _subtitle: p_subtitle
-            };
+            if (!this._configModWindow) {
+                this._configModWindow = {
+                    _urlmodule: "",
+                    _revision: "",
+                    _dmap: [],
+                    _dmaplenth: 0,
+                    _subtitle: p_subtitle
+                };
+            }
+            ;
             this.getEle().addClass("col-sm-12 col-xs-12 column windowC ModWindow").css({ "z-index": (this._uid + 1) });
             this.getEle(".blockrequest").attr("id", "tge_" + this._uid).on({
                 'click': function (evt) {
@@ -61,20 +62,17 @@ define(["require", "exports", "core", "net"], function (require, exports, core_1
                     net_1.RequestManager.removeAllTasks($(evt.target).attr("id"));
                 }
             });
-            this.setUrlModule(p_fullmod);
-            var lstPart = p_fullmod.substring(p_fullmod.lastIndexOf(".") + 1, p_fullmod.length);
-            this.getEle().addClass(lstPart);
+            this.setUrlModule(p_modpath);
         }
+        ModWindow.prototype.setTitle = function (p_title) {
+            this._configModWindow._subtitle = p_title;
+            this.getEle('h3.subtitlemodwindow:first').text(p_title);
+        };
+        ModWindow.prototype.getTitle = function () {
+            return this._configModWindow._subtitle;
+        };
         ModWindow.prototype._onStart = function () {
-            //var nextMapInd:number = 0;
-            //var _this:ModWindow = this;
             var _this = this;
-            if (this._configListsViews) {
-                this._configListsViews.forEach(function (listconfig) {
-                    _this[listconfig.list]["_urlTemplate"] = listconfig.url;
-                });
-            }
-            ;
             var tmList = this._configModWindow._dmaplenth;
             $.each(this, function (key) {
                 if (tmList == 0) {
@@ -115,6 +113,24 @@ define(["require", "exports", "core", "net"], function (require, exports, core_1
                 ;
             }
             ;
+            if (this._configModWindow._configListsViews) {
+                this._configModWindow._configListsViews.forEach(function (listconfig) {
+                    if (listconfig.list == "") {
+                        if (_this._configModWindow._mainlist) {
+                            listconfig.list = _this._configModWindow._mainlist;
+                        }
+                        ;
+                    }
+                    ;
+                    if (listconfig.list != "") {
+                        _this[listconfig.list]["_urlTemplate"] = listconfig.url;
+                    }
+                    ;
+                });
+            }
+            ;
+            this.changeDsModule();
+            this.setDsModule();
         };
         ModWindow.prototype.onStart = function () {
         };
@@ -155,11 +171,15 @@ define(["require", "exports", "core", "net"], function (require, exports, core_1
             return this._configModWindow._revision;
         };
         ModWindow.prototype.getDsModule = function () {
-            var urltmp = this.getUrlModule().replace(".js", "").toUpperCase();
-            urltmp = urltmp.replace(/\/+/g, ".");
+            var urltmp = this.getUrlModule().toUpperCase();
             var urltmpa = urltmp.split(".");
             var tmurls = urltmpa.length;
             return urltmpa[tmurls - 3] + " | " + urltmpa[tmurls - 1];
+        };
+        ModWindow.prototype.changeDsModule = function () {
+            var tmpModule = this.getUrlModule();
+            var lstPart = tmpModule.substring(tmpModule.lastIndexOf(".") + 1, tmpModule.length);
+            this.getEle().addClass(lstPart);
         };
         ModWindow.prototype.setUrlModule = function (p_url_m) {
             this._configModWindow._urlmodule = p_url_m;
@@ -308,7 +328,6 @@ define(["require", "exports", "core", "net"], function (require, exports, core_1
                 this.getEle().append(p_ele.getEle());
                 p_ele._onStart();
                 p_ele.onStart();
-                p_ele.setDsModule();
             }
             ;
         };

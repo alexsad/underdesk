@@ -27,6 +27,10 @@ define(["require", "exports"], function (require, exports) {
             ;
             return results[1] || "";
         };
+        Underas.getLocation = function () {
+            var tmpUrl = window.location.href;
+            return tmpUrl.substring(0, tmpUrl.lastIndexOf("/") + 1);
+        };
         Underas.printDataProvider = function (p_dta, p_url_template) {
         };
         Underas.getInstanceOf = function (context, name, args) {

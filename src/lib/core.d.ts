@@ -22,6 +22,7 @@ export declare class Underas {
     static cache(p_on: boolean): void;
     static setProjectVersion(p_version: string): void;
     static getUrlParam(p_name: string): string;
+    static getLocation(): string;
     static printDataProvider(p_dta: any[], p_url_template: string): void;
     static getInstanceOf<T>(context: Object, name: string, args: any[]): T;
     static templateCompile(template: string, data: Object): string;
