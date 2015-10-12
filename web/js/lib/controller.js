@@ -602,6 +602,7 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
             var iconeM = "file";
             for (var z = 0; z < tml; z++) {
                 var btTab = new LinkButton(childrens[z].label);
+                btTab.getEle().addClass("elegibleToClick");
                 if (childrens[z].icone != " ") {
                     btTab.setIcon(childrens[z].icone);
                     btTab.getEle(".imgI").addClass("hidden-xs");
@@ -655,9 +656,9 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
             evt.preventDefault();
             var _this = $(evt.target);
             var p_vl = _this.attr("data-vl");
-            this.getInput().val(_this.text());
             this.getEle().attr({ "data-prevalue": p_vl, "data-vl": p_vl });
             this.showList(false);
+            this.getInput().val(_this.text()).trigger("change");
         };
         Select.prototype.setFilter = function (evt) {
             if (evt.which == 40) {
@@ -1473,7 +1474,7 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
             $("#aba_s_" + uidToRemove).remove();
             $("#navbarlist li:first a").click();
         });
-        $(".tab_content_menu").on('click', 'li', function (event) {
+        $(".tab_content_menu").on('click', 'li.elegibleToClick', function (event) {
             event.preventDefault();
             var _linkM = $(this);
             var nextload = false;

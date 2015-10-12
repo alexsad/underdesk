@@ -260,9 +260,10 @@ define(["require", "exports", "core", "controller"], function (require, exports,
         };
         ToolBar.prototype.updateItem = function (p_objToUpdate) {
             var req_objToUpdate = $.extend(this.getDefaultRequest("/", "put"), { "data": p_objToUpdate });
+            req_objToUpdate = $.extend(true, { "data": this.getModule().getMainList().getSelectedItem() }, req_objToUpdate);
             req_objToUpdate = this.getModule().beforeUpdate(req_objToUpdate, this.getModule().getMainList().getSelectedItem());
             if (req_objToUpdate) {
-                var tmpObjectMerged = $.extend(this.getModule().getMainList().getSelectedItem(), req_objToUpdate.data);
+                var tmpObjectMerged = $.extend(true, {}, req_objToUpdate.data);
                 this.getModule().getMainList().updateItem(tmpObjectMerged);
                 RequestManager.addRequest(req_objToUpdate);
                 tmpObjectMerged = null;
