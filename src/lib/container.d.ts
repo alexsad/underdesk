@@ -1,5 +1,5 @@
 import { Component } from "core";
-import { Controller, Button, IListView, IConfigsLists } from "controller";
+import { Controller, Button, IListView } from "controller";
 import { IDefaultRequest } from "net";
 export declare class AlertWindow extends Component {
     _title: string;
@@ -12,6 +12,10 @@ export interface IModWindowColumn {
     column: string;
     field: string;
 }
+export interface IConfigsLists {
+    list: string;
+    url: string;
+}
 export interface IConfigModWindow {
     _urlmodule: string;
     _revision: string;
@@ -23,11 +27,14 @@ export interface IConfigModWindow {
     _mainlist?: string;
     _embedItem?: string;
     _embedFather?: string;
+    _modName?: string;
+    _configListsViews?: IConfigsLists[];
 }
 export declare class ModWindow extends Component {
     _configModWindow: IConfigModWindow;
-    _configListsViews: IConfigsLists[];
-    constructor(p_subtitle: string, p_fullmod: string);
+    constructor(p_subtitle: string, p_modpath: string);
+    setTitle(p_title: string): void;
+    getTitle(): string;
     _onStart(): void;
     onStart(): void;
     getFormItem(): Object;
@@ -35,6 +42,7 @@ export declare class ModWindow extends Component {
     setRevision(p_txt_revision: string): void;
     getRevision(): string;
     getDsModule(): string;
+    changeDsModule(): void;
     setUrlModule(p_url_m: string): void;
     getUrlModule(): string;
     getModView(): ModView;

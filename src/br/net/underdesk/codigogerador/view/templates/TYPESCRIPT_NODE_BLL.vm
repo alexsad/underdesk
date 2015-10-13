@@ -4,9 +4,9 @@ import {${classe.getNome()}DAO} from "../model/${classe.getNome().toLowerCase()}
 import {I${classe.getNome()}} from "../model/I${classe.getNome()}";
 
 
-@Controller("/${classe.getNome().toLowerCase()}")
+@Controller()
 class ${classe.getNome()}{
-	@Get("/")
+	@Get()
 	get(req:express.Request,res:express.Response):void{
 		${classe.getNome()}DAO.find({}).exec().then(
 			function(dta:I${classe.getNome()}[]){
@@ -17,7 +17,7 @@ class ${classe.getNome()}{
 			}
 		);
 	}
-	@Post("/")
+	@Post()
 	add(req:express.Request,res:express.Response):void{
 		var n${classe.getNome().toLowerCase()}:I${classe.getNome()} = <I${classe.getNome()}>req.body;
 		${classe.getNome()}DAO.create(n${classe.getNome().toLowerCase()}).then(
@@ -31,7 +31,7 @@ class ${classe.getNome()}{
 			}
 		);
 	}
-	@Put("/")
+	@Put()
 	atualizar(req:express.Request,res:express.Response):void{
 		var p_${classe.getNome().toLowerCase()}:I${classe.getNome()} = <I${classe.getNome()}>req.body;
 		var tmpId:string = p_${classe.getNome().toLowerCase()}._id;

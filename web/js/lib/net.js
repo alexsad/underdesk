@@ -244,24 +244,26 @@ define(["require", "exports", "core", "controller"], function (require, exports,
                 this.getModule()[tfield].setValue("");
                 this.getModule().clearFormItem();
             }.bind(this));
-            this.btDel = new controller_1.Button("Excluir");
-            this.btDel.setIcon("minus-sign");
-            this.btDel.addEvent('click', this.deleteItem.bind(this));
+            this.addButton(this.btAdd);
             this.btSave = new controller_1.Button("Salvar");
             this.btSave.setIcon("floppy-disk");
             this.btSave.addEvent('click', this.saveItem.bind(this));
-            this.addButton(this.btAdd);
-            this.addButton(this.btDel);
             this.addButton(this.btSave);
+            this.btDel = new controller_1.Button("Excluir");
+            this.btDel.setIcon("minus-sign");
+            this.btDel.getEle().removeClass("btn-default").addClass("btn-warning");
+            this.btDel.addEvent('click', this.deleteItem.bind(this));
+            this.addButton(this.btDel);
         }
         ToolBar.prototype.getDefaultRequest = function (p_act, p_method) {
             return { "format": RequestManager.format, "url": RequestManager.url + this._config.domain + p_act, "method": p_method, "module": this.getModule() };
         };
         ToolBar.prototype.updateItem = function (p_objToUpdate) {
             var req_objToUpdate = $.extend(this.getDefaultRequest("/", "put"), { "data": p_objToUpdate });
+            req_objToUpdate = $.extend(true, { "data": this.getModule().getMainList().getSelectedItem() }, req_objToUpdate);
             req_objToUpdate = this.getModule().beforeUpdate(req_objToUpdate, this.getModule().getMainList().getSelectedItem());
             if (req_objToUpdate) {
-                var tmpObjectMerged = $.extend(this.getModule().getMainList().getSelectedItem(), req_objToUpdate.data);
+                var tmpObjectMerged = $.extend(true, {}, req_objToUpdate.data);
                 this.getModule().getMainList().updateItem(tmpObjectMerged);
                 RequestManager.addRequest(req_objToUpdate);
                 tmpObjectMerged = null;
@@ -316,21 +318,6 @@ define(["require", "exports", "core", "controller"], function (require, exports,
             var p_req_delete = this.getDefaultRequest("/" + modTmp[tfield].getValue(), "delete");
             p_req_delete["onLoad"] = function (dta) {
                 if (this.getModule().getMainList()) {
-                    var tmpEmbedFather = this.getModule()._embedFather;
-                    if (tmpEmbedFather) {
-                        var tmpEmbedItem = this.getModule()._embedItem;
-                        var tmC = 0;
-                        var tmpEmbedFatherVar = window[tmpEmbedFather];
-                        if (tmpEmbedFatherVar.getMainList().getSelectedItem()[tmpEmbedItem]) {
-                            var indexEmbed = this.getModule().getMainList().getSelectedIndex();
-                            if (indexEmbed > -1) {
-                                tmpEmbedFatherVar.getMainList().getSelectedItem()[tmpEmbedItem].splice(indexEmbed, 1);
-                            }
-                            ;
-                        }
-                        ;
-                    }
-                    ;
                     this.getModule().getMainList().removeItem(this.getModule().getMainList().getSelectedItem());
                 }
                 ;

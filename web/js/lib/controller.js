@@ -602,6 +602,7 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
             var iconeM = "file";
             for (var z = 0; z < tml; z++) {
                 var btTab = new LinkButton(childrens[z].label);
+                btTab.getEle().addClass("elegibleToClick");
                 if (childrens[z].icone != " ") {
                     btTab.setIcon(childrens[z].icone);
                     btTab.getEle(".imgI").addClass("hidden-xs");
@@ -655,9 +656,9 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
             evt.preventDefault();
             var _this = $(evt.target);
             var p_vl = _this.attr("data-vl");
-            this.getInput().val(_this.text());
             this.getEle().attr({ "data-prevalue": p_vl, "data-vl": p_vl });
             this.showList(false);
+            this.getInput().val(_this.text()).trigger("change");
         };
         Select.prototype.setFilter = function (evt) {
             if (evt.which == 40) {
@@ -712,10 +713,17 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
         };
         Select.prototype.isValid = function () {
             var vl = this.getValue();
+            if (!vl) {
+                return false;
+            }
+            ;
             return vl.length > 0 == true;
         };
         Select.prototype.setValue = function (p_vl) {
-            if (p_vl.length > 0) {
+            if (!p_vl) {
+                this.getInput().val("");
+            }
+            else if (p_vl.length > 0) {
                 this.getEle().attr({ "data-prevalue": p_vl, "data-vl": p_vl });
                 var tmpDesc = this.getDescFromServiceByValue(p_vl);
                 this.getInput().val(tmpDesc);
@@ -896,6 +904,10 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
             return this;
         };
         ListView.prototype._getTmpUrl = function (fnAfter) {
+            var urlModule = this.getModule().getUrlModule();
+            urlModule = urlModule.replace(/\.+/g, "/");
+            urlModule = urlModule.substring(0, urlModule.lastIndexOf("/"));
+            this._urlTemplate = "js/" + urlModule + "/" + this._urlTemplate;
             $.get(this._urlTemplate, function (p_templateHtml) {
                 this._itemTemplateHtml = p_templateHtml;
                 fnAfter();
@@ -1074,6 +1086,11 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
             tmpOnWithTemplate = null;
         };
         ListView.prototype.removeSelectedItem = function () {
+            var indexEmbed = this.getSelectedIndex();
+            if (indexEmbed > -1) {
+                this.dataProvider.splice(indexEmbed, 1);
+            }
+            ;
             this.getEle(".tilecellgrid .selectedLine").remove();
         };
         ListView.prototype.removeItem = function (p_item) {
@@ -1178,8 +1195,12 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
             }
             ;
             if (nextload) {
-                requirejs(['container', 'app/' + _linkM.attr("data-varmod").replace(/\./g, "/")], function (_container, _modwindow) {
-                    var tmp_modwindow = new _modwindow.Teste();
+                var tmpPathModule = _linkM.attr("data-varmod");
+                var varModuleToLoadTmpM = tmpPathModule.split(".");
+                var varModuleToLoadTmp = varModuleToLoadTmpM[varModuleToLoadTmpM.length - 1];
+                var varModuleToLoadTmpCapt = varModuleToLoadTmp;
+                requirejs(['container', 'app/' + tmpPathModule.replace(/\./g, "/")], function (_container, _modwindow) {
+                    var tmp_modwindow = new _modwindow[varModuleToLoadTmpCapt]();
                     var mdw_tmp = new _container.ModView(_linkM.attr("data-titlemod"));
                     mdw_tmp.setIcon(_linkM.attr("data-iconmod"));
                     mdw_tmp.show(true);
@@ -1400,18 +1421,27 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
         return AlertMsg;
     })(Controller);
     exports.AlertMsg = AlertMsg;
-    function ItemView(p_config) {
+    function ItemView(p_url_source, p_mainlist_name) {
+        if (p_mainlist_name === void 0) { p_mainlist_name = ""; }
         return function (target) {
             var tmpClass = target.prototype;
-            if (!tmpClass._configListsViews) {
-                tmpClass._configListsViews = [];
+            if (!tmpClass._configModWindow) {
+                tmpClass._configModWindow = {
+                    _urlmodule: "",
+                    _revision: "",
+                    _dmap: [],
+                    _dmaplenth: 0,
+                    _subtitle: "",
+                    _configListsViews: []
+                };
             }
             ;
-            if (!p_config.list) {
-                p_config.list = "";
+            if (!tmpClass._configModWindow._configListsViews) {
+                tmpClass._configModWindow._configListsViews = [];
             }
             ;
-            tmpClass._configListsViews.push({ list: p_config.list, url: p_config.url });
+            tmpClass._configModWindow._modName = target.name;
+            tmpClass._configModWindow._configListsViews.push({ list: p_mainlist_name, url: p_url_source });
         };
     }
     exports.ItemView = ItemView;
@@ -1444,7 +1474,7 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
             $("#aba_s_" + uidToRemove).remove();
             $("#navbarlist li:first a").click();
         });
-        $(".tab_content_menu").on('click', 'li', function (event) {
+        $(".tab_content_menu").on('click', 'li.elegibleToClick', function (event) {
             event.preventDefault();
             var _linkM = $(this);
             var nextload = false;
@@ -1459,7 +1489,8 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
             }
             ;
             if (nextload) {
-                requirejs(['container', _linkM.attr("data-varmod").replace(/\./g, "/")], function (_container, _modwindow) {
+                var urlModuleLoad = _linkM.attr("data-varmod");
+                requirejs(['container', urlModuleLoad.replace(/\./g, "/")], function (_container, _modwindow) {
                     var tmp_modwindow = new _modwindow[varModuleToLoadTmpCapt]();
                     var mdw_tmp = new _container.ModView(_linkM.attr("data-titlemod"));
                     mdw_tmp.setIcon(_linkM.attr("data-iconmod"));

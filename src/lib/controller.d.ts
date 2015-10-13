@@ -1,6 +1,6 @@
 import { IPaginationParam } from "util";
 import { Component } from "core";
-import { ModWindow } from "container";
+import { IConfigModWindow, ModWindow } from "container";
 import { IRequestConf } from "net";
 export declare class Controller {
     _uid: number;
@@ -110,6 +110,9 @@ export declare class InputPassWord extends Input {
 export declare class InputPercent extends InputText {
     constructor(p_text?: string);
 }
+export declare class InputMoney extends InputText {
+    constructor(p_text?: string);
+}
 export declare class InputTime extends InputText {
     constructor(p_text?: string);
 }
@@ -178,6 +181,7 @@ export declare class Select extends InputDouble {
     setDataProvider(p_dta: any[]): void;
     getValue(): string;
     getText(): string;
+    isValid(): boolean;
     setValue(p_vl: string): void;
     getDescFromServiceByValue(p_vl: string): string;
     reloadService(): void;
@@ -308,17 +312,10 @@ export declare class AlertMsg extends Controller {
     isValid(): boolean;
     setType(p_type: string): void;
 }
-export interface IConfigItemView {
-    list: string;
-    url: string;
-}
-export interface IConfigsLists {
-    list: string;
-    url: string;
-}
 export interface IViewClass extends Function {
     prototype: {};
-    _configListsViews: IConfigsLists[];
+    _configModWindow: IConfigModWindow;
+    name: string;
     new (): Function;
 }
-export declare function ItemView(p_config: IConfigItemView): ClassDecorator;
+export declare function ItemView(p_url_source: string, p_mainlist_name?: string): ClassDecorator;
