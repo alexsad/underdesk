@@ -5,7 +5,7 @@ import {TabelaCampo} from "./TabelaCampo";
 import {ArquivoView} from "../../arquivo/view/ArquivoView";
 import {ToolBar,RequestManager,IDefaultRequest} from "../../../../../lib/net";
 
-@ItemView({url:"js/br/net/underdesk/codigogerador/view/assets/html/tabela.html",list:"mainList"})
+@ItemView("assets/html/tabela.html")
 export class Tabela extends ModWindow{   
     itidTabela:InputText;
     itdsTabela:InputText;
@@ -32,7 +32,7 @@ export class Tabela extends ModWindow{
     _modTabelaCampo:TabelaCampo;
     _modArquivoView:ArquivoView;
     constructor(p_arquivoview:ArquivoView){
-        super("*Geracao de Codigo","br.net.underdesk.codigogerador.view.Tabela");
+        super("*Geracao de Codigo");
         this.setRevision("$Revision$"); 
         this.setSize(5);        
         
@@ -217,8 +217,7 @@ export class Tabela extends ModWindow{
          //var urlcaminho:string = p_urlcaminho.substring(1,p_urlcaminho.length);
           //itemmenu.setSize(12);
           //tabela.tbMain.setActAttrConfig(["add","del","edit","reload"],"params",[urlcaminho]);  
-         RequestManager.addRequest({ 
-            "module":this,
+         RequestManager.addRequest({
             "url":p_urlcaminho,
             "onLoad":function(dta:ITabela[]){
               this._modTabelaCampo.getMainList().setDataProvider([]);
@@ -233,8 +232,7 @@ export class Tabela extends ModWindow{
     }
     gerarCodigoSingle():void{
         RequestManager.addRequest({
-                "module":this
-                ,"method":"post"
+                "method":"post"
                 ,"url":"ws/codigogerador/tabela/gerarcodigo"
                 ,"data":{
                     "idTabela":this.itidTabela.getValue()              
@@ -331,7 +329,6 @@ export class Tabela extends ModWindow{
         */
         RequestManager.addRequest({  
                 "data":itensList
-                ,"module":this
                 ,"method":"post"
                 ,"url":"ws/codigogerador/tabela/gerarcodigo"
                 ,"onLoad":function(dta:ITabela[]){
