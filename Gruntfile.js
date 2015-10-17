@@ -94,10 +94,26 @@ module.exports = function(grunt) {
 		}
 	}	  
 	});
-	grunt.registerTask('default', ['build-all']);
-	grunt.registerTask('build-client', ['clean:client','typescript:client','copy:viewAssets','replace:viewjs']);
-	grunt.registerTask('build-all', ['build-client']);	
-	grunt.registerTask('build-deploy', ['build-client','uglify:view']);	
+	
+	
+	grunt.registerTask('build-view-pos', function(){
+		grunt.file.recurse("web/js/br/", function(abspath, rootdir, subdir, filename){
+			//console.log(abspath+":"+rootdir+":"+filename);
+			if(filename.indexOf(".js")>-1){
+				var contentFile = grunt.file.read(abspath);
+				if(contentFile.indexOf("})(container_1.ModWindow);")){
+					contentFile = contentFile.replace(/(_super\.call\(this,.*)/,"$1 this.setUrlModule('"+abspath.replace("web/","").replace(/\//g,".").replace(".js","")+"');");
+					grunt.file.write(abspath, contentFile);
+					grunt.log.writeln('File "' + abspath + '" modified.');
+				}
+			};
+		});
+	});
+	
+	grunt.registerTask('default', ['build-view-dev']);
+	grunt.registerTask('build-view-dev', ['clean:client','typescript:client','copy:viewAssets','replace:viewjs','build-view-pos']);
+	grunt.registerTask('build-deploy', ['build-view-dev','uglify:view']);	
+	
 	grunt.loadNpmTasks('grunt-text-replace');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-clean');
