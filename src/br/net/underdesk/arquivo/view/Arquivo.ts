@@ -4,7 +4,7 @@ import {Tabela} from "../../codigogerador/view/Tabela";
 import {IArquivo} from "./IArquivo";
 import {SimpleToolBar,RequestManager,IDefaultRequest} from "../../../../../lib/net";
 
-@ItemView({url:"js/br/net/underdesk/arquivo/view/assets/html/arquivo.html",list:"mainList"})
+@ItemView("assets/html/arquivo.html")
 export class Arquivo extends ModWindow{    
     itIdArquivo:InputText;
     itDsArquivo:InputText;
@@ -16,7 +16,7 @@ export class Arquivo extends ModWindow{
     btExplorar:Button;
     btBaixar:Button;
     constructor(){
-        super("*lista de arquivos no servidor","br.net.underdesk.arquivo.view.Arquivo");
+        super("*lista de arquivos no servidor");
         this.setRevision("$Revision$");   
         this.setSize(4); 
         
@@ -105,7 +105,6 @@ export class Arquivo extends ModWindow{
             this.itCaminho.setValue(p_caminho); 
             RequestManager.addRequest({
                 "data":{"urlpath":p_caminho}
-                ,"module":this
                 ,"url":"ws/arquivo/arquivo/getbypath"
                 ,"onLoad":function(dta:IArquivo[]){
                    this.getMainList().setDataProvider(dta);

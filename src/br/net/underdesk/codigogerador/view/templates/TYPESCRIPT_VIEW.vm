@@ -22,7 +22,7 @@ ${tab}it${campo.getColunaCapitalize()}:$campotuput;
 ${tab}mainTb:ToolBar;
 ${tab}mainList:ListView;
 ${tab}constructor(){
-${tab}${tab}super("${classe.getNome()}","${classe.getPacote()}.${classe.getDominio().toLowerCase()}.${classe.getNome()}");
+${tab}${tab}super("${classe.getNome()}");
 ${tab}${tab}this.setRevision("$Revision: 1 $");	
 ${tab}${tab}this.setSize(12);	
 
@@ -71,8 +71,7 @@ ${tab}onStart():void{
 #foreach ($campo in $classe.getAllCampos())
 #if($campo.getColuna()!=$classe.getPrimaryKey().getColuna()&&$campo.isFk())
 ${tab}${tab}this.it${campo.getColunaCapitalize()}.fromService({
-${tab}${tab}${tab}"module":this
-${tab}${tab}${tab},"url":"${campo.getDsCampo().toLowerCase()}/"
+${tab}${tab}${tab}"url":"${campo.getDsCampo().toLowerCase()}/"
 ${tab}${tab}});
 #end
 #end

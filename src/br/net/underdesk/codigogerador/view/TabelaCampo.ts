@@ -6,7 +6,7 @@ import {Tabela} from "./Tabela";
 import {ToolBar,RequestManager,IDefaultRequest} from "../../../../../lib/net";
 
 
-@ItemView({url:"js/br/net/underdesk/codigogerador/view/assets/html/tabelacampo.html",list:"mainList"})
+@ItemView("assets/html/tabelacampo.html")
 export class TabelaCampo extends ModWindow{   
     itIdTabelaCampo:InputText;
     itIdTabela:InputText;
@@ -20,7 +20,7 @@ export class TabelaCampo extends ModWindow{
     _urlPath:string;
     _modTabela:Tabela;
     constructor(p_modTabela:Tabela){
-        super("campos da tabela","br.net.underdesk.codigogerador.view.TabelaCampo");
+        super("campos da tabela");
         this.setRevision("$Revision$");
         this.setSize(3);
         
