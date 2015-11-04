@@ -35,7 +35,7 @@ export class TabelaCampo extends ModWindow{
         this.append(this.itIdTabelaCampo);
         
         this.itIdTabela = new InputText("");
-        this.itIdTabela.setColumn("#idTabela");
+        this.itIdTabela.setColumn("!idTabela");
         this.itIdTabela.setLabel("cod tab.");
         this.itIdTabela.setSize(6);    
         this.itIdTabela.setEnable(false);
@@ -96,20 +96,27 @@ export class TabelaCampo extends ModWindow{
     getCaminho():string{
         return this._urlPath;
     }
-    beforeSave(p_obj:ITabelaCampo):ITabelaCampo{
-        /*
-        p_obj.caminho = this.getCaminho();
-        p_obj.idTabela = parseInt(this.itIdTabela.getValue());
-        return p_obj;
-        */
-        
-        //var indTmp:string = this.mainList.getSelectedItem()["_ind"];
-        console.log(p_obj.idTabelaCampo);
+
+    beforeInsert(p_req_obj: IDefaultRequest): IDefaultRequest{
         var tmpTabela:ITabela = <ITabela>this._modTabela.mainList.getSelectedItem();
+        var tmpCampo:ITabelaCampo = <ITabelaCampo>this.getFormItem();        
+        //tmpCampo.
+        if(!tmpTabela.campo){
+            tmpTabela.campo = [];
+        };
+        tmpCampo.idTabelaCampo = tmpTabela.campo.length;
+        //tmpTabela.campo.push(tmpCampo);        
+        this.mainList.insertItem(tmpCampo);
+        //p_req_obj.data["caminho"] = this.getCaminho();
+        return null;    
+    }
+    beforeUpdate(p_req_new_obj: IDefaultRequest, p_old_obj: ITabelaCampo): IDefaultRequest{
         
-        tmpTabela.campo[p_obj.idTabelaCampo-1] = p_obj;
-       
-        return null;        
+       var tmpTabela:ITabela = <ITabela>this._modTabela.mainList.getSelectedItem();
+       var tmpCampo:ITabelaCampo = <ITabelaCampo>p_req_new_obj.data;        
+       tmpTabela.campo[tmpCampo.idTabelaCampo-1] = tmpCampo;       
+       this.mainList.updateItem(tmpCampo);
+       return null;
     }
     beforeDelete(p_req_delete: IDefaultRequest, p_old_obj: ITabelaCampo):IDefaultRequest{
         /*

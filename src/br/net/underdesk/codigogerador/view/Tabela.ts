@@ -23,6 +23,7 @@ export class Tabela extends ModWindow{
     itSnTypeScriptNodeBLL:CheckBox;
     itSnTypeScriptNodeInterface:CheckBox;
     itSnGerarApenasSelecionada:CheckBox;
+    itSnUML:CheckBox;
     //itSnNodeRouteJs:CheckBox;
     //itrs:null;
     btGerarCodigo:Button;
@@ -91,7 +92,16 @@ export class Tabela extends ModWindow{
         this.itSnGerarApenasSelecionada.setSize(12);
         this.itSnGerarApenasSelecionada.setCheckedValue("S");
         this.itSnGerarApenasSelecionada.setUnCheckedValue("N");       
-        this.append(this.itSnGerarApenasSelecionada);        
+        this.append(this.itSnGerarApenasSelecionada);   
+        
+        
+        this.itSnUML = new CheckBox("Gerar Diagrama de Classe?", "Sim");
+        this.itSnUML.setEnable(true);
+        this.itSnUML.setSize(12);
+        this.itSnUML.setCheckedValue("UML@html");
+        this.itSnUML.setUnCheckedValue("");       
+        this.append(this.itSnUML);
+        
         
         this.itSnModelJava = new CheckBox("Model java:", "Sim");
         this.itSnModelJava.setEnable(true);
@@ -218,8 +228,8 @@ export class Tabela extends ModWindow{
           //itemmenu.setSize(12);
           //tabela.tbMain.setActAttrConfig(["add","del","edit","reload"],"params",[urlcaminho]);  
          RequestManager.addRequest({
-            "url":p_urlcaminho,
-            "onLoad":function(dta:ITabela[]){
+            "url":p_urlcaminho+"?bust2="+new Date().getTime()
+            ,"onLoad":function(dta:ITabela[]){
               this._modTabelaCampo.getMainList().setDataProvider([]);
               this.getMainList().setDataProvider(dta);              
             }.bind(this)
@@ -298,6 +308,10 @@ export class Tabela extends ModWindow{
             selecteds[tms] = this.itSnTypeScriptNodeInterface.getValue();
         };
         
+        if(this.itSnUML.getValue()!=""){
+            var tms:number = selecteds.length;
+            selecteds[tms] = this.itSnUML.getValue();
+        };
         
         //var itensList:ITabela[] = this.getMainList().getDataProvider();
         var itensList:ITabela[] = [];
@@ -337,6 +351,7 @@ export class Tabela extends ModWindow{
         }); 
         
     }
+    
     beforeInsert(p_req_obj: IDefaultRequest): IDefaultRequest{
         p_req_obj.data["caminho"] = this.getCaminho();
         return p_req_obj;    
@@ -348,9 +363,11 @@ export class Tabela extends ModWindow{
     beforeSave(p_obj:ITabela):ITabela{
         //p_obj.data["caminho"] = this._urlPath;
         var TmpList:ITabela = <ITabela>  this.mainList.getSelectedItem();
-        p_obj.campo = TmpList.campo; 
+        
+        //p_obj.campo = TmpList.campo; 
         return p_obj;
     }
+    
     beforeDelete(p_new_obj:IDefaultRequest,p_old_obj:ITabela):IDefaultRequest{
         p_new_obj.data["caminho"] = this.getCaminho();
         return p_new_obj;

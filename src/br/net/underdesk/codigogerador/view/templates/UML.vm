@@ -58,9 +58,8 @@
       <attributes id="${increment}" justification="0" size="4" underlined="false">#set ($increment = $increment + 1)
       
 		<text>
-		$classe.getPrimaryKey().getColunaLogical()
-#foreach ($campo in $classe.getCampos())
-		${campo.getColunaLogical()}   				
+#foreach ($campo in $classe.getAllCampos())
+${tab}$campo.getColuna()   				
 #end		
 		</text>
       </attributes>

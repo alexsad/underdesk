@@ -220,6 +220,7 @@ export declare class ListView extends Component implements IListView {
     setSelectedIndex(p_index: number): void;
     changeToIndex(p_index: number): void;
     updateItem(p_item: Object): void;
+    replaceItem(p_item: Object, p_index?: number): void;
     insertItem(p_item: Object, p_where?: string): void;
     removeSelectedItem(): void;
     removeItem(p_item: Object): void;

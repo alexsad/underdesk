@@ -26,8 +26,12 @@ requirejs.config({
 $(function(){
 	
 	requirejs(
-		['container','br/net/underdesk/arquivo/view/ArquivoView']
-		,function(_container,_modtmp){
+		['core','net','container','br/net/underdesk/arquivo/view/ArquivoView']
+		,function(_core,_net,_container,_modtmp){
+			var tmpLocation = _core.Underas.getLocation();
+			//tmpLocation = tmpLocation.replace("8080","8330");
+			//tmpLocation = tmpLocation.substring(0,tmpLocation.indexOf("8080"))+"8330/";
+			_net.RequestManager.setRootUrl(tmpLocation);
 			//console.log(m);
 			//var t = new sub.SubB(45);
 			//t.doAnyThing("nova instancia!!!!");

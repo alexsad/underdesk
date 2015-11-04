@@ -65,6 +65,7 @@ public class TabelaBLL {
 		String dirTmp = "";	
 		String nameOfDir = "";
 		if(tmT>0){
+			boolean hasUML = false;
 			nameOfDir = "uml_tmp_"+lsttab.get(0).getPacote().replaceAll("\\.", "_");
 			dirTmp = "underdesk/"+lsttab.get(0).getCaminho();
 			dirTmp = dirTmp.substring(0,dirTmp.lastIndexOf("/"))+"/"+nameOfDir;
@@ -125,9 +126,11 @@ public class TabelaBLL {
 						}else if(tmpExport.equals(TabelaDAO.TP_DAO)){
 							CompactadorBLL.criaDiretorio(tmpPath+"/dao");
 							CompactadorBLL.criaArquivo(tmpPath+"/dao/"+tmpNameFile+"."+this.dao.getExtencao(tmpExport), this.dao.gerarCodigo(lsttab.get(x),tmpExport));
-						}else{
+						}else if(!tmpExport.equals(TabelaDAO.TP_UML)){
 							CompactadorBLL.criaDiretorio(tmpPath+"/others");							
 							CompactadorBLL.criaArquivo(tmpPath+"/others/"+tmpNameFile+"."+this.dao.getExtencao(tmpExport), this.dao.gerarCodigo(lsttab.get(x),tmpExport));
+						}else{
+							hasUML = true;
 						};			
 					};
 				};
@@ -136,6 +139,12 @@ public class TabelaBLL {
 			};	
 			//System.out.println(dirBase+nameOfDir+".zip");
 			//CompactadorBLL.compactarPasta(dirBase+".zip",dirBase);
+			
+			
+			if(hasUML){
+				CompactadorBLL.criaArquivo(dirBase+"/project.violet.html", this.dao.gerarCodigo(lsttab,TabelaDAO.TP_UML));
+				
+			}
 			
 		};		
 		//return "";

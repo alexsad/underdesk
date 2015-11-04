@@ -89,6 +89,29 @@ public class TabelaDAO {
 		}
 		return writer.toString();
 	}
+	public String gerarCodigo(List<Tabela> tabelas,String tipoTemplate){	
+		VelocityContext context = new VelocityContext();
+		String local = this.urlTemplates+this.getTipo(tipoTemplate);
+		VelocityEngine ve = new VelocityEngine();
+		ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+		ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+		StringWriter writer = new StringWriter();
+		try {
+			ve.init();
+			Template t = ve.getTemplate(local+".vm"); 	
+			context.put("project_name","underdesk");
+			context.put("project_desc","underdesk");			
+			context.put("pacote",this.getPackageUrl(tabelas.get(0)));	
+			context.put("pacote_url",tabelas.get(0).getPacote().replaceAll("[.]","/"));
+			context.put("tab", "\t");
+			context.put("classes",tabelas);
+			t.merge(context, writer);		
+			//System.out.println("ex:\n"+writer.toString());
+		} catch (Exception e) {
+			return "erro: "+e.getMessage().toUpperCase();
+		}
+		return writer.toString();
+	}
 	
 	
 	public Tabela getByIdTabela(String urlc,int idTabela){

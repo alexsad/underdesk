@@ -32,7 +32,7 @@ export interface IConfigModWindow {
 }
 export declare class ModWindow extends Component {
     _configModWindow: IConfigModWindow;
-    constructor(p_subtitle: string, p_modpath: string);
+    constructor(p_subtitle: string);
     setTitle(p_title: string): void;
     getTitle(): string;
     _onStart(): void;
