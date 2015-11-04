@@ -23,9 +23,9 @@ body{
 }
 
 #sidebar{
-	border-bottom:1px solid #aaa;			
+	border-bottom:1px solid #aaa;
 }
-#navbarlist{			
+#navbarlist{
 	padding-left:15px;
 	background-color:#E5E5E5;
 	/*
@@ -37,7 +37,7 @@ body{
 	-moz-box-shadow: inset -5px 32px 5px -30px rgba(0,0,0,0.75);
 	box-shadow: inset -5px 32px 5px -30px rgba(0,0,0,0.75);
 }
-#navbarlist > li{			
+#navbarlist > li{
 	margin-top:10px;
 }
 .navitem{
@@ -71,24 +71,30 @@ body{
 .navitem_success{
 	border-bottom-color: #5BC0DE;
 }
+div.ModView{
+  position:relative;
+  float: left;
+  padding:0px;
+  width: 100%;
+}
+
 div.ModView div.ModWindow{
-	padding:0px;	
+	padding:0px;
 }
-.ModWindow .blockrequest.erro_load,.any_erro_load{
-	background-image:url('../img/img32x32/erro_load.gif');
+.ModView .blockrequest.erro_load,.any_erro_load{
 }
-.ModWindow .blockrequest.normal_load,.any_normal_load{
-	background-image:url('../img/img32x32/load_circle.gif');
+.ModView .blockrequest.normal_load,.any_normal_load{ 
+
+	background-image:url(../img/img16x16/fundo_quadro_preto1x1.png);
+	background-repeat:repeat;
+	background-position:center bottom;
+
 }
-.ModWindow .blockrequest,.any_request{
-	background-repeat:no-repeat;	
-	background-color:#fff;
-    background-position:center center;
-    opacity:0.9;
+.ModView .blockrequest,.any_request{
+
 }
-.ModWindow .blockrequest{
+.ModView .blockrequest{
 	display:none;
-	border:1px solid #ccc;
 	width:100%;
 	height:100%;
 	min-height:150px;
@@ -96,4 +102,16 @@ div.ModView div.ModWindow{
 	top:0px;
 	left:0px;
 	z-index:2000;
+}
+.ModView .blockrequest .BoxTasks{
+	width:100%;
+	/*
+	background-color:#000;
+    opacity:0.2;
+    */
+}
+.ModView .blockrequest .BoxTaskRequestProgress{
+	width:5%;
+	height:3px;
+	background-color: blue;
 }

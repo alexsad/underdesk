@@ -210,11 +210,11 @@ export class Tabela extends ModWindow{
     onChangeItem(p_obj:ITabela):ITabela{        
         //this._modTabelaCampo.getMainList().setDataProvider(p_obj.campo);
         if(p_obj.campo){
-            this._modTabelaCampo.getMainList().setDataProvider(p_obj.campo);
-            this._modTabelaCampo.itIdTabela.setValue(p_obj.idTabela+"");
+            this._modTabelaCampo.getMainList().setDataProvider(p_obj.campo);            
         }else{
             this._modTabelaCampo.getMainList().setDataProvider([]);
         };        
+        this._modTabelaCampo.itIdTabela.setValue(p_obj.idTabela+"");
         return p_obj;        
     }
     setCaminho(p_caminho:string):void{

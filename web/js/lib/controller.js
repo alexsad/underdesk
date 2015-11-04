@@ -1057,10 +1057,14 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
         ListView.prototype.insertItem = function (p_item, p_where) {
             if (p_where === void 0) { p_where = "top"; }
             var tmpOnWithTemplate = function () {
+                if (!this.dataProvider) {
+                    this.dataProvider = [];
+                }
+                ;
                 var nind = this.dataProvider.length;
-                this.dataProvider[nind] = p_item;
-                this._ind = nind;
                 p_item["_ind"] = nind;
+                this.dataProvider.push(p_item);
+                this._ind = nind;
                 var itemRender = new ListViewItemRender(p_item, this._itemTemplateHtml);
                 itemRender.getEle().attr("data-ind", nind).addClass("tilecell selectedLine list-group-item");
                 var tcitens = 1;

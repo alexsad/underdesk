@@ -320,18 +320,6 @@ define(["require", "exports", "core", "controller"], function (require, exports,
                             delete req_objToInsert["method"];
                             delete req_objToInsert["url"];
                             this.getModule().getMainList().insertItem(req_objToInsert.data, 'bottom');
-                            if (this.getModule()._embedFather) {
-                                var tmpEmbedFather = this.getModule()._embedFather;
-                                var tmpEmbedItem = this.getModule()._embedItem;
-                                var tmC = 0;
-                                var tmpEmbedFatherVar = window[tmpEmbedFather];
-                                if (!tmpEmbedFatherVar.getMainList().getSelectedItem()[tmpEmbedItem]) {
-                                    tmpEmbedFatherVar.getMainList().getSelectedItem()[tmpEmbedItem] = [];
-                                }
-                                else {
-                                }
-                                ;
-                            }
                         }
                         ;
                     }.bind(this)

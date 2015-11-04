@@ -105,9 +105,16 @@ export class TabelaCampo extends ModWindow{
             tmpTabela.campo = [];
         };
         tmpCampo.idTabelaCampo = tmpTabela.campo.length;
+        /*
+        if(tmpCampo.idTabela > 1){
+            tmpTabela.campo.push(tmpCampo);  
+        };
+        */
         //tmpTabela.campo.push(tmpCampo);        
+        
         this.mainList.insertItem(tmpCampo);
         //p_req_obj.data["caminho"] = this.getCaminho();
+        this._modTabela.mainTb.btSave.getEle().click();
         return null;    
     }
     beforeUpdate(p_req_new_obj: IDefaultRequest, p_old_obj: ITabelaCampo): IDefaultRequest{
@@ -116,6 +123,7 @@ export class TabelaCampo extends ModWindow{
        var tmpCampo:ITabelaCampo = <ITabelaCampo>p_req_new_obj.data;        
        tmpTabela.campo[tmpCampo.idTabelaCampo-1] = tmpCampo;       
        this.mainList.updateItem(tmpCampo);
+       this._modTabela.mainTb.btSave.getEle().click();
        return null;
     }
     beforeDelete(p_req_delete: IDefaultRequest, p_old_obj: ITabelaCampo):IDefaultRequest{
@@ -123,7 +131,7 @@ export class TabelaCampo extends ModWindow{
         p_old_obj.caminho = this.getCaminho();
         p_old_obj.idTabela = parseInt(this.itIdTabela.getValue());
         return p_req_delete;
-        */
+        */        
         return null;
     }
 }
