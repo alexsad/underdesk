@@ -41,40 +41,7 @@ module.exports = function(grunt) {
 			options: {
 				separator: ';'
 			}
-		}		
-	  ,typescript: {
-		client: {
-		  cwd: '.'
-		  ,expand: false
-		  ,src: [			
-		  		"src/**/model/I[A-Z]*.ts"
-				,"src/**/view/*.ts"
-		  ]
-		  ,dest: 'web/js/br/net/underdesk'
-		  ,options: {			
-			"target": "es5",
-			"module": "amd",
-			"declaration": false,
-			"noImplicitAny": true,
-			"removeComments": true,
-			"noLib": false,
-			"sourceMap": true,
-			"experimentalDecorators": true,
-			"emitDecoratorMetadata":false,
-			"isolatedModules": false,
-			"noEmitHelpers": true,
-			"noResolve": true,
-			"references": [
-				"src/lib/jquery2.d.ts",	
-				"src/lib/util.d.ts",
-				"src/lib/core.d.ts",
-				"src/lib/container.d.ts",
-				"src/lib/controller.d.ts",				
-				"src/lib/net.d.ts"				
-			]
-		  }
 		}
-	  }
 	,uglify: {
 		view: {
 			files: [{
@@ -92,8 +59,20 @@ module.exports = function(grunt) {
 				,dest: 'public/js/lib'
 			}]
 		}
-	}	  
+	}	 
+	,ts: {
+		view : {
+			tsconfig:"tsconfig.json"
+		    }
+		}
 	});
+	
+	grunt.loadNpmTasks("grunt-ts");
+	grunt.loadNpmTasks('grunt-text-replace');
+	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-contrib-uglify');
 	
 	
 	grunt.registerTask('build-view-pos', function(){
@@ -110,17 +89,11 @@ module.exports = function(grunt) {
 		});
 	});
 	
+	 
 	grunt.registerTask('default', ['build-view-dev']);
-	grunt.registerTask('build-view-dev', ['clean:client','typescript:client','copy:viewAssets','replace:viewjs','build-view-pos']);
+	grunt.registerTask('build-view-dev', ['clean:client','ts:view','copy:viewAssets','replace:viewjs','build-view-pos']);
 	grunt.registerTask('build-deploy', ['build-view-dev','uglify:view']);	
 	
-	grunt.loadNpmTasks('grunt-text-replace');
-	grunt.loadNpmTasks('grunt-contrib-copy');
-	grunt.loadNpmTasks('grunt-contrib-clean');
-	grunt.loadNpmTasks('grunt-contrib-concat');
-	grunt.loadNpmTasks('grunt-contrib-uglify');
-	//grunt.loadNpmTasks('grunt-contrib-cssmin');
-	//grunt.loadNpmTasks('grunt-usemin');
-	grunt.loadNpmTasks('grunt-typescript');
+
 
 };

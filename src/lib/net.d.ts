@@ -7,7 +7,7 @@ export interface ITaskConfig {
     idRequest?: number;
 }
 export interface IRequestConf {
-    module: ModWindow;
+    module?: ModWindow;
     url: string;
     rootUrl?: string;
     format?: string;
@@ -21,7 +21,7 @@ export interface IDefaultRequest {
     format: string;
     url: string;
     method: string;
-    module: ModWindow;
+    module?: ModWindow;
     rootUrl?: string;
     data?: any;
     onLoad?: JQueryPromiseCallback<Function>;
@@ -29,12 +29,12 @@ export interface IDefaultRequest {
 export declare class Task extends Component {
     s: string;
     t: number;
-    idModWindow: string;
+    idView: string;
     idRequest: number;
     lbMsg: Label;
     constructor(p_dts: ITaskConfig);
-    setIdModWindow(p_idModWindow: string): void;
-    getIdModWindow(): string;
+    setIdView(p_idView: string): void;
+    getIdView(): string;
     finalizar(dtk2: any): void;
     reload(): void;
     cancel(): void;
@@ -63,9 +63,9 @@ export declare class RequestManager {
     static addRequest(req: IRequestConf): void;
     static refresh(): void;
     static finalizar(): void;
-    static notifyTaskErro(idTask: number, erro: string): void;
-    static showAllTasks(p_idWinMod: string): void;
-    static hideAllTasks(p_idWinMod: string): void;
+    static notifyTaskErro(p_idView: string, erro: string): void;
+    static showAllTasks(p_idWiew: string): void;
+    static hideAllTasks(p_idWiew: string): void;
     static setFormat(p_format: string): void;
     static setUrl(p_url: string): void;
     static setRootUrl(p_rootUrl: string): void;

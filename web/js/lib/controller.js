@@ -720,10 +720,16 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
             return vl.length > 0 == true;
         };
         Select.prototype.setValue = function (p_vl) {
+            var tmpVl = "";
             if (!p_vl) {
                 this.getInput().val("");
+                return;
             }
-            else if (p_vl.length > 0) {
+            else {
+                tmpVl = p_vl + "";
+            }
+            ;
+            if (tmpVl.length > 0) {
                 this.getEle().attr({ "data-prevalue": p_vl, "data-vl": p_vl });
                 var tmpDesc = this.getDescFromServiceByValue(p_vl);
                 this.getInput().val(tmpDesc);
@@ -907,7 +913,7 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
             var urlModule = this.getModule().getUrlModule();
             urlModule = urlModule.replace(/\.+/g, "/");
             urlModule = urlModule.substring(0, urlModule.lastIndexOf("/"));
-            this._urlTemplate = "js/" + urlModule + "/" + this._urlTemplate;
+            this._urlTemplate = urlModule + "/" + this._urlTemplate;
             $.get(this._urlTemplate, function (p_templateHtml) {
                 this._itemTemplateHtml = p_templateHtml;
                 fnAfter();
@@ -1026,21 +1032,27 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
             ;
         };
         ListView.prototype.updateItem = function (p_item) {
-            var tmpOnWithTemplate = function () {
-                this.setSelectedItem(p_item);
-                var itemRender = new ListViewItemRender(p_item, this._itemTemplateHtml);
-                itemRender.getEle().attr("data-ind", this.getSelectedIndex()).addClass("tilecell list-group-item");
-                itemRender.getEle().addClass("selectedLine");
-                this.getEle(".tilecellgrid .selectedLine").replaceWith(itemRender.getEle());
-            }.bind(this);
-            if (!this._itemTemplateHtml) {
-                this._getTmpUrl(tmpOnWithTemplate);
+            this.setSelectedItem(p_item);
+            var itemRender = new ListViewItemRender(p_item, this._itemTemplateHtml);
+            itemRender.getEle().attr("data-ind", this.getSelectedIndex()).addClass("tilecell list-group-item");
+            itemRender.getEle().addClass("selectedLine");
+            this.getEle(".tilecellgrid .selectedLine").replaceWith(itemRender.getEle());
+        };
+        ListView.prototype.replaceItem = function (p_item, p_index) {
+            var p_index_s = 0;
+            if (!p_index) {
+                p_index_s = this.getSelectedIndex();
             }
             else {
-                tmpOnWithTemplate();
+                p_index_s = p_index;
             }
             ;
-            tmpOnWithTemplate = null;
+            p_item["_ind"] = p_index_s;
+            var itemRender = new ListViewItemRender(p_item, this._itemTemplateHtml);
+            itemRender.getEle().attr("data-ind", p_index_s).addClass("tilecell list-group-item");
+            itemRender.getEle().addClass("selectedLine");
+            this.setSelectedItem(p_index);
+            this.getEle(".tilecellgrid .selectedLine").replaceWith(itemRender.getEle());
         };
         ListView.prototype.insertItem = function (p_item, p_where) {
             if (p_where === void 0) { p_where = "top"; }
@@ -1120,7 +1132,7 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
         ListView.prototype.changeSelectedItem = function (tgt) {
             this.getEle(".tilecellgrid .row_cells .selectedLine").removeClass("selectedLine active");
             tgt.addClass("selectedLine active");
-            this["_ind"] = parseInt(tgt.attr("data-ind"));
+            this._ind = parseInt(tgt.attr("data-ind"));
             if (this.itemChange && this.getSelectedItem()) {
                 this.itemChange(this.getSelectedItem());
             }
@@ -1281,42 +1293,48 @@ define(["require", "exports", "util", "core", "net"], function (require, exports
             return parseInt(this.getValue());
         };
         NumericStepper.prototype.setVL = function (vl) {
-            if (vl >= this.minvl && vl <= this.maxvl) {
-                this.setValue(vl + "");
+            var tmpVl = 0;
+            if (vl) {
+                tmpVl = vl;
             }
             ;
-            if (vl <= this.minvl) {
-                this.setEnable(false, 3);
-            }
-            else {
+            this.setValue(tmpVl + "");
+            if (tmpVl > this.minvl) {
                 this.setEnable(true, 3);
             }
+            else {
+                this.setEnable(false, 3);
+            }
             ;
-            if (vl >= this.maxvl) {
-                this.setEnable(false, 1);
+            if (tmpVl < this.maxvl) {
+                this.setEnable(true, 1);
             }
             else {
-                this.setEnable(true, 1);
+                this.setEnable(false, 1);
             }
             ;
         };
         NumericStepper.prototype.aumentar = function () {
             if (this.isEnable(1)) {
                 if (this.getValue() == "") {
-                    this.setValue(this.minvl + "");
+                    this.setVL(this.minvl);
+                }
+                else if ((this.getVL() + this.stepvl) <= this.maxvl) {
+                    this.setVL(this.getVL() + this.stepvl);
                 }
                 ;
-                this.setVL(this.getVL() + this.stepvl);
             }
             ;
         };
         NumericStepper.prototype.diminuir = function () {
             if (this.isEnable(3)) {
                 if (this.getValue() == "") {
-                    this.setValue(this.minvl + "");
+                    this.setVL(this.minvl);
+                }
+                else if ((this.getVL() - this.stepvl) >= this.minvl) {
+                    this.setVL(this.getVL() - this.stepvl);
                 }
                 ;
-                this.setVL(this.getVL() - this.stepvl);
             }
             ;
         };

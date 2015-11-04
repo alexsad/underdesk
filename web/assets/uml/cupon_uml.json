@@ -1,1 +1,16 @@
-[]
+[
+	{
+	"idTabela":1
+	,"caminho":""
+	,"dsTabela":"produto"
+	,"dominio":"produto"
+	,"pacote":"br.net.cupon"
+	,"tipo":"table"
+	,"chavePrimaria":"id_cupon"
+	,"tpGeracao":"increment"
+	,"imports":[]
+	,"campo":[
+		
+		]
+	}
+]

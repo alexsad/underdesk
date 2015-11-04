@@ -4,6 +4,14 @@
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
+   		<filter>
+	<filter-name>cors</filter-name>
+	<filter-class>br.net.underdesk.util.CorsFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	<filter-name>cors</filter-name>
+	<url-pattern>/ws/*</url-pattern>
+	</filter-mapping>
   <servlet>
     <servlet-name>rest</servlet-name>
     <servlet-class>
@@ -20,4 +28,5 @@
     	<servlet-name>rest</servlet-name>
    	 	<url-pattern>/ws/*</url-pattern>
   	</servlet-mapping>
+
 </web-app>

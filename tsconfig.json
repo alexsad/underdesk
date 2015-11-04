@@ -9,7 +9,7 @@
         "noLib": false,
         "emitDecoratorMetadata": true,
         "sourceMap": false,
-        "outDir": "./web/js/br/net/underdesk",
+        "outDir": "./web/js",
         "experimentalDecorators": true,
         "isolatedModules": false,
         "noEmitHelpers": true,
@@ -21,13 +21,18 @@
         "./src/lib/**/*.ts"
     ],
     "files": [
-        "./src/lib/jquery2.d.ts",
-        "./src/lib/container.d.ts",
-        "./src/lib/controller.d.ts",
-        "./src/lib/core.d.ts",
-        "./src/lib/net.d.ts",
-        "./src/lib/util.d.ts",
-        "./src/br/net/underdesk/arquivo/view/Arquivo.ts",
-        "./src/br/net/underdesk/codigogerador/view/Tabela.ts"
+        "src/br/net/underdesk/arquivo/view/Arquivo.ts",
+        "src/br/net/underdesk/arquivo/view/ArquivoView.ts",
+        "src/br/net/underdesk/arquivo/view/IArquivo.ts",
+        "src/br/net/underdesk/codigogerador/view/ITabela.ts",
+        "src/br/net/underdesk/codigogerador/view/ITabelaCampo.ts",
+        "src/br/net/underdesk/codigogerador/view/Tabela.ts",
+        "src/br/net/underdesk/codigogerador/view/TabelaCampo.ts",
+        "src/lib/container.d.ts",
+        "src/lib/controller.d.ts",
+        "src/lib/core.d.ts",
+        "src/lib/jquery2.d.ts",
+        "src/lib/net.d.ts",
+        "src/lib/util.d.ts"
     ]
 }
